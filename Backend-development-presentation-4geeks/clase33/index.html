@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 33: APIs REST con FastAPI, Pydantic y Coding Agents - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=2">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="API Requests">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 33 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 33:<br><span>APIs REST con FastAPI, Pydantic & Coding Agents</span></h1>
+                <p class="cover-subtitle">Diseño de contratos, validación estricta y proyecto práctico: Voice Business Ideas API.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Objetivos de la Sesión -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">1. Objetivos de la Sesión</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 12px;">APIs REST con FastAPI, Pydantic y Coding Agents</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    <strong>Objetivo de la sesión:</strong> Dominar el diseño de contratos API RESTful, validación y serialización estricta con Pydantic, manejo de estados en memoria y generación automática de documentación técnica usando como ejemplo una <strong>API de Ideas de Negocio (Voice Business Ideas API)</strong>.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">🌐</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #0056FF; margin-bottom: 4px;">Arquitectura REST</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Contratos limpios basados en el recurso <code>/ideas</code> y verbos HTTP estandarizados.</p>
+                    </div>
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">🛡️</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #047857; margin-bottom: 4px;">Pydantic Strict</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Validaciones de entrada y serialización de salida sin errores.</p>
+                    </div>
+                    <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">💾</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #6D28D9; margin-bottom: 4px;">In-Memory Store</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Gestión de estado volátil rápida sin dependencias de base de datos externa.</p>
+                    </div>
+                    <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">🤖</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #B45309; margin-bottom: 4px;">Docs para IA</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">OpenAPI / Swagger útil tanto para humanos como para Coding Agents.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Fundamentos RESTful & Operaciones CRUD -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">2. Fundamentos RESTful y Operaciones CRUD</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Mapeo de Verbos HTTP</h2>
+                    <p class="slide-main-desc" style="font-size: 0.82rem; margin-bottom: 8px;">Interfaz uniforme basada en recursos en plural (<code>/ideas</code>) y acciones HTTP:</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="color: #1d4ed8; font-size: 0.8rem;">GET (<code>/ideas</code>):</strong> <span style="font-size: 0.76rem; color: #334155;">Obtener todas las ideas de negocio (<code>200 OK</code>).</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 4px solid #10b981; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="color: #047857; font-size: 0.8rem;">POST (<code>/ideas</code>):</strong> <span style="font-size: 0.76rem; color: #334155;">Registrar una nueva idea de negocio (<code>201 Created</code>).</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 4px solid #f59e0b; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="color: #b45309; font-size: 0.8rem;">PUT (<code>/ideas/{id}</code>):</strong> <span style="font-size: 0.76rem; color: #334155;">Reemplazo total de la idea (<code>200 OK</code>).</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 4px solid #8b5cf6; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="color: #6d28d9; font-size: 0.8rem;">PATCH (<code>/ideas/{id}</code>):</strong> <span style="font-size: 0.76rem; color: #334155;">Actualización parcial (ej. <code>validated: true</code>) (<code>200 OK</code>).</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 4px solid #ef4444; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="color: #b91c1c; font-size: 0.8rem;">DELETE (<code>/ideas/{id}</code>):</strong> <span style="font-size: 0.76rem; color: #334155;">Eliminación de la idea (<code>200 OK</code> / <code>204</code>).</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Convenciones vs. Anti-patrones</h2>
+                    
+                    <div style="background: #fff1f2; border: 2px solid #fecdd3; border-radius: 10px; padding: 12px; margin-bottom: 12px;">
+                        <div style="font-size: 0.88rem; font-weight: 800; color: #be123c; margin-bottom: 4px;">❌ Anti-patrones Comunes</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">
+                            <code>/getIdeas</code>, <code>/createIdea</code>, <code>/updateIdea/1</code><br>
+                            <em>Usar verbos en la URL duplica la semántica del método HTTP.</em>
+                        </p>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 10px; padding: 12px;">
+                        <div style="font-size: 0.88rem; font-weight: 800; color: #15803d; margin-bottom: 4px;">✅ Diseño REST Correcto</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">
+                            <code>GET /ideas</code><br>
+                            <code>POST /ideas</code><br>
+                            <code>PUT /ideas/1</code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Validación y Serialización con Pydantic -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">3. Validación y Serialización con Pydantic</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Pydantic & Type Hints</h2>
+                    <p class="slide-main-desc" style="font-size: 0.82rem; margin-bottom: 8px;">Convierte JSONs de ideas de negocio en objetos validados de Python y viceversa.</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 8px 12px;">
+                            <div style="font-size: 0.82rem; font-weight: 800; color: #1d4ed8;">📥 Validación de Entrada</div>
+                            <p style="font-size: 0.75rem; color: #1e3a8a;">Datos inválidos son interceptados automáticamente respondiendo <code>422 Unprocessable Entity</code>.</p>
+                        </div>
+                        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 8px 12px;">
+                            <div style="font-size: 0.82rem; font-weight: 800; color: #15803d;">📤 Serialización de Salida</div>
+                            <p style="font-size: 0.75rem; color: #14532d;">Con <code>response_model=IdeaResponse</code> se controla exactamente qué campos se exponen.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; margin-top: 8px; font-size: 0.72rem; color: #475569; text-align: center;">
+                        <code>JSON Request</code> ➔ <code>Pydantic Model</code> ➔ <code>Lógica</code> ➔ <code>Response Model</code> ➔ <code>JSON Response</code>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">schemas.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> pydantic <span class="syn-kw">import</span> <span class="syn-class">BaseModel</span>, <span class="syn-class">Field</span>
+<span class="syn-kw">from</span> typing <span class="syn-kw">import</span> <span class="syn-class">Optional</span>
+
+<span class="syn-kw">class</span> <span class="syn-class">IdeaBase</span>(<span class="syn-class">BaseModel</span>):
+    title: <span class="syn-type">str</span> = <span class="syn-class">Field</span>(..., min_length=<span class="syn-num">1</span>, description=<span class="syn-str">"Título de la idea"</span>)
+    category: <span class="syn-type">str</span> = <span class="syn-class">Field</span>(default=<span class="syn-str">"Tech"</span>, description=<span class="syn-str">"Categoría del negocio"</span>)
+    validated: <span class="syn-type">bool</span> = <span class="syn-class">Field</span>(default=<span class="syn-kw">False</span>, description=<span class="syn-str">"Estado de validación"</span>)
+
+<span class="syn-kw">class</span> <span class="syn-class">IdeaCreate</span>(<span class="syn-class">IdeaBase</span>):
+    <span class="syn-kw">pass</span>
+
+<span class="syn-kw">class</span> <span class="syn-class">IdeaUpdate</span>(<span class="syn-class">BaseModel</span>):
+    title: <span class="syn-class">Optional</span>[<span class="syn-type">str</span>] = <span class="syn-kw">None</span>
+    category: <span class="syn-class">Optional</span>[<span class="syn-type">str</span>] = <span class="syn-kw">None</span>
+    validated: <span class="syn-class">Optional</span>[<span class="syn-type">bool</span>] = <span class="syn-kw">None</span>
+
+<span class="syn-kw">class</span> <span class="syn-class">IdeaResponse</span>(<span class="syn-class">IdeaBase</span>):
+    id: <span class="syn-type">int</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Almacenamiento en Memoria -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">4. Almacenamiento en Memoria (In-Memory Store)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Estructura Volátil en Memoria</h2>
+                    <p class="slide-main-desc">Para prototipado rápido y demostración en clase, almacenamos las ideas en listas nativas de Python a nivel de módulo.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 10px; border-radius: 6px;">
+                            <strong style="color: #047857; font-size: 0.85rem;">⚡ Ventajas principales</strong>
+                            <p style="font-size: 0.78rem; color: #14532d; margin-top: 4px;">Cero dependencias de bases de datos y configuración instantánea para desarrollo local.</p>
+                        </div>
+
+                        <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 6px;">
+                            <strong style="color: #c2410c; font-size: 0.85rem;">⚠️ Limitación de persistencia</strong>
+                            <p style="font-size: 0.78rem; color: #7c2d12; margin-top: 4px;">El estado se reinicia cada vez que el servidor de Uvicorn se recarga o detiene.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">db.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 14px; font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># Simulación de base de datos volátil de ideas en memoria</span>
+
+ideas_db: <span class="syn-type">list</span>[<span class="syn-type">dict</span>] = []
+current_id: <span class="syn-type">int</span> = <span class="syn-num">1</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Documentación Automática como Producto -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">5. Documentación Automática como Producto</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px;">Documentación Autogenerada (<code>/docs</code> y <code>/redoc</code>)</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    La documentación no es un accesorio secundario, sino un <strong>contrato vivo</strong> que sirve a dos audiencias críticas en sistemas modernos:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.2rem; margin-bottom: 6px;">👨‍💻</div>
+                        <div style="font-size: 1rem; font-weight: 800; color: #1d4ed8; margin-bottom: 6px;">1. Desarrolladores Humanos</div>
+                        <p style="font-size: 0.84rem; color: #334155; line-height: 1.45;">
+                            Permite probar endpoints de forma interactiva en Swagger UI (<code>/docs</code>), verificar esquemas de respuesta y validar códigos de estado HTTP sin salir del navegador.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.2rem; margin-bottom: 6px;">🤖</div>
+                        <div style="font-size: 1rem; font-weight: 800; color: #6d28d9; margin-bottom: 6px;">2. Modelos de Lenguaje & Agents</div>
+                        <p style="font-size: 0.84rem; color: #334155; line-height: 1.45;">
+                            Los LLMs y Coding Agents interpretan el esquema OpenAPI autogenerado para realizar <em>Function Calling</em> y construir integraciones precisas sin ambigüedades.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Proyecto Voice Ideas API -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">6. Ejemplo Práctico: Voice Business Ideas API</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">💡 Voice Business Ideas API — Talk to Your Pitch Deck</h2>
+                    <p class="slide-main-desc" style="font-size: 0.84rem;">
+                        Desarrollaremos en vivo un backend en FastAPI para registrar <strong>Ideas de Negocio por Voz</strong>. El frontend captura el audio, transcribe el texto y lo envía al backend al endpoint <code>POST /instruction</code>.
+                    </p>
+                    
+                    <div style="background: #eff6ff; border-left: 4px solid #0056FF; border-radius: 6px; padding: 10px;">
+                        <strong style="color: #1e40af; font-size: 0.82rem;">🧠 Enrutamiento por IA (Groq):</strong>
+                        <p style="font-size: 0.78rem; color: #1e3a8a; margin-top: 2px;">El backend usa Groq para extraer la intención en JSON estructurado y ejecutar acciones sobre el recurso <code>/ideas</code>.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Voz a Texto (Frontend)</div>
+                                <div class="step-desc">Web Speech API transcribe la idea por voz (ej. <em>"Guarda una idea de app de paseadores de perros en categoría Mascotas"</em>).</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Inferencia LLM (POST /instruction)</div>
+                                <div class="step-desc">Groq mapea la orden a un JSON con <code>endpoint</code>, <code>method</code> y <code>params</code>.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Ejecución CRUD</div>
+                                <div class="step-desc">Se invoca la acción correspondiente contra los endpoints de <code>/ideas</code>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Requisitos y Entorno -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">7. Requisitos y Configuración del Entorno</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Estructura del Proyecto</h2>
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Árbol de Directorios</span>
+                            <div class="editor-header-right"><span class="editor-lang">Tree</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code>voice-ideas-api/
+├── frontend/        # Interfaz de voz
+├── src/
+│   ├── __init__.py
+│   └── main.py      # API en FastAPI
+├── .env             # GROQ_API_KEY (Ignorado en git)
+├── .gitignore
+└── requirements.txt</code></pre>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Instalación & Variables</h2>
+                    
+                    <div class="editor-container" style="margin-bottom: 8px;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Terminal</span>
+                            <div class="editor-header-right"><span class="editor-lang">Bash</span></div>
+                        </div>
+                        <pre style="padding: 8px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code>pip install fastapi uvicorn pydantic python-dotenv groq</code></pre>
+                    </div>
+
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">.env</span>
+                            <div class="editor-header-right"><span class="editor-lang">ENV</span></div>
+                        </div>
+                        <pre style="padding: 8px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code>GROQ_API_KEY=gsk_tu_clave_de_groq_aqui</code></pre>
+                    </div>
+
+                    <div style="background: #fefce8; border: 1px solid #fef08a; border-radius: 6px; padding: 6px 10px; margin-top: 6px;">
+                        <span style="font-size: 0.74rem; color: #854d0e;">⚠️ Asegúrate de incluir <code>.env</code> en tu archivo <code>.gitignore</code>.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Configuración CORS & In-Memory Store -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">8. Especificación Backend: Configuración & CORS</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Inicialización de la App</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">Debes permitir peticiones desde el frontend web habilitando el middleware de CORS y configurar el cliente de Groq con tus variables de entorno.</p>
+
+                    <div class="callout-card" style="background-color: #eff6ff; border-color: #bfdbfe;">
+                        <div class="callout-title" style="color: #1d4ed8; font-size: 0.82rem;"><span>🔒</span> CORSMiddleware</div>
+                        <p class="callout-text" style="font-size: 0.76rem;">Habilita orígenes dinámicos para evitar bloqueos del navegador en desarrollo local.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">src/main.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">import</span> os, json
+<span class="syn-kw">from</span> typing <span class="syn-kw">import</span> <span class="syn-class">Optional</span>
+<span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">FastAPI</span>, <span class="syn-class">HTTPException</span>, status
+<span class="syn-kw">from</span> fastapi.middleware.cors <span class="syn-kw">import</span> <span class="syn-class">CORSMiddleware</span>
+<span class="syn-kw">from</span> pydantic <span class="syn-kw">import</span> <span class="syn-class">BaseModel</span>
+<span class="syn-kw">from</span> dotenv <span class="syn-kw">import</span> load_dotenv
+<span class="syn-kw">from</span> groq <span class="syn-kw">import</span> <span class="syn-class">Groq</span>
+
+load_dotenv()
+
+app = <span class="syn-class">FastAPI</span>(
+    title=<span class="syn-str">"Voice Business Ideas API"</span>,
+    description=<span class="syn-str">"Backend para registro de ideas de negocio por voz"</span>
+)
+
+app.add_middleware(
+    <span class="syn-class">CORSMiddleware</span>,
+    allow_origins=[<span class="syn-str">"*"</span>],
+    allow_credentials=<span class="syn-kw">True</span>,
+    allow_methods=[<span class="syn-str">"*"</span>],
+    allow_headers=[<span class="syn-str">"*"</span>],
+)
+
+<span class="syn-comment"># In-memory database de ideas</span>
+ideas: <span class="syn-type">list</span>[<span class="syn-type">dict</span>] = []
+idea_counter = <span class="syn-num">1</span>
+groq_client = <span class="syn-class">Groq</span>(api_key=os.getenv(<span class="syn-str">"GROQ_API_KEY"</span>))</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Esquemas Pydantic del Proyecto -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">9. Esquemas Pydantic para Voice Ideas API</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Esquemas de Entrada & Respuesta</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">Modelos estrictos de Pydantic para validar peticiones de ideas y estructurar las respuestas de la IA.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f8fafc; border-left: 3px solid #0056FF; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="font-size: 0.78rem; color: #0056FF;">IdeaCreateSchema:</strong> <span style="font-size: 0.74rem; color: #334155;">Creación total de la idea.</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 3px solid #10B981; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="font-size: 0.78rem; color: #047857;">IdeaPatchSchema:</strong> <span style="font-size: 0.74rem; color: #334155;">Campos opcionales para PATCH.</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 3px solid #8B5CF6; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="font-size: 0.78rem; color: #6D28D9;">InstructionResponse:</strong> <span style="font-size: 0.74rem; color: #334155;">Estructura JSON generada por Groq.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">src/main.py (Esquemas)</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">class</span> <span class="syn-class">IdeaCreateSchema</span>(<span class="syn-class">BaseModel</span>):
+    title: <span class="syn-type">str</span>
+    category: <span class="syn-type">str</span> = <span class="syn-str">"Tech"</span>
+    validated: <span class="syn-type">bool</span> = <span class="syn-kw">False</span>
+
+<span class="syn-kw">class</span> <span class="syn-class">IdeaPatchSchema</span>(<span class="syn-class">BaseModel</span>):
+    title: <span class="syn-class">Optional</span>[<span class="syn-type">str</span>] = <span class="syn-kw">None</span>
+    category: <span class="syn-class">Optional</span>[<span class="syn-type">str</span>] = <span class="syn-kw">None</span>
+    validated: <span class="syn-class">Optional</span>[<span class="syn-type">bool</span>] = <span class="syn-kw">None</span>
+
+<span class="syn-kw">class</span> <span class="syn-class">InstructionRequest</span>(<span class="syn-class">BaseModel</span>):
+    transcription: <span class="syn-type">str</span>
+
+<span class="syn-kw">class</span> <span class="syn-class">InstructionResponse</span>(<span class="syn-class">BaseModel</span>):
+    endpoint: <span class="syn-type">str</span>
+    method: <span class="syn-type">str</span>
+    params: <span class="syn-class">Optional</span>[<span class="syn-type">dict</span>] = <span class="syn-kw">None</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Endpoints GET & POST -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">10. Endpoints CRUD: Lectura y Creación (GET & POST)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">GET /ideas & POST /ideas</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">Operaciones iniciales para listar ideas de negocio y registrar nuevas con un ID incremental autogenerado.</p>
+
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #047857; font-size: 0.82rem;">🟢 Status 201 Created</strong>
+                        <p style="font-size: 0.76rem; color: #14532d; margin-top: 2px;">El decorador <code>POST</code> declara explícitamente el código HTTP <code>201</code>.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">src/main.py (GET & POST)</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-dec">@app.get</span>(<span class="syn-str">"/ideas"</span>, status_code=status.HTTP_200_OK)
+<span class="syn-kw">def</span> <span class="syn-fn">get_ideas</span>():
+    <span class="syn-kw">return</span> ideas
+
+<span class="syn-dec">@app.post</span>(<span class="syn-str">"/ideas"</span>, status_code=status.HTTP_201_CREATED)
+<span class="syn-kw">def</span> <span class="syn-fn">create_idea</span>(idea_data: <span class="syn-class">IdeaCreateSchema</span>):
+    <span class="syn-kw">global</span> idea_counter
+    new_idea = {
+        <span class="syn-str">"id"</span>: idea_counter,
+        <span class="syn-str">"title"</span>: idea_data.title,
+        <span class="syn-str">"category"</span>: idea_data.category,
+        <span class="syn-str">"validated"</span>: idea_data.validated
+    }
+    ideas.append(new_idea)
+    idea_counter += <span class="syn-num">1</span>
+    <span class="syn-kw">return</span> new_idea</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Endpoints PUT, PATCH & DELETE -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">11. Endpoints CRUD: Edición y Borrado (PUT, PATCH, DELETE)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Edición & Borrado por ID</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">Reemplazo total (PUT), actualización parcial (PATCH) y eliminación (DELETE) manejando errores <code>404 Not Found</code>.</p>
+
+                    <div style="background: #fff1f2; border-left: 4px solid #ef4444; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #be123c; font-size: 0.82rem;">🔴 Manejo de Excepciones 404</strong>
+                        <p style="font-size: 0.76rem; color: #475569; margin-top: 2px;">Si el <code>idea_id</code> no existe en la lista en memoria, se eleva <code>HTTPException(status_code=404)</code>.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">src/main.py (PUT, PATCH, DELETE)</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.62rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-dec">@app.put</span>(<span class="syn-str">"/ideas/{idea_id}"</span>, status_code=status.HTTP_200_OK)
+<span class="syn-kw">def</span> <span class="syn-fn">update_idea</span>(idea_id: <span class="syn-type">int</span>, idea_data: <span class="syn-class">IdeaCreateSchema</span>):
+    <span class="syn-kw">for</span> index, idea <span class="syn-kw">in</span> <span class="syn-fn">enumerate</span>(ideas):
+        <span class="syn-kw">if</span> idea[<span class="syn-str">"id"</span>] == idea_id:
+            updated_idea = {<span class="syn-str">"id"</span>: idea_id, <span class="syn-str">"title"</span>: idea_data.title, <span class="syn-str">"category"</span>: idea_data.category, <span class="syn-str">"validated"</span>: idea_data.validated}
+            ideas[index] = updated_idea
+            <span class="syn-kw">return</span> updated_idea
+    <span class="syn-kw">raise</span> <span class="syn-class">HTTPException</span>(status_code=<span class="syn-num">404</span>, detail=<span class="syn-str">"Idea not found"</span>)
+
+<span class="syn-dec">@app.patch</span>(<span class="syn-str">"/ideas/{idea_id}"</span>, status_code=status.HTTP_200_OK)
+<span class="syn-kw">def</span> <span class="syn-fn">patch_idea</span>(idea_id: <span class="syn-type">int</span>, idea_data: <span class="syn-class">IdeaPatchSchema</span>):
+    <span class="syn-kw">for</span> idea <span class="syn-kw">in</span> ideas:
+        <span class="syn-kw">if</span> idea[<span class="syn-str">"id"</span>] == idea_id:
+            <span class="syn-kw">if</span> idea_data.title <span class="syn-kw">is not</span> <span class="syn-kw">None</span>: idea[<span class="syn-str">"title"</span>] = idea_data.title
+            <span class="syn-kw">if</span> idea_data.category <span class="syn-kw">is not</span> <span class="syn-kw">None</span>: idea[<span class="syn-str">"category"</span>] = idea_data.category
+            <span class="syn-kw">if</span> idea_data.validated <span class="syn-kw">is not</span> <span class="syn-kw">None</span>: idea[<span class="syn-str">"validated"</span>] = idea_data.validated
+            <span class="syn-kw">return</span> idea
+    <span class="syn-kw">raise</span> <span class="syn-class">HTTPException</span>(status_code=<span class="syn-num">404</span>, detail=<span class="syn-str">"Idea not found"</span>)
+
+<span class="syn-dec">@app.delete</span>(<span class="syn-str">"/ideas/{idea_id}"</span>, status_code=status.HTTP_200_OK)
+<span class="syn-kw">def</span> <span class="syn-fn">delete_idea</span>(idea_id: <span class="syn-type">int</span>):
+    <span class="syn-kw">global</span> ideas
+    idea_to_delete = <span class="syn-fn">next</span>((i <span class="syn-kw">for</span> i <span class="syn-kw">in</span> ideas <span class="syn-kw">if</span> i[<span class="syn-str">"id"</span>] == idea_id), <span class="syn-kw">None</span>)
+    <span class="syn-kw">if not</span> idea_to_delete: <span class="syn-kw">raise</span> <span class="syn-class">HTTPException</span>(status_code=<span class="syn-num">404</span>, detail=<span class="syn-str">"Idea not found"</span>)
+    ideas = [i <span class="syn-kw">for</span> i <span class="syn-kw">in</span> ideas <span class="syn-kw">if</span> i[<span class="syn-str">"id"</span>] != idea_id]
+    <span class="syn-kw">return</span> {<span class="syn-str">"message"</span>: <span class="syn-str">f"Idea {idea_id} deleted successfully"</span>}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Endpoint de Instrucciones con Groq -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">12. Endpoint de Instrucciones con LLM (Groq)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">POST /instruction</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">Convierte texto de voz a JSON estructurado para el enrutamiento de la API.</p>
+
+                    <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #c2410c; font-size: 0.82rem;">⚠️ Regla Clave: Enrutamiento IA</strong>
+                        <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px;">
+                            <strong>No uses condicionales manuales</strong> (como <code>if "add" in text:</code>). El enrutamiento debe ser inferido 100% por el LLM.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">src/main.py (Groq Endpoint)</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.6rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-dec">@app.post</span>(<span class="syn-str">"/instruction"</span>, response_model=<span class="syn-class">InstructionResponse</span>, status_code=status.HTTP_200_OK)
+<span class="syn-kw">def</span> <span class="syn-fn">process_instruction</span>(instruction: <span class="syn-class">InstructionRequest</span>):
+    system_prompt = """
+You are an API router assistant for a Business Ideas Management application.
+Convert the user's natural language voice transcription into a structured JSON action.
+
+Available endpoints:
+- GET /ideas -> to list all business ideas. (params: {})
+- POST /ideas -> to create a new idea. (params: {"title": "&lt;string&gt;", "category": "&lt;string&gt;", "validated": false})
+- PUT /ideas/&lt;idea_id&gt; -> to fully replace an idea. (params: {"title": "&lt;string&gt;", "category": "&lt;string&gt;", "validated": &lt;bool&gt;})
+- PATCH /ideas/&lt;idea_id&gt; -> to update an idea title, category or status. (params: {"title": "&lt;string&gt;"} or {"validated": &lt;bool&gt;})
+- DELETE /ideas/&lt;idea_id&gt; -> to delete an idea. (params: {})
+
+Rules:
+1. Output ONLY a valid JSON object. No explanations.
+2. The format MUST be exactly:
+{
+  "endpoint": "/ideas" or "/ideas/&lt;id&gt;",
+  "method": "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
+  "params": { ... }
+}
+"""
+
+    response = groq_client.chat.completions.create(
+        model=<span class="syn-str">"llama3-8b-8192"</span>,
+        messages=[
+            {<span class="syn-str">"role"</span>: <span class="syn-str">"system"</span>, <span class="syn-str">"content"</span>: system_prompt},
+            {<span class="syn-str">"role"</span>: <span class="syn-str">"user"</span>, <span class="syn-str">"content"</span>: instruction.transcription}
+        ],
+        temperature=<span class="syn-num">0.0</span>,
+        response_format={<span class="syn-str">"type"</span>: <span class="syn-str">"json_object"</span>}
+    )
+
+    result_json = json.loads(response.choices[<span class="syn-num">0</span>].message.content)
+    <span class="syn-kw">return</span> result_json</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Criterios de Evaluación -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">13. Criterios de Evaluación del Proyecto</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 12px;">Matriz de Evaluación: Voice Business Ideas API</h2>
+
+                <table class="custom-table" style="font-size: 0.78rem;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 8px 12px;">Criterio</th>
+                            <th style="padding: 8px 12px;">Validación Exigida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>CRUD Completo</strong></td>
+                            <td style="padding: 6px 12px;"><code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code> implementados sobre <code>/ideas</code> con códigos <code>200</code>, <code>201</code> y <code>404</code>.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Pydantic Validation</strong></td>
+                            <td style="padding: 6px 12px;">Payloads de entrada (<code>IdeaCreateSchema</code>) y respuestas serializadas correctamente.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Integración Groq</strong></td>
+                            <td style="padding: 6px 12px;"><code>POST /instruction</code> extrae intenciones con LLM y responde el formato JSON esperado.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>CORS Habilitado</strong></td>
+                            <td style="padding: 6px 12px;">Comunicación fluida entre el frontend web y la API local.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Seguridad de Credenciales</strong></td>
+                            <td style="padding: 6px 12px;"><code>.env</code> configurado e ignorado en <code>.gitignore</code>.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Estado en Memoria</strong></td>
+                            <td style="padding: 6px 12px;">Manejo adecuado de listas nativas de Python (<code>ideas: list[dict]</code>) sin DB externa.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 14</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="../assets/js/presentation.js?v=2"></script>
+</body>
+</html>

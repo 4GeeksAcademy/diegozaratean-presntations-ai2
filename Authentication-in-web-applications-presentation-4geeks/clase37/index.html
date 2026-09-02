@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 37: Autenticación Backend y JWT en FastAPI - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Autenticación Backend y JWT en FastAPI">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 37 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 37:<br><span>Autenticación Backend y JWT en FastAPI</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>🦾 <strong>Práctica 1:</strong> Fundamentos de Autenticación Web</li>
+<li>🦾 <strong>Práctica 2:</strong> Contraseñas Seguras y Autenticación</li>
+<li>🦾 <strong>Práctica 3:</strong> Autenticación JWT en FastAPI</li>
+<li>💻 <strong>Proyecto Final:</strong> Securing the API: Authentication and Route Restriction in FastAPI</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE INTRO UNIFICADO: Authentication vs Authorization -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 37 • Conceptos Clave: Autenticación vs Autorización</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🔐 Autenticación vs Autorización: Pilares de Seguridad Web</h2>
+                
+                <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Introducción Fundamental:</strong>
+                    <p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">
+                        Comprender la diferencia entre <strong>Autenticación</strong> y <strong>Autorización</strong> es crucial para construir aplicaciones web seguras. Aunque trabajan juntos, cumplen propósitos completamente distintos en el control de acceso.
+                    </p>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 10px 14px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                            <span style="font-size: 1.2rem;">🔑</span>
+                            <strong style="color: #0056FF; font-size: 0.84rem;">1. ¿Qué es la Autenticación? (Authentication) — ¿Quién eres?</strong>
+                        </div>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin-left: 28px;">
+                            Es el proceso de verificar y confirmar la identidad de un usuario o sistema. Métodos comunes incluyen verificación de usuario/contraseña cifrada, validación de Tokens (JWT) o biometría.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 10px 14px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                            <span style="font-size: 1.2rem;">🛡️</span>
+                            <strong style="color: #047857; font-size: 0.84rem;">2. ¿Qué es la Autorización? (Authorization) — ¿Qué puedes hacer?</strong>
+                        </div>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin-left: 28px;">
+                            Determina las acciones y recursos a los que se permite acceder una vez confirmada la identidad. Controla el acceso basado en permisos o roles (RBAC) e inspección de rutas en FastAPI (<code>401</code> vs <code>403</code>).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <!-- SLIDE: Tema 1 - Importance Of Password Encryption -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 1: Fundamentos de Autenticación Web • Tema 1: Importance Of Password Encryption</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Cifrado de Contraseñas con Salt y Bcrypt: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"Las contraseñas robustas son la cerradura principal: si es débil, cualquiera entra a tu casa sin esfuerzo."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Almacenar las contraseñas de los usuarios de forma segura es uno de los aspectos más críticos para construir sistemas de...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Cifrado</strong> transforma los datos en una forma codificada que puede revertirse...</li><li><strong>Hashing</strong> convierte los datos en una cadena de caracteres de tamaño fijo,...</li><li>Nunca almacenes contraseñas en texto plano.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_4234004023.png" alt="Cifrado de Contraseñas con Salt y Bcrypt" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Cifrado de Contraseñas con Salt y Bcrypt</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 2 - Overview Of Authentication Methods -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 1: Fundamentos de Autenticación Web • Tema 2: Overview Of Authentication Methods</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Panorama de Métodos de Autenticación: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"La autenticación confirma quién eres en la puerta, como mostrar tu documento oficial."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Los métodos de autenticación forman la columna vertebral para asegurar las aplicaciones web.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Autenticación Básica:</strong> La forma más simple, que transmite credenciales con...</li><li><strong>Autenticación Basada en Tokens:</strong> Utiliza tokens para reducir la exposición de...</li><li><strong>OAuth e Inicio de Sesión Social:</strong> Delegan la verificación de identidad a...</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_1337215184.png" alt="Panorama de Métodos de Autenticación" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Panorama de Métodos de Autenticación</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 3 - Basic Authentication Mechanics -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 1: Fundamentos de Autenticación Web • Tema 3: Basic Authentication Mechanics</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Mecánica de Autenticación Básica: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"La autenticación confirma quién eres en la puerta, como mostrar tu documento oficial."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">La Autenticación Básica es uno de los métodos más simples para asegurar aplicaciones web mediante la verificación de las...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>La Autenticación Básica codifica las credenciales en Base64 y las envía en el encabezado HTTP.</li><li>Es simple pero tiene limitaciones significativas de seguridad.</li><li>Usar solo en entornos seguros y controlados con HTTPS.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_3861215082.png" alt="Mecánica de Autenticación Básica" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Mecánica de Autenticación Básica</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 4 - Password Managers Your Digital Ally -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 2: Contraseñas Seguras y Autenticación • Tema 4: Password Managers Your Digital Ally</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Password Managers Your Digital Ally: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"Las contraseñas robustas son la cerradura principal: si es débil, cualquiera entra a tu casa sin esfuerzo."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Gestionar múltiples contraseñas fuertes puede resultar abrumador, pero existe una solución inteligente que lo hace más fácil:...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Almacena tus contraseñas</strong> en una bóveda cifrada.</li><li><strong>Genera contraseñas fuertes y únicas</strong> para cada una de tus cuentas.</li><li><strong>Rellena automáticamente los datos de inicio de sesión</strong> cuando visitas sitios...</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_929073049.png" alt="Password Managers Your Digital Ally" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Password Managers Your Digital Ally</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 5 - Multifactor Authentication As Your Final Barrier -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 2: Contraseñas Seguras y Autenticación • Tema 5: Multifactor Authentication As Your Final Barrier</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Multifactor Authentication As Your Final Barrier: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"La autenticación confirma quién eres en la puerta, como mostrar tu documento oficial."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Agregar <strong>Autenticación Multifactor (MFA)</strong> a tus cuentas es como añadir una segunda cerradura a la puerta de tu...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Algo que sabes:</strong> como tu contraseña o PIN.</li><li><strong>Algo que tienes:</strong> como tu teléfono o un token de seguridad.</li><li><strong>Algo que eres:</strong> como tu huella dactilar o reconocimiento facial.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_3540779334.png" alt="Multifactor Authentication As Your Final Barrier" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Multifactor Authentication As Your Final Barrier</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 6 - Reallife Example Corporate Account Alert -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 2: Contraseñas Seguras y Autenticación • Tema 6: Reallife Example Corporate Account Alert</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Reallife Example Corporate Account Alert: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"Entender Reallife Example Corporate Account Alert permite aplicar buenas prácticas de seguridad e ingeniería en la aplicación."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Imagina recibir una alerta de que alguien intentó acceder a tu cuenta corporativa desde una ubicación o dispositivo inusual.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Prevenir accesos no autorizados</strong> que podrían causar brechas de datos.</li><li><strong>Proteger información sensible de la empresa</strong> y mantener la confianza.</li><li><strong>Detener posibles daños</strong> antes de que se propaguen.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_1544050065.png" alt="Reallife Example Corporate Account Alert" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Reallife Example Corporate Account Alert</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 7 - Frontend Token Storage Strategies -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 3: Autenticación JWT en FastAPI • Tema 7: Frontend Token Storage Strategies</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Frontend Token Storage Strategies: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El flujo JWT es como una discoteca: verificas tu DNI en la entrada (login) y te dan una pulsera (JWT) para pedir consumiciones en..."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Cuando tu backend emite un token JWT después de un inicio de sesión exitoso, la siguiente pregunta crítica es: <strong>¿dónde y...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>LocalStorage es vulnerable a ataques de <strong>Cross-Site Scripting (XSS)</strong> porque...</li><li><strong>Mitigación:</strong> Implementa políticas estrictas de Content Security Policy (CSP) y...</li><li>Comúnmente usado en Aplicaciones de Página Única (SPA) por su facilidad de acceso.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_2846318522.png" alt="Frontend Token Storage Strategies" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Frontend Token Storage Strategies</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 8 - Jwt Security Best Practices -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 3: Autenticación JWT en FastAPI • Tema 8: Jwt Security Best Practices</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Jwt Security Best Practices: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El flujo JWT es como una discoteca: verificas tu DNI en la entrada (login) y te dan una pulsera (JWT) para pedir consumiciones en..."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">La seguridad en la autenticación JWT es fundamental para proteger los datos de los usuarios y mantener la confianza en tus...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Mantén tu clave secreta segura</strong> usando variables de entorno y una gestión...</li><li><strong>Valida todas las reclamaciones de la carga útil JWT</strong> minuciosamente,...</li><li><strong>Implementa protección CSRF</strong> cuando uses almacenamiento de JWT basado en...</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_3309116984.png" alt="Jwt Security Best Practices" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Jwt Security Best Practices</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+    <!-- SLIDE: Tema 9 - Building Authentication Endpoints -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="slide-title-header">Práctica 3: Autenticación JWT en FastAPI • Tema 9: Building Authentication Endpoints</div>
+            <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+        </div>
+        <div class="slide-body">
+            
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Building Authentication Endpoints: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"La autenticación confirma quién eres en la puerta, como mostrar tu documento oficial."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">En esta lección, implementarás los endpoints principales de autenticación para tu aplicación FastAPI: <strong>registro de...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>El endpoint de <strong>registro</strong> almacena de forma segura contraseñas cifradas y...</li><li>El endpoint de <strong>inicio de sesión</strong> verifica credenciales y emite tokens JWT para...</li><li>Las contraseñas se cifran con <strong>bcrypt</strong> para proteger los datos del usuario.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_1909326455.png" alt="Building Authentication Endpoints" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Building Authentication Endpoints</span>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+            
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 37 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.9rem; color: #1e293b; line-height: 1.55; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; text-align: center;">
+                        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem;">📌 Proyecto Práctico</strong>
+                            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">ai-eng-user-authentication-api</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px;">
+                            <strong style="color: #10B981; font-size: 0.85rem;">🛠️ Stack Técnico</strong>
+                            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">Python • FastAPI • JWT • LearnPack</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px;">
+                            <strong style="color: #8B5CF6; font-size: 0.85rem;">🎯 Entregable</strong>
+                            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">Código funcional, tests en verde & repo actualizado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 12</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>

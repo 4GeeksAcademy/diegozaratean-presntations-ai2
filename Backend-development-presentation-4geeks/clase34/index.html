@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 34: Managing files from the backend - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=2">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1544396821-4dd40b938ad3?q=80&w=800&auto=format&fit=crop" alt="Managing Files">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 34 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 34:<br><span>Managing files from the backend</span></h1>
+                <p class="cover-subtitle">Manipulación, lectura, escritura y persistencia local de archivos desde Python.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Objetivos de la Sesión -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">1. Objetivos de la Sesión</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 12px;">Manejo Defensivo de Archivos, CSVs y Script a Servicio</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    <strong>Objetivo de la sesión:</strong> Aprender la gestión defensiva de archivos en disco, el procesamiento eficiente de CSVs sin saturar memoria y cómo desacoplar la lógica de un script CLI para convertirlo en un servicio backend en FastAPI sin duplicar código.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">📂</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #0056FF; margin-bottom: 4px;">Ciclo de Vida</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Control de descriptores, codificación UTF-8 y modos de apertura segura.</p>
+                    </div>
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">🛡️</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #047857; margin-bottom: 4px;">Writing Pitfalls</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Uso obligatorio de <code>with open</code>, saltos <code>\n</code> y lectura por streaming O(1).</p>
+                    </div>
+                    <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">📊</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #6D28D9; margin-bottom: 4px;">Manejo de CSVs</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Lectura y escritura mapeada a diccionarios con <code>DictReader</code> y <code>DictWriter</code>.</p>
+                    </div>
+                    <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">⚙️</div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #B45309; margin-bottom: 4px;">Script ➔ Servicio</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.4;">Funciones puras compartidas entre CLI (<code>sys.argv</code>) y API HTTP (<code>io.StringIO</code>).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Texto vs Binarios y Ciclo de Vida -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">2. Archivos de Texto vs. Binarios & Ciclo de Vida</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Tipos de Archivos & Ciclo de Vida</h2>
+                    <p class="slide-main-desc" style="font-size: 0.84rem;">Un archivo en disco es una secuencia estructurada de bytes administrada por el sistema operativo.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 8px 10px; border-radius: 4px;">
+                            <strong style="color: #1d4ed8; font-size: 0.8rem;">Archivos de Texto:</strong> <span style="font-size: 0.76rem; color: #334155;">Secuencias de caracteres legibles codificados (estándar <code>UTF-8</code>).</span>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 4px solid #8b5cf6; padding: 8px 10px; border-radius: 4px;">
+                            <strong style="color: #6d28d9; font-size: 0.8rem;">Archivos Binarios:</strong> <span style="font-size: 0.76rem; color: #334155;">Imágenes, ejecutables o buffers que no son texto plano directamente.</span>
+                        </div>
+                    </div>
+
+                    <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #c2410c; font-size: 0.82rem;">🔄 Ciclo de Vida Obligatorio:</strong>
+                        <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px;">
+                            <code>Abrir (Open)</code> ➔ <code>Operar (Read/Write)</code> ➔ <code>Cerrar (Close)</code>.<br>
+                            Dejar archivos abiertos genera <em>dangling handles</em> y bloquea recursos del SO.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Modos de Apertura en Disco</h2>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #0056FF; font-size: 0.8rem;">Escribir (<code>'w'</code> vs <code>'x'</code>):</strong>
+                            <p style="font-size: 0.75rem; color: #475569;"><code>'w'</code> sobreescribe todo el archivo. <code>'x'</code> es exclusivo y lanza <code>FileExistsError</code> si ya existe.</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #047857; font-size: 0.8rem;">Leer (<code>'r'</code>):</strong>
+                            <p style="font-size: 0.75rem; color: #475569;">Accede a un archivo existente. Lanza <code>FileNotFoundError</code> si no existe la ruta.</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #b45309; font-size: 0.8rem;">Anexar (<code>'a'</code>):</strong>
+                            <p style="font-size: 0.75rem; color: #475569;">Agrega contenido al final del archivo sin alterar los bytes previos.</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #b91c1c; font-size: 0.8rem;">Borrado Seguro (<code>Path.unlink</code>):</strong>
+                            <p style="font-size: 0.75rem; color: #475569;">Elimina archivos comprobando su existencia previamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Operaciones Básicas en Código -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">3. Operaciones Básicas en Disco</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Código Seguro en Python</h2>
+                    <p class="slide-main-desc" style="font-size: 0.84rem;">Ejemplo práctico de escritura con sobrescritura, anexado al final y borrado seguro con <code>pathlib.Path</code>.</p>
+
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #047857; font-size: 0.82rem;">💡 Codificación UTF-8</strong>
+                        <p style="font-size: 0.76rem; color: #14532d; margin-top: 2px;">Especificar siempre <code>encoding='utf-8'</code> al abrir archivos evita errores de caracteres entre Windows, Mac y Linux.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">file_operations.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 12px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> pathlib <span class="syn-kw">import</span> <span class="syn-class">Path</span>
+
+<span class="syn-comment"># 1. Crear y escribir ('w' sobreescribe todo)</span>
+<span class="syn-kw">with</span> <span class="syn-fn">open</span>(<span class="syn-str">'registro.txt'</span>, <span class="syn-str">'w'</span>, encoding=<span class="syn-str">'utf-8'</span>) <span class="syn-kw">as</span> f:
+    f.write(<span class="syn-str">'Línea 1\n'</span>)
+
+<span class="syn-comment"># 2. Anexar sin sobreescribir ('a')</span>
+<span class="syn-kw">with</span> <span class="syn-fn">open</span>(<span class="syn-str">'registro.txt'</span>, <span class="syn-str">'a'</span>, encoding=<span class="syn-str">'utf-8'</span>) <span class="syn-kw">as</span> f:
+    f.write(<span class="syn-str">'Línea 2\n'</span>)
+
+<span class="syn-comment"># 3. Eliminar de forma segura con pathlib</span>
+archivo = <span class="syn-class">Path</span>(<span class="syn-str">'registro.txt'</span>)
+<span class="syn-kw">if</span> archivo.exists():
+    archivo.unlink()</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Manejo Defensivo y Writing Pitfalls -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">4. Manejo Defensivo & Writing Pitfalls</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px;">3 Reglas de Oro para Evitar Errores Comunes</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">Prácticas de ingeniería para escribir código robusto que previene corrupción de archivos y fugas de memoria:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">🔒</div>
+                        <div style="font-size: 0.92rem; font-weight: 800; color: #0056FF; margin-bottom: 6px;">1. Context Manager (<code>with</code>)</div>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.45;">
+                            El uso obligatorio de <code>with open(...) as f:</code> garantiza que el archivo se cierre automáticamente al salir del bloque, incluso ante excepciones imprevistas.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 12px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">↵</div>
+                        <div style="font-size: 0.92rem; font-weight: 800; color: #B45309; margin-bottom: 6px;">2. Saltos de Línea (<code>\n</code>)</div>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.45;">
+                            El método <code>.write()</code> <strong>no inserta saltos de línea</strong> automáticamente. Omitir <code>\n</code> concatena registros y corrompe archivos estructurados.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 12px; padding: 14px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">⚡</div>
+                        <div style="font-size: 0.92rem; font-weight: 800; color: #047857; margin-bottom: 6px;">3. Streaming O(1)</div>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.45;">
+                            Evitar <code>.read()</code> o <code>.readlines()</code> en archivos grandes. Iterar directo (<code>for linea in f:</code>) procesa línea a línea con memoria constante <strong>O(1)</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Manipulación de CSVs -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">5. Manipulación de CSVs con DictReader / DictWriter</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem;">Módulo Nativo <code>csv</code></h2>
+                    <p class="slide-main-desc" style="font-size: 0.82rem;">Permite interactuar con datos tabulares mapeando automáticamente las columnas a diccionarios de Python.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 3px solid #0056FF; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="font-size: 0.78rem; color: #0056FF;">DictReader:</strong> <span style="font-size: 0.74rem; color: #334155;">Lee la cabecera como llaves y cada fila como diccionario.</span>
+                        </div>
+                        <div style="background: #f0fdf4; border-left: 3px solid #10B981; padding: 6px 10px; border-radius: 4px;">
+                            <strong style="font-size: 0.78rem; color: #047857;">DictWriter:</strong> <span style="font-size: 0.74rem; color: #334155;">Escribe listas de diccionarios a disco con <code>writeheader()</code>.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">csv_handler.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">import</span> csv
+
+<span class="syn-comment"># Lectura: de CSV a lista de diccionarios</span>
+<span class="syn-kw">def</span> <span class="syn-fn">leer_csv_a_dicts</span>(ruta: <span class="syn-type">str</span>) -&gt; <span class="syn-type">list</span>[<span class="syn-type">dict</span>]:
+    <span class="syn-kw">with</span> <span class="syn-fn">open</span>(ruta, <span class="syn-str">'r'</span>, encoding=<span class="syn-str">'utf-8'</span>) <span class="syn-kw">as</span> f:
+        lector = csv.<span class="syn-class">DictReader</span>(f)
+        <span class="syn-kw">return</span> [<span class="syn-fn">dict</span>(fila) <span class="syn-kw">for</span> fila <span class="syn-kw">in</span> lector]
+
+<span class="syn-comment"># Escritura: de lista de diccionarios a CSV</span>
+<span class="syn-kw">def</span> <span class="syn-fn">guardar_dicts_a_csv</span>(ruta: <span class="syn-type">str</span>, datos: <span class="syn-type">list</span>[<span class="syn-type">dict</span>], cabeceras: <span class="syn-type">list</span>[<span class="syn-type">str</span>]):
+    <span class="syn-kw">with</span> <span class="syn-fn">open</span>(ruta, <span class="syn-str">'w'</span>, encoding=<span class="syn-str">'utf-8'</span>, newline=<span class="syn-str">''</span>) <span class="syn-kw">as</span> f:
+        escritor = csv.<span class="syn-class">DictWriter</span>(f, fieldnames=cabeceras)
+        escritor.writeheader()
+        escritor.writerows(datos)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Prerrequisito 1 - Funciones Puras -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">6. Prerrequisito 1: Funciones Puras (Lógica Desacoplada)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">🎯 ¿Por qué se necesitan?</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">
+                        Las <strong>funciones puras</strong> reciben datos por parámetros y retornan resultados sin usar <code>input()</code>, <code>print()</code> ni depender del framework web.
+                    </p>
+
+                    <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #1e40af; font-size: 0.82rem;">💡 Reutilización Multicanal</strong>
+                        <p style="font-size: 0.76rem; color: #1e3a8a; margin-top: 2px;">
+                            Una misma función pura puede ser probada con unit tests, ejecutada desde la terminal (CLI) y consumida en una API HTTP sin cambiar una sola línea de código.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">pure_functions.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-comment"># ❌ IMPURA: Acoplada a la terminal (No se puede usar en API)</span>
+<span class="syn-kw">def</span> <span class="syn-fn">procesar_impuro</span>():
+    archivo = <span class="syn-fn">input</span>(<span class="syn-str">"Ruta archivo: "</span>)
+    <span class="syn-fn">print</span>(<span class="syn-str">f"Procesando {archivo}"</span>)
+
+<span class="syn-comment"># ✅ PURA: Desacoplada de I/O y del framework web</span>
+<span class="syn-kw">def</span> <span class="syn-fn">calcular_metricas</span>(filas: <span class="syn-type">list</span>[<span class="syn-type">dict</span>]) -&gt; <span class="syn-type">dict</span>:
+    total = <span class="syn-fn">sum</span>(<span class="syn-type">float</span>(f[<span class="syn-str">'monto'</span>]) <span class="syn-kw">for</span> f <span class="syn-kw">in</span> filas <span class="syn-kw">if</span> <span class="syn-str">'monto'</span> <span class="syn-kw">in</span> f)
+    <span class="syn-kw">return</span> {
+        <span class="syn-str">"total_ventas"</span>: <span class="syn-fn">round</span>(total, <span class="syn-num">2</span>),
+        <span class="syn-str">"total_registros"</span>: <span class="syn-fn">len</span>(filas)
+    }</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Prerrequisito 2 - sys.argv -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">7. Prerrequisito 2: Argumentos Dinámicos (sys.argv)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">💻 ¿Por qué se necesitan?</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">
+                        <code>sys.argv</code> captura argumentos directamente desde la línea de comandos sin pedir datos de forma interactiva durante la ejecución.
+                    </p>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #8b5cf6; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #6d28d9; font-size: 0.82rem;">⚡ Automatización en Servidores</strong>
+                        <p style="font-size: 0.76rem; color: #334155; margin-top: 2px;">
+                            Indispensable para scripts ejecutados por cron jobs, pipelines de CI/CD o administradores de sistemas en terminales headless.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">cli_args.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">import</span> sys
+
+<span class="syn-comment"># sys.argv[0] -> Nombre del archivo script</span>
+<span class="syn-comment"># sys.argv[1] -> Primer parámetro de la terminal</span>
+<span class="syn-kw">if</span> <span class="syn-fn">len</span>(sys.argv) &lt; <span class="syn-num">2</span>:
+    <span class="syn-fn">print</span>(<span class="syn-str">"❌ Error: Debes proporcionar la ruta del archivo CSV."</span>)
+    <span class="syn-fn">print</span>(<span class="syn-str">"Uso: python cli_args.py datos.csv"</span>)
+    sys.exit(<span class="syn-num">1</span>)
+
+ruta_archivo = sys.argv[<span class="syn-num">1</span>]
+<span class="syn-fn">print</span>(<span class="syn-str">f"📂 Cargando archivo: {ruta_archivo}"</span>)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Prerrequisito 3 - io.StringIO -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">8. Prerrequisito 3: Streams en Memoria (io.StringIO)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">🧠 ¿Por qué se necesitan?</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">
+                        <code>csv.DictReader</code> requiere un objeto de tipo archivo (<em>file-like object</em>) que pueda ser leído línea por línea.
+                    </p>
+
+                    <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #c2410c; font-size: 0.82rem;">🚀 Cero I/O de Disco en la API</strong>
+                        <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px;">
+                            Al recibir bytes por HTTP, <code>io.StringIO</code> convierte el texto en un archivo virtual en memoria RAM, evitando guardar archivos temporales en disco.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">memory_stream.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">import</span> csv
+<span class="syn-kw">import</span> io
+
+<span class="syn-comment"># Texto en memoria (ej. recibido en la API HTTP)</span>
+contenido_bytes = <span class="syn-str">b"id,producto,precio\n1,Laptop,1200\n2,Mouse,25"</span>
+texto = contenido_bytes.decode(<span class="syn-str">'utf-8'</span>)
+
+<span class="syn-comment"># io.StringIO simula un archivo abierto en disco</span>
+stream_memoria = io.<span class="syn-class">StringIO</span>(texto)
+lector = csv.<span class="syn-class">DictReader</span>(stream_memoria)
+
+filas = <span class="syn-fn">list</span>(lector)
+<span class="syn-comment"># [{'id': '1', 'producto': 'Laptop', ...}, ...]</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Prerrequisito 4 - UploadFile -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">9. Prerrequisito 4: Endpoints HTTP (UploadFile)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">🌐 ¿Por qué se necesitan?</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">
+                        Permite a clientes (Frontend Web, Mobile o Postman) enviar archivos usando el estándar <code>multipart/form-data</code>.
+                    </p>
+
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #047857; font-size: 0.82rem;">🛡️ Validación HTTP Defensiva</strong>
+                        <p style="font-size: 0.76rem; color: #14532d; margin-top: 2px;">
+                            Valida el tipo de archivo y responde con códigos HTTP correctos (<code>400 Bad Request</code> o <code>200 OK</code>).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">upload_endpoint.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">APIRouter</span>, <span class="syn-class">UploadFile</span>, <span class="syn-class">File</span>, <span class="syn-class">HTTPException</span>
+
+router = <span class="syn-class">APIRouter</span>()
+
+<span class="syn-dec">@router.post</span>(<span class="syn-str">"/api/upload"</span>)
+<span class="syn-kw">async def</span> <span class="syn-fn">subir_csv</span>(file: <span class="syn-class">UploadFile</span> = <span class="syn-class">File</span>(...)):
+    <span class="syn-kw">if not</span> file.filename.endswith(<span class="syn-str">'.csv'</span>):
+        <span class="syn-kw">raise</span> <span class="syn-class">HTTPException</span>(status_code=<span class="syn-num">400</span>, detail=<span class="syn-str">"Formato no permitido. Usar .csv"</span>)
+
+    contenido_bytes = <span class="syn-kw">await</span> file.read()
+    <span class="syn-kw">return</span> {<span class="syn-str">"filename"</span>: file.filename, <span class="syn-str">"size_bytes"</span>: <span class="syn-fn">len</span>(contenido_bytes)}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Paso 1 Módulo Central -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">10. Paso 1: Módulo Central con Lógica Pura</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Lógica Reutilizable</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">La función <code>analizar_ordenes</code> procesa filas en memoria, valida estados y calcula métricas sin saber de dónde provienen los datos.</p>
+
+                    <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #1e40af; font-size: 0.82rem;">⚙️ Desacoplamiento Total</strong>
+                        <p style="font-size: 0.76rem; color: #1e3a8a; margin-top: 2px;">Este módulo puede ser llamado por un script CLI, un endpoint de FastAPI o una tarea programada.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">core/orders_analyzer.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.6rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">def</span> <span class="syn-fn">analizar_ordenes</span>(filas: <span class="syn-type">list</span>[<span class="syn-type">dict</span>], estados_validos: <span class="syn-type">set</span>) -&gt; <span class="syn-type">dict</span>:
+    validas, invalidas = [], []
+    total_ventas = <span class="syn-num">0.0</span>
+
+    <span class="syn-kw">for</span> fila <span class="syn-kw">in</span> filas:
+        orden_id = fila.get(<span class="syn-str">'order_id'</span>)
+        estado = fila.get(<span class="syn-str">'status'</span>)
+        monto = fila.get(<span class="syn-str">'amount'</span>)
+
+        <span class="syn-kw">if not</span> orden_id <span class="syn-kw">or not</span> estado <span class="syn-kw">or</span> estado <span class="syn-kw">not in</span> estados_validos:
+            invalidas.append({<span class="syn-str">'fila'</span>: fila, <span class="syn-str">'motivo'</span>: <span class="syn-str">'Datos incompletos o estado inválido'</span>})
+            <span class="syn-kw">continue</span>
+
+        <span class="syn-kw">try</span>:
+            monto_num = <span class="syn-type">float</span>(monto)
+            validas.append(fila)
+            total_ventas += monto_num
+        <span class="syn-kw">except</span> (<span class="syn-class">ValueError</span>, <span class="syn-class">TypeError</span>):
+            invalidas.append({<span class="syn-str">'fila'</span>: fila, <span class="syn-str">'motivo'</span>: <span class="syn-str">'Monto numérico no válido'</span>})
+
+    <span class="syn-kw">return</span> {
+        <span class="syn-str">"total_procesadas"</span>: <span class="syn-fn">len</span>(filas),
+        <span class="syn-str">"total_validas"</span>: <span class="syn-fn">len</span>(validas),
+        <span class="syn-str">"total_invalidas"</span>: <span class="syn-fn">len</span>(invalidas),
+        <span class="syn-str">"total_ventas"</span>: <span class="syn-fn">round</span>(total_ventas, <span class="syn-num">2</span>),
+        <span class="syn-str">"invalidas_detalle"</span>: invalidas
+    }</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Paso 2 Punto CLI -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">11. Paso 2: Punto de Entrada CLI (Terminal)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Ejecución por Consola</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">El script CLI abre el archivo en disco especificado por <code>sys.argv[1]</code>, lo convierte a diccionarios e invoca al módulo central.</p>
+
+                    <div class="editor-container" style="margin-top: 10px;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Uso en Terminal</span>
+                            <div class="editor-header-right"><span class="editor-lang">Bash</span></div>
+                        </div>
+                        <pre style="padding: 8px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code>python scripts/analyze_orders.py orders.csv</code></pre>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">scripts/analyze_orders.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">import</span> sys
+<span class="syn-kw">import</span> csv
+<span class="syn-kw">from</span> core.orders_analyzer <span class="syn-kw">import</span> analizar_ordenes
+
+<span class="syn-kw">def</span> <span class="syn-fn">main</span>():
+    <span class="syn-kw">if</span> <span class="syn-fn">len</span>(sys.argv) &lt; <span class="syn-num">2</span>:
+        <span class="syn-fn">print</span>(<span class="syn-str">"Uso: python analyze_orders.py &lt;ruta_archivo.csv&gt;"</span>)
+        sys.exit(<span class="syn-num">1</span>)
+
+    ruta = sys.argv[<span class="syn-num">1</span>]
+    <span class="syn-kw">with</span> <span class="syn-fn">open</span>(ruta, <span class="syn-str">'r'</span>, encoding=<span class="syn-str">'utf-8'</span>) <span class="syn-kw">as</span> f:
+        lector = csv.<span class="syn-class">DictReader</span>(f)
+        filas = <span class="syn-fn">list</span>(lector)
+
+    resultado = analizar_ordenes(filas, {<span class="syn-str">'completada'</span>, <span class="syn-str">'pendiente'</span>, <span class="syn-str">'cancelada'</span>})
+    <span class="syn-fn">print</span>(<span class="syn-str">f"Válidas: {resultado['total_validas']} | Inválidas: {resultado['total_invalidas']}"</span>)
+    <span class="syn-fn">print</span>(<span class="syn-str">f"Total Ventas: ${resultado['total_ventas']}"</span>)
+
+<span class="syn-kw">if</span> __name__ == <span class="syn-str">'__main__'</span>:
+    main()</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Paso 3 Punto API -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">12. Paso 3: Punto de Entrada Backend API (FastAPI)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">Servicio HTTP en FastAPI</h2>
+                    <p class="slide-main-desc" style="font-size: 0.8rem;">El endpoint recibe el archivo por HTTP (<code>UploadFile</code>), lo decodifica y usa <code>io.StringIO</code> para leer el CSV en memoria sin tocar el disco.</p>
+
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #047857; font-size: 0.82rem;">✨ Cero Duplicación de Código</strong>
+                        <p style="font-size: 0.76rem; color: #14532d; margin-top: 2px;">Tanto el CLI como la API reutilizan exactamente la misma función <code>analizar_ordenes</code>.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">services/api/routes.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 320px; overflow-y: auto;"><code><span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">APIRouter</span>, <span class="syn-class">UploadFile</span>, <span class="syn-class">File</span>, <span class="syn-class">HTTPException</span>
+<span class="syn-kw">import</span> csv, io
+<span class="syn-kw">from</span> core.orders_analyzer <span class="syn-kw">import</span> analizar_ordenes
+
+router = <span class="syn-class">APIRouter</span>()
+
+<span class="syn-dec">@router.post</span>(<span class="syn-str">"/api/orders/analyze"</span>)
+<span class="syn-kw">async def</span> <span class="syn-fn">endpoint_analizar_ordenes</span>(file: <span class="syn-class">UploadFile</span> = <span class="syn-class">File</span>(...)):
+    <span class="syn-kw">if not</span> file.filename.endswith(<span class="syn-str">'.csv'</span>):
+        <span class="syn-kw">raise</span> <span class="syn-class">HTTPException</span>(status_code=<span class="syn-num">400</span>, detail=<span class="syn-str">"El archivo debe ser un CSV."</span>)
+
+    contenido = <span class="syn-kw">await</span> file.read()
+    texto = contenido.decode(<span class="syn-str">'utf-8'</span>)
+    lector = csv.<span class="syn-class">DictReader</span>(io.<span class="syn-class">StringIO</span>(texto))
+    filas = <span class="syn-fn">list</span>(lector)
+
+    <span class="syn-comment"># Reutiliza la misma función central</span>
+    <span class="syn-kw">return</span> analizar_ordenes(filas, {<span class="syn-str">'completada'</span>, <span class="syn-str">'pendiente'</span>, <span class="syn-str">'cancelada'</span>})</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Proyecto Final Incident Analyzer -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">13. Proyecto Final: Incident Analyzer — Script and Control Panel</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem;">🛠️ Reto Final: Incident Analyzer</h2>
+                    <p class="slide-main-desc" style="font-size: 0.82rem;">
+                        Los estudiantes aplicarán los patrones anteriores en el monorepo de su empresa para analizar incidencias de clientes protegiendo datos sensibles (PII).
+                    </p>
+
+                    <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                        <strong style="color: #1e40af; font-size: 0.82rem;">🏢 Organización en Monorepo</strong>
+                        <p style="font-size: 0.76rem; color: #1e3a8a; margin-top: 2px;">Aislamiento entre scripts ejecutables por consola, servicios backend API y paneles web backoffice.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Monorepo del Proyecto</span>
+                            <div class="editor-header-right"><span class="editor-lang">Tree</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code>ai-engineering-company-project-monorepo/
+├── scripts/
+│   ├── analyze.py           # Fase 1: CLI ejecutable por consola
+│   └── incidents-COMPANY.csv # Archivo de prueba
+├── services/
+│   └── api/                 # Fase 2: Backend con endpoints
+└── uis/
+    └── backoffice/          # Fase 2: Interfaz web de carga</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Fases de Ejecución del Proyecto Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">14. Fases de Ejecución: CLI (Fase 1) vs. API (Fase 2)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 12px;">Desglose por Fases de Desarrollo</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">💻</div>
+                        <div style="font-size: 1rem; font-weight: 800; color: #0056FF; margin-bottom: 6px;">Fase 1: Script CLI (<code>scripts/analyze.py</code>)</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.45;">
+                            • Leer <code>CONTEXT-company.md</code> para extraer columnas, categorías y estados válidos.<br>
+                            • Aceptar la ruta del CSV por terminal: <code>python analyze.py incidents-COMPANY.csv</code>.<br>
+                            • Validar registros, contar inválidos y calcular: total procesados, desglose por categoría, estado y promedio de satisfacción.<br>
+                            • Consultar si se desea exportar el resultado a <code>results.csv</code>.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 6px;">🌐</div>
+                        <div style="font-size: 1rem; font-weight: 800; color: #047857; margin-bottom: 6px;">Fase 2: Integración en API & Backoffice</div>
+                        <p style="font-size: 0.78rem; color: #475569; line-height: 1.45;">
+                            • Extraer la lógica a un módulo reutilizable para no duplicar código entre script y servidor.<br>
+                            • Implementar <code>POST /api/incidents/analyze</code> (recepción <code>multipart/form-data</code>) y <code>GET /api/incidents/results/export</code>.<br>
+                            • Diseñar la UI en <code>uis/backoffice</code> para arrastrar archivos, visualizar métricas y descargar reportes sin tocar la terminal.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 15</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="../assets/js/presentation.js?v=2"></script>
+    <script>
+let currentSlide = 0;
+
+function getElements() {
+    return {
+        slides: document.querySelectorAll('.slide'),
+        counter: document.getElementById('slideCounter'),
+        progressBar: document.getElementById('progressBar'),
+        prevBtn: document.getElementById('prevBtn'),
+        nextBtn: document.getElementById('nextBtn')
+    };
+}
+
+function updateSlide() {
+    const { slides, counter, progressBar, prevBtn, nextBtn } = getElements();
+    if (!slides || slides.length === 0) return;
+
+    if (currentSlide < 0) currentSlide = 0;
+    if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+
+    slides.forEach((slide, index) => {
+        if (index === currentSlide) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    
+    if (counter) {
+        counter.innerText = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+    }
+    
+    if (progressBar) {
+        const progress = ((currentSlide + 1) / slides.length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    if (prevBtn) prevBtn.disabled = (currentSlide === 0);
+    if (nextBtn) nextBtn.disabled = (currentSlide === slides.length - 1);
+}
+
+function nextSlide() {
+    const { slides } = getElements();
+    if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlide();
+    }
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+    }
+}
+
+window.nextSlide = nextSlide;
+window.prevSlide = prevSlide;
+window.updateSlide = updateSlide;
+
+function initControls() {
+    const { prevBtn, nextBtn } = getElements();
+    if (prevBtn) {
+        prevBtn.onclick = (e) => {
+            if (e) e.preventDefault();
+            prevSlide();
+        };
+    }
+    if (nextBtn) {
+        nextBtn.onclick = (e) => {
+            if (e) e.preventDefault();
+            nextSlide();
+        };
+    }
+    updateSlide();
+}
+
+document.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space') {
+        e.preventDefault();
+        nextSlide();
+    } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+    }
+});
+
+const COPY_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+const CHECK_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+function copyTextToClipboard(text, btn) {
+    function setSuccess() {
+        btn.innerHTML = `${CHECK_ICON_SVG} <span>¡Copiado!</span>`;
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.innerHTML = `${COPY_ICON_SVG} <span>Copiar</span>`;
+            btn.classList.remove('copied');
+        }, 2200);
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(setSuccess).catch(() => {
+            fallbackCopyText(text, setSuccess);
+        });
+    } else {
+        fallbackCopyText(text, setSuccess);
+    }
+}
+
+function fallbackCopyText(text, callback) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        if (callback) callback();
+    } catch (err) {
+        console.error('Fallback copy failed', err);
+    }
+    document.body.removeChild(textArea);
+}
+
+window.copyDirect = function(btn) {
+    const container = btn.closest('.editor-container');
+    if (!container) return;
+    const codeBlock = container.querySelector('.code-block') || container.querySelector('code') || container.querySelector('pre');
+    if (!codeBlock) return;
+    copyTextToClipboard(codeBlock.innerText, btn);
+};
+
+function initCopyButtons() {
+    document.querySelectorAll('.editor-container').forEach(container => {
+        const header = container.querySelector('.editor-header');
+        const codeBlock = container.querySelector('.code-block') || container.querySelector('code') || container.querySelector('pre');
+        if (header && codeBlock && !header.querySelector('.copy-code-btn')) {
+            const btn = document.createElement('button');
+            btn.className = 'copy-code-btn';
+            btn.type = 'button';
+            btn.innerHTML = `${COPY_ICON_SVG} <span>Copiar</span>`;
+            btn.title = 'Copiar código con formato exacto al portapapeles';
+            
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                copyTextToClipboard(codeBlock.innerText, btn);
+            });
+
+            const rightContainer = header.querySelector('.editor-header-right');
+            if (rightContainer) {
+                rightContainer.appendChild(btn);
+            } else {
+                header.appendChild(btn);
+            }
+        }
+    });
+}
+
+function boot() {
+    initControls();
+    initCopyButtons();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+} else {
+    boot();
+}
+
+window.addEventListener('load', boot);
+    </script>
+</body>
+</html>

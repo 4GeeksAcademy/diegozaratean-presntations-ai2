@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 32: Fundamentos de Backend, Organización y FastAPI - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=2">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop" alt="Backend Architecture & FastAPI">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 32 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 32:<br><span>Fundamentos de Backend, Organización y FastAPI</span></h1>
+                <p class="cover-subtitle">Guía completa: Buenas prácticas, anti-patrones, entornos virtuales con <code>uv</code>, patrón MVC, desarrollo en FastAPI y entrega de propuesta de arquitectura.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Módulo 1 Intro -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">1. Módulo 1: Buenas Prácticas y Anti-Patrones en Python</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">¿Qué son los Anti-Patrones?</h2>
+                    <p class="slide-main-desc">Los anti-patrones son soluciones recurrentes que parecen convenientes a corto plazo, pero aumentan la carga cognitiva, ocultan dependencias y complican el mantenimiento del código a futuro.</p>
+                    
+                    <div class="callout-card">
+                        <div class="callout-title"><span>💡</span> Objetivo del Módulo</div>
+                        <p class="callout-text">Identificar y corregir los 5 anti-patrones más comunes en Python para escribir código limpio, profesional y mantenible.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">1</div>
+                            <div class="step-content">
+                                <div class="step-title"><code>from module import *</code></div>
+                                <div class="step-desc">Contaminación del namespace global.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-orange);">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Inconsistencia en Nombres</div>
+                                <div class="step-desc">Violaciones a las normas de estilo PEP8.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">3</div>
+                            <div class="step-content">
+                                <div class="step-title"><code>__init__.py</code> Sobrecargados</div>
+                                <div class="step-desc">Lógica de negocio innecesaria en paquetes.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-cyan);">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Imports Anidados Extensos</div>
+                                <div class="step-desc">Acoplamiento rígido e imports circulares.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">5</div>
+                            <div class="step-content">
+                                <div class="step-title">Desorden en Declaraciones</div>
+                                <div class="step-desc">Mezclar dependencias sin seguir bloques PEP8.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Anti-Patrón 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">2. Anti-Patrón 1: Importación Masiva (from module import *)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">El Problema de <code>import *</code></h2>
+                    <p class="slide-main-desc">Importar todo el contenido de un módulo contamina el namespace global, oculta la procedencia de las funciones y genera colisiones accidentales de nombres si dos módulos exportan la misma función.</p>
+                    
+                    <div class="callout-card" style="background-color: #fff1f2; border-color: #fecdd3; margin-bottom: 8px;">
+                        <div class="callout-title" style="color: #e11d48;"><span>❌</span> Anti-Patrón</div>
+                        <p class="callout-text">Aumenta la carga cognitiva y hace imposible rastrear de dónde proviene cada función.</p>
+                    </div>
+
+                    <div class="callout-card" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                        <div class="callout-title" style="color: #16a34a;"><span>✅</span> Solución</div>
+                        <p class="callout-text">Usar siempre <strong>Imports Explícitos</strong> mencionando únicamente los símbolos necesarios.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <!-- Bloque INCORRECTO -->
+                    <div class="editor-container" style="border-color: #ef4444; margin-bottom: 12px;">
+                        <div class="editor-header" style="background: #1f1215; border-bottom-color: #7f1d1d;">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span></div>
+                            <span class="editor-filename" style="color: #f87171;">❌ INCORRECTO (Importación Masiva)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(239,68,68,0.2); color: #f87171;">Anti-Patrón</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># ❌ Ambiguo y contamina el namespace</span>
+<span class="syn-kw">from</span> math <span class="syn-kw">import</span> *
+<span class="syn-kw">from</span> os <span class="syn-kw">import</span> *
+
+<span class="syn-comment"># ¿De dónde provienen sqrt() o log()?</span>
+result = <span class="syn-fn">sqrt</span>(<span class="syn-num">16</span>) + <span class="syn-fn">log</span>(<span class="syn-num">10</span>)</code></pre>
+                    </div>
+
+                    <!-- Bloque CORRECTO -->
+                    <div class="editor-container" style="border-color: #22c55e;">
+                        <div class="editor-header" style="background: #0f1f17; border-bottom-color: #14532d;">
+                            <div class="editor-dots"><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename" style="color: #4ade80;">✅ CORRECTO (Imports Explícitos)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(34,197,94,0.2); color: #4ade80;">Solución</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># ✅ Imports explícitos y trazables</span>
+<span class="syn-kw">from</span> math <span class="syn-kw">import</span> sqrt, log
+
+result = <span class="syn-fn">sqrt</span>(<span class="syn-num">16</span>) + <span class="syn-fn">log</span>(<span class="syn-num">10</span>)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Anti-Patrón 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">3. Anti-Patrón 2: Inconsistencia en Nombres (Violación de PEP8)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Normas de Estilo PEP8</h2>
+                    <p class="slide-main-desc">Mezclar estilos (<code>camelCase</code>, <code>snake_case</code>, <code>PascalCase</code>) confunde a los integrantes del equipo y rompe las convenciones de Python.</p>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">snake_case</div>
+                            <div class="step-content">
+                                <div class="step-title">Variables y Funciones</div>
+                                <div class="step-desc"><code>calculate_total_price()</code>, <code>user_id</code></div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">PascalCase</div>
+                            <div class="step-content">
+                                <div class="step-title">Clases</div>
+                                <div class="step-desc"><code>UserProfile</code>, <code>AuthService</code></div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-orange);">UPPER_CASE</div>
+                            <div class="step-content">
+                                <div class="step-title">Constantes</div>
+                                <div class="step-desc"><code>MAX_CONNECTIONS</code>, <code>API_KEY</code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <!-- Bloque INCORRECTO -->
+                    <div class="editor-container" style="border-color: #ef4444; margin-bottom: 12px;">
+                        <div class="editor-header" style="background: #1f1215; border-bottom-color: #7f1d1d;">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span></div>
+                            <span class="editor-filename" style="color: #f87171;">❌ INCORRECTO (Mezcla de Estilos)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(239,68,68,0.2); color: #f87171;">Anti-Patrón</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">class</span> <span class="syn-bad">user_profile</span>:  <span class="syn-comment"># Debe ser PascalCase</span>
+    <span class="syn-kw">def</span> <span class="syn-bad">CalculateTotal</span>(self, ItemPrice):  <span class="syn-comment"># Debe ser snake_case</span>
+        MaxLimit = <span class="syn-num">100</span>  <span class="syn-comment"># Debe ser UPPER_SNAKE_CASE</span>
+        <span class="syn-kw">return</span> ItemPrice * <span class="syn-num">1.16</span></code></pre>
+                    </div>
+
+                    <!-- Bloque CORRECTO -->
+                    <div class="editor-container" style="border-color: #22c55e;">
+                        <div class="editor-header" style="background: #0f1f17; border-bottom-color: #14532d;">
+                            <div class="editor-dots"><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename" style="color: #4ade80;">✅ CORRECTO (Estándar PEP8)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(34,197,94,0.2); color: #4ade80;">Solución</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">class</span> <span class="syn-class">UserProfile</span>:
+    <span class="syn-num">MAX_LIMIT</span> = <span class="syn-num">100</span>
+
+    <span class="syn-kw">def</span> <span class="syn-fn">calculate_total</span>(self, item_price: <span class="syn-type">float</span>) -&gt; <span class="syn-type">float</span>:
+        <span class="syn-kw">return</span> item_price * <span class="syn-num">1.16</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Anti-Patrón 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">4. Anti-Patrón 3: Archivos __init__.py Sobrecargados</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">El Propósito de <code>__init__.py</code></h2>
+                    <p class="slide-main-desc">Incluir lógica de negocio o funciones pesadas dentro de <code>__init__.py</code> distorsiona el propósito del paquete y provoca ejecuciones secundarias no deseadas al importar cualquier componente.</p>
+                    
+                    <div class="callout-card" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                        <div class="callout-title" style="color: #16a34a;"><span>✅</span> Solución</div>
+                        <p class="callout-text">Mantener <code>__init__.py</code> <strong>minimalista</strong>, usándolo únicamente para inicializar el paquete o re-exportar componentes públicos clave.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <!-- Bloque INCORRECTO -->
+                    <div class="editor-container" style="border-color: #ef4444; margin-bottom: 10px;">
+                        <div class="editor-header" style="background: #1f1215; border-bottom-color: #7f1d1d;">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span></div>
+                            <span class="editor-filename" style="color: #f87171;">❌ INCORRECTO: app/services/__init__.py</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(239,68,68,0.2); color: #f87171;">Anti-Patrón</span></div>
+                        </div>
+                        <pre style="padding: 8px 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># ¡Lógica pesada e infraestructura dentro de __init__.py!</span>
+<span class="syn-kw">import</span> sqlite3
+
+<span class="syn-kw">def</span> <span class="syn-fn">get_db</span>():
+    <span class="syn-kw">return</span> sqlite3.<span class="syn-fn">connect</span>(<span class="syn-str">"db.sqlite"</span>)
+
+<span class="syn-kw">class</span> <span class="syn-class">UserService</span>: ...</code></pre>
+                    </div>
+
+                    <!-- Bloque CORRECTO -->
+                    <div class="editor-container" style="border-color: #22c55e;">
+                        <div class="editor-header" style="background: #0f1f17; border-bottom-color: #14532d;">
+                            <div class="editor-dots"><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename" style="color: #4ade80;">✅ CORRECTO: app/services/__init__.py</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(34,197,94,0.2); color: #4ade80;">Solución</span></div>
+                        </div>
+                        <pre style="padding: 8px 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># Re-exportar únicamente interfaces públicas</span>
+<span class="syn-kw">from</span> .user_service <span class="syn-kw">import</span> <span class="syn-class">UserService</span>
+<span class="syn-kw">from</span> .auth_service <span class="syn-kw">import</span> <span class="syn-class">AuthService</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Anti-Patrón 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">5. Anti-Patrón 4: Imports Profundamente Anidados</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Acoplamiento Rígido en Rutas</h2>
+                    <p class="slide-main-desc">Rutas extensas de importación (<code>from a.b.c.d.e import f</code>) generan un acoplamiento frágil a la estructura de carpetas y facilitan la aparición de errores por <strong>imports circulares</strong>.</p>
+                    
+                    <div class="callout-card" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                        <div class="callout-title" style="color: #16a34a;"><span>✅</span> Solución</div>
+                        <p class="callout-text">Aplanar la estructura del paquete y exponer interfaces limpias desde los niveles superiores del módulo.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <!-- Bloque INCORRECTO -->
+                    <div class="editor-container" style="border-color: #ef4444; margin-bottom: 12px;">
+                        <div class="editor-header" style="background: #1f1215; border-bottom-color: #7f1d1d;">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span></div>
+                            <span class="editor-filename" style="color: #f87171;">❌ INCORRECTO (Ruta Extensa)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(239,68,68,0.2); color: #f87171;">Anti-Patrón</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># Acoplamiento rígido a carpetas internas</span>
+<span class="syn-kw">from</span> app.api.v1.endpoints.users.services.helpers.formatters <span class="syn-kw">import</span> format_name
+
+user = <span class="syn-fn">format_name</span>(<span class="syn-str">"Juan"</span>)</code></pre>
+                    </div>
+
+                    <!-- Bloque CORRECTO -->
+                    <div class="editor-container" style="border-color: #22c55e;">
+                        <div class="editor-header" style="background: #0f1f17; border-bottom-color: #14532d;">
+                            <div class="editor-dots"><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename" style="color: #4ade80;">✅ CORRECTO (Interfaz Aplanada)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(34,197,94,0.2); color: #4ade80;">Solución</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># Ruta aplanada y mantenible</span>
+<span class="syn-kw">from</span> app.services <span class="syn-kw">import</span> format_name
+
+user = <span class="syn-fn">format_name</span>(<span class="syn-str">"Juan"</span>)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Anti-Patrón 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">6. Anti-Patrón 5: Desorden en Declaraciones de Imports</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">El Orden de Imports según PEP8</h2>
+                    <p class="slide-main-desc">Imports dispersos dificultan identificar rápidamente las dependencias externas frente a los módulos locales del proyecto.</p>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">Bloque 1</div>
+                            <div class="step-content">
+                                <div class="step-title">Librería Estándar de Python</div>
+                                <div class="step-desc"><code>import os, sys, typing</code></div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">Bloque 2</div>
+                            <div class="step-content">
+                                <div class="step-title">Librerías de Terceros (pip)</div>
+                                <div class="step-desc"><code>from fastapi import FastAPI</code></div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">Bloque 3</div>
+                            <div class="step-content">
+                                <div class="step-title">Módulos Locales del Proyecto</div>
+                                <div class="step-desc"><code>from app.core import config</code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <!-- Bloque INCORRECTO -->
+                    <div class="editor-container" style="border-color: #ef4444; margin-bottom: 10px;">
+                        <div class="editor-header" style="background: #1f1215; border-bottom-color: #7f1d1d;">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span></div>
+                            <span class="editor-filename" style="color: #f87171;">❌ INCORRECTO (Mezclado y Desordenado)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(239,68,68,0.2); color: #f87171;">Anti-Patrón</span></div>
+                        </div>
+                        <pre style="padding: 8px 10px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> app.core <span class="syn-kw">import</span> config
+<span class="syn-kw">import</span> os
+<span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">FastAPI</span>
+<span class="syn-kw">import</span> sys
+<span class="syn-kw">from</span> app.services <span class="syn-kw">import</span> <span class="syn-class">UserService</span></code></pre>
+                    </div>
+
+                    <!-- Bloque CORRECTO -->
+                    <div class="editor-container" style="border-color: #22c55e;">
+                        <div class="editor-header" style="background: #0f1f17; border-bottom-color: #14532d;">
+                            <div class="editor-dots"><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename" style="color: #4ade80;">✅ CORRECTO (3 Bloques PEP8)</span>
+                            <div class="editor-header-right"><span class="editor-lang" style="background: rgba(34,197,94,0.2); color: #4ade80;">Solución</span></div>
+                        </div>
+                        <pre style="padding: 8px 10px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># 1. Librería Estándar</span>
+<span class="syn-kw">import</span> os
+<span class="syn-kw">import</span> sys
+
+<span class="syn-comment"># 2. Librerías de Terceros</span>
+<span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">FastAPI</span>
+<span class="syn-kw">from</span> pydantic <span class="syn-kw">import</span> <span class="syn-class">BaseModel</span>
+
+<span class="syn-comment"># 3. Módulos Locales</span>
+<span class="syn-kw">from</span> app.core <span class="syn-kw">import</span> config
+<span class="syn-kw">from</span> app.services <span class="syn-kw">import</span> <span class="syn-class">UserService</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Módulo 2: Entornos Virtuales y Reproducibilidad -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">7. Módulo 2: Entornos Virtuales y Reproducibilidad</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 10px;">Aislamiento y Gestión de Dependencias</h2>
+                <p class="slide-main-desc">Solución al problema clásico <em>"en mi máquina sí funciona"</em> mediante entornos aislados e idénticos en todo el equipo.</p>
+                
+                <div class="step-list" style="margin-top: 14px;">
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-blue);">Aislamiento</div>
+                        <div class="step-content">
+                            <div class="step-title">Entornos Virtuales Independientes</div>
+                            <div class="step-desc">Cada proyecto requiere versiones específicas e independientes para evitar conflictos globales en el sistema operativo.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-orange);">Gestor: uv</div>
+                        <div class="step-content">
+                            <div class="step-title">Gestión de Alto Rendimiento con <code>uv</code></div>
+                            <div class="step-desc">Es el estándar moderno extremadamente rápido para el ecosistema Python, sustituyendo flujos tradicionales como <code>pip</code> o <code>pipenv</code>.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-green);">Reproducibilidad</div>
+                        <div class="step-content">
+                            <div class="step-title">Garantía en Equipos y Servidores</div>
+                            <div class="step-desc">Archivos como <code>pyproject.toml</code> (especificación de requerimientos) y <code>uv.lock</code> (versiones exactas fijadas) aseguran que el entorno sea 100% determinista.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Ejemplo Práctico con venv (NATIVO) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">8. Ejemplo Práctico: Entornos Virtuales con venv (Nativo)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Paso a Paso con <code>venv</code></h2>
+                    <p class="slide-main-desc">El módulo <code>venv</code> viene incluido en la librería estándar de Python. Permite crear un directorio aislado donde se instalan los paquetes del proyecto.</p>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">1. Crear</div>
+                            <div class="step-content">
+                                <div class="step-title">Crear el Entorno</div>
+                                <div class="step-desc">Genera la carpeta <code>.venv</code> aislada.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">2. Activar</div>
+                            <div class="step-content">
+                                <div class="step-title">Activar el Entorno</div>
+                                <div class="step-desc">Modifica el <code>PATH</code> en tu terminal actual.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">3. Usar</div>
+                            <div class="step-content">
+                                <div class="step-title">Instalar y Ejecutar</div>
+                                <div class="step-desc">Instala paquetes con <code>pip</code> de forma aislada.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Terminal (macOS / Linux / Windows)</span>
+                            <div class="editor-header-right"><span class="editor-lang">Bash</span></div>
+                        </div>
+                        <pre style="padding: 12px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># 1. Crear el entorno virtual en el directorio .venv</span>
+python3 -m venv .venv
+
+<span class="syn-comment"># 2. Activar el entorno virtual</span>
+<span class="syn-comment"># En macOS / Linux:</span>
+source .venv/bin/activate
+
+<span class="syn-comment"># En Windows (PowerShell / CMD):</span>
+.venv\Scripts\activate
+
+<span class="syn-comment"># 3. Verificar activación (aparecerá (.venv) en el prompt)</span>
+which python
+<span class="syn-comment"># Output: /tu_proyecto/.venv/bin/python</span>
+
+<span class="syn-comment"># 4. Instalar paquetes aislados</span>
+pip install fastapi uvicorn
+
+<span class="syn-comment"># 5. Desactivar el entorno al finalizar</span>
+deactivate</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Ejemplo Práctico con uv (MODERNO) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">9. Ejemplo Práctico: Flujo Moderno de Entornos con uv</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Flujo Ultra-Rápido con <code>uv</code></h2>
+                    <p class="slide-main-desc"><code>uv</code> administra la versión de Python, los entornos virtuales y las dependencias en milisegundos, manteniendo fija la reproducibilidad.</p>
+                    
+                    <div class="callout-card" style="background-color: #eff6ff; border-color: #bfdbfe; margin-bottom: 10px;">
+                        <div class="callout-title" style="color: #1d4ed8;"><span>🚀</span> <code>uv run</code> Ventaja</div>
+                        <p class="callout-text">Con <code>uv run script.py</code> puedes ejecutar comandos directamente en el entorno aislado sin necesidad de activarlo manualmente.</p>
+                    </div>
+
+                    <div class="callout-card" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                        <div class="callout-title" style="color: #16a34a;"><span>🔒</span> Archivo uv.lock</div>
+                        <p class="callout-text">Fija el hash y versión exacta de cada sub-dependencia instalada.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Terminal (uv Manager)</span>
+                            <div class="editor-header-right"><span class="editor-lang">Bash</span></div>
+                        </div>
+                        <pre style="padding: 12px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># 1. Crear e inicializar un nuevo proyecto con uv</span>
+uv init mi-backend
+cd mi-backend
+
+<span class="syn-comment"># 2. Crear entorno virtual ultra-rápido</span>
+uv venv
+
+<span class="syn-comment"># 3. Activar el entorno virtual</span>
+source .venv/bin/activate
+
+<span class="syn-comment"># 4. Agregar dependencias (actualiza pyproject.toml y uv.lock)</span>
+uv add fastapi uvicorn
+
+<span class="syn-comment"># 5. Ejecutar scripts directamente en el entorno venv</span>
+uv run python main.py</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Módulo 3: Introducción a la Arquitectura de Software -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">10. Módulo 3: Introducción a la Arquitectura de Software</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px; font-size: 1.65rem;">🧩 ¿Qué es la Arquitectura de Software Backend?</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    Antes de escribir código o crear archivos, necesitamos un <strong>plano estructural</strong> que ordene nuestro sistema.
+                </p>
+
+                <!-- Explicación: Qué es, Para qué sirve, Por qué es importante -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px;">
+                    <div style="background: #f8fafc; border: 2px solid #0056FF; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #0056FF; margin-bottom: 8px;">🏗️ ¿Qué es?</div>
+                        <p style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
+                            Es el <strong>plano estructural de alto nivel</strong> y el conjunto de reglas que definen cómo se dividen, organizan y comunican las piezas del software.
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #FFB800; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #b45309; margin-bottom: 8px;">⚙️ ¿Para qué se usa?</div>
+                        <p style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
+                            Para <strong>separar responsabilidades</strong> de forma limpia (interfaz, lógica y datos), trabajar en equipo sin pisarse y facilitar el mantenimiento.
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #10b981; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #047857; margin-bottom: 8px;">🛡️ ¿Por qué es importante?</div>
+                        <p style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
+                            Evita el <strong>"código espagueti"</strong>, reduce errores al crecer el proyecto y permite <strong>escalar el sistema</strong> sin rehacerlo desde cero.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Lista de las 3 Arquitecturas a explorar -->
+                <div style="background: #0f172a; border-radius: 12px; padding: 16px 20px; color: #ffffff;">
+                    <div style="font-size: 1rem; font-weight: 800; color: #FFB800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        🚀 Las 3 Arquitecturas Backend que Analizaremos a Continuación:
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                        <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #60a5fa; font-size: 0.95rem;">1. MVC</strong>
+                            <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 2px;">Modelo-Vista-Controlador</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #facc15; font-size: 0.95rem;">2. Por Capas</strong>
+                            <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 2px;">Layered / N-Tier Architecture</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #4ade80; font-size: 0.95rem;">3. Serverless</strong>
+                            <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 2px;">Arquitectura Sin Servidor</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO A: MVC (Modelo-Vista-Controlador) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Arquitecturas Backend: MVC</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px; font-size: 1.65rem;">1. MVC (Modelo-Vista-Controlador): El Equipo Directo</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    💡 <em>Para entender la diferencia entre estas tres arquitecturas, imaginemos cómo funciona un <strong>negocio de comida</strong>.</em><br>
+                    <strong>MVC</strong> se enfoca en <strong>cómo interactúa el usuario con una pantalla o interfaz</strong>.
+                </p>
+                <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #0056FF; margin-bottom: 8px;">🎨 La Vista (El Plato servido)</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            Es lo visual, lo que el comensal ve y toca (botones, formularios, colores).
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #FFB800; margin-bottom: 8px;">🧑‍🍳 El Controlador (El Mesero)</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            Escucha lo que pide el usuario (<em>"quiero una hamburguesa"</em>), va a buscar lo necesario y coordina la respuesta.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #10b981; margin-bottom: 8px;">📖 El Modelo (La Receta y la Despensa)</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            Contiene las reglas y los datos puros (cuánta carne lleva, consultar si hay queso en la nevera).
+                        </p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; background: #eff6ff; border-left: 4px solid #0056FF; padding: 12px 16px; border-radius: 8px;">
+                    <strong style="color: #1e40af;">🔑 Idea clave:</strong> Separa lo que se <strong>ve</strong> de lo que se <strong>hace</strong> y los <strong>datos</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO B: Arquitectura por Capas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Arquitecturas Backend: Por Capas</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px; font-size: 1.65rem;">2. Arquitectura por Capas (Layered Architecture): El Edificio Corporativo</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    🏢 Se enfoca en <strong>la jerarquía y el orden del flujo interno del sistema</strong> (de arriba hacia abajo). Cada piso solo habla con el piso de abajo.
+                </p>
+                <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #0056FF; margin-bottom: 8px;">🖥️ Capa de Presentación (Recepción)</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            Recibe la solicitud del exterior (peticiones HTTP, APIs, formularios) y entrega la respuesta final.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #FFB800; margin-bottom: 8px;">⚙️ Capa de Negocio (Oficinas de Lógica)</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            Aplica las reglas importantes del sistema (validar pagos, autorizaciones, reglas y cálculos).
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #10b981; margin-bottom: 8px;">🗄️ Capa de Datos (Archivo / Bodega)</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            Es el único componente que tiene la llave para hablar directamente con la base de datos o almacenamiento.
+                        </p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; background: #f8fafc; border-left: 4px solid #64748b; padding: 12px 16px; border-radius: 8px;">
+                    <strong style="color: #334155;">🔑 Idea clave:</strong> Orden estricto. Si necesitas cambiar la base de datos, solo tocas la bodega sin alterar las oficinas de arriba.
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO C: Serverless -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Arquitecturas Backend: Serverless</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px; font-size: 1.65rem;">3. Serverless (Sin Servidor): Chefs por Encargo (Bajo Demanda)</h2>
+                <p class="slide-main-desc" style="margin-bottom: 16px;">
+                    ⚡ El enfoque cambia por completo: ya no es sobre cómo organizas el código, sino <strong>dónde y cómo se ejecuta físicamente la infraestructura en la nube</strong>.
+                </p>
+                <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #d97706; margin-bottom: 8px;">👨‍🍳 Chef a Domicilio</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            En lugar de pagar un restaurante 24/7, contratas a un chef que aparece 3 segundos, cocina cuando entra un pedido, cobra por ese tiempo y se va.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #0284c7; margin-bottom: 8px;">🚀 Cómputo por Eventos</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            La nube prende y apaga pequeñas funciones (Lambdas / Cloud Functions) únicamente cuando ocurre un evento exacto.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #8b5cf6; margin-bottom: 8px;">☁️ Cero Mantenimiento</div>
+                        <p style="font-size: 0.9rem; color: #334155; line-height: 1.4;">
+                            No administras máquinas, sistemas operativos ni servidores encendidos; la plataforma gestiona la infraestructura.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO D: Matriz de Decisión -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Matriz de Decisión de Arquitecturas</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 8px; font-size: 1.6rem;">📊 Criterios y Matriz de Decisión para Elegir Arquitectura</h2>
+                
+                <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 12px 16px; border-radius: 8px; font-size: 0.92rem; color: #1e3a8a; margin-bottom: 20px;">
+                    Para elegir la arquitectura adecuada, evalúa el proyecto a través de cuatro variables clave: 
+                    <strong>fase del producto</strong>, <strong>patrón de tráfico</strong>, <strong>complejidad del dominio</strong> y <strong>capacidad del equipo</strong>.
+                </div>
+
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 12px;">1. Matriz de Decisión Rápida</h3>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);">
+                        <thead>
+                            <tr style="background-color: #0f172a; color: #ffffff; text-align: left; font-size: 0.88rem;">
+                                <th style="padding: 12px 14px; width: 18%;">Criterio</th>
+                                <th style="padding: 12px 14px; width: 27%;">MVC</th>
+                                <th style="padding: 12px 14px; width: 27%;">Arquitectura por Capas (N-Tier)</th>
+                                <th style="padding: 12px 14px; width: 28%;">Serverless (FaaS / BaaS)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 0.82rem; color: #334155; line-height: 1.4;">
+                            <tr style="border-bottom: 1px solid #e2e8f0; background-color: #f8fafc;">
+                                <td style="padding: 12px 14px; font-weight: 700; color: #0f172a;">Tipo de Proyecto</td>
+                                <td style="padding: 12px 14px;">Monolitos web tradicionales, CRUDs rápidos, paneles admin.</td>
+                                <td style="padding: 12px 14px;">APIs empresariales, sistemas con reglas de negocio complejas.</td>
+                                <td style="padding: 12px 14px;">Tareas asíncronas, webhooks, MVPs con tráfico impredecible o en picos.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e2e8f0;">
+                                <td style="padding: 12px 14px; font-weight: 700; color: #0f172a;">Volumen de Tráfico</td>
+                                <td style="padding: 12px 14px;">Constante / Predecible.</td>
+                                <td style="padding: 12px 14px;">Alto y constante; requiere escalabilidad horizontal de servidores.</td>
+                                <td style="padding: 12px 14px;">Cero tráfico base o picos extremos y esporádicos.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e2e8f0; background-color: #f8fafc;">
+                                <td style="padding: 12px 14px; font-weight: 700; color: #0f172a;">Tiempo al Mercado (TTM)</td>
+                                <td style="padding: 12px 14px;">Muy rápido (frameworks todo-en-uno).</td>
+                                <td style="padding: 12px 14px;">Medio (requiere definir contratos e interfaces entre capas).</td>
+                                <td style="padding: 12px 14px;">Rápido para prototipos; medio a largo si la orquestación crece.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e2e8f0;">
+                                <td style="padding: 12px 14px; font-weight: 700; color: #0f172a;">Costo Operativo</td>
+                                <td style="padding: 12px 14px;">Servidor fijo (VPS o contenedor básico).</td>
+                                <td style="padding: 12px 14px;">Costo fijo medio/alto (infraestructura dedicada y balanceadores).</td>
+                                <td style="padding: 12px 14px;">$0 si no hay tráfico; costoso si el volumen de cómputo es alto y sostenido 24/7.</td>
+                            </tr>
+                            <tr style="background-color: #f8fafc;">
+                                <td style="padding: 12px 14px; font-weight: 700; color: #dc2626;">Riesgo Principal</td>
+                                <td style="padding: 12px 14px;">Acoplamiento excesivo conforme crece el código ("código espagueti").</td>
+                                <td style="padding: 12px 14px;">Sobre-ingeniería innecesaria en proyectos pequeños.</td>
+                                <td style="padding: 12px 14px;"><em>Cold starts</em> (latencia en frío) y dependencia del proveedor (<em>vendor lock-in</em>).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO E: Guía de Selección y Regla de Oro -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Guía por Escenarios & Regla de Oro</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 14px; font-size: 1.6rem;">2. Guía de Selección según el Escenario</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px;">
+                    <div style="background: #f8fafc; border: 2px solid #0056FF; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #0056FF; margin-bottom: 8px;">🎯 Elige MVC si:</div>
+                        <ul style="font-size: 0.84rem; color: #334155; line-height: 1.45; padding-left: 16px;">
+                            <li style="margin-bottom: 6px;">Estás construyendo una aplicación web monolítica donde el backend renderiza las vistas directamente o sirve un cliente web estrechamente acoplado.</li>
+                            <li>El equipo busca velocidad de entrega sin diseñar contratos de API complejos desde el primer día.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #64748b; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #334155; margin-bottom: 8px;">🏢 Elige Capas si:</div>
+                        <ul style="font-size: 0.84rem; color: #334155; line-height: 1.45; padding-left: 16px;">
+                            <li style="margin-bottom: 6px;">El sistema maneja reglas de negocio densas, múltiples integraciones externas o prevés cambiar la capa de datos en el futuro.</li>
+                            <li>La interfaz (móvil, web, CLI) debe desacoplarse por completo de la lógica del servidor a través de contratos claros (APIs REST, GraphQL).</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #eab308; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #854d0e; margin-bottom: 8px;">⚡ Elige Serverless si:</div>
+                        <ul style="font-size: 0.84rem; color: #334155; line-height: 1.45; padding-left: 16px;">
+                            <li style="margin-bottom: 6px;">La carga de trabajo está basada en eventos (procesamiento de imágenes, envío de notificaciones, webhooks).</li>
+                            <li style="margin-bottom: 6px;">Es un MVP donde no quieres pagar servidores ociosos mientras validas la idea en el mercado.</li>
+                            <li>No quieres gestionar parches de seguridad, sistemas operativos ni escalado de servidores.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Regla de Oro Práctica -->
+                <div style="background: #fefce8; border: 2px solid #fde047; border-left: 6px solid #eab308; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 1.05rem; font-weight: 800; color: #854d0e; margin-bottom: 6px;">👑 Regla de Oro Práctica</div>
+                    <p style="font-size: 0.88rem; color: #713f12; line-height: 1.45; margin-bottom: 6px;">
+                        <strong>No son mutuamente excluyentes:</strong> Puedes implementar un backend con <strong>Arquitectura por Capas</strong> y empaquetar cada caso de uso dentro de funciones <strong>Serverless</strong>, o usar <strong>MVC</strong> internamente dentro de una capa de presentación.
+                    </p>
+                    <p style="font-size: 0.86rem; color: #854d0e; line-height: 1.45;">
+                        Comienza con la solución más simple que cumpla los requisitos del primer trimestre de vida del proyecto; la arquitectura debe evolucionar junto con la complejidad real del sistema, no con la anticipada.
+                    </p>
+                </div>
+
+                <!-- Pregunta reflexiva final -->
+                <div style="background: #0f172a; color: #ffffff; border-radius: 10px; padding: 12px 18px; text-align: center; font-size: 0.95rem; font-weight: 700;">
+                    💬 ¿Qué tipo de producto, volumen de usuarios inicial y stack tecnológico estás considerando para este caso puntual?
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- SLIDE 16: Temario Oficial FastAPI -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">15. Módulo 4: Temario Principal de FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 12px;">Puntos Clave del Módulo FastAPI</h2>
+                
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-blue);">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Project structure and entry point</div>
+                            <div class="step-desc">Estructura del proyecto backend y punto de entrada de la aplicación en <code>main.py</code>.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-cyan);">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Creating endpoints with decorators</div>
+                            <div class="step-desc">Creación de rutas HTTP usando decoradores como <code>@app.get()</code>, <code>@app.post()</code>, etc.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-purple);">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Path parameters query strings and apirouter</div>
+                            <div class="step-desc">Parámetros de ruta en la URL, query strings dinámicos y modularización mediante <code>APIRouter</code>.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-orange);">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Pydantic models for request and response</div>
+                            <div class="step-desc">Modelos de Pydantic para la validación estricta del cuerpo de peticiones y respuestas JSON.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-green);">5</div>
+                        <div class="step-content">
+                            <div class="step-title">Common mistakes in api design</div>
+                            <div class="step-desc">Errores comunes en el diseño de APIs (códigos de estado, convenciones de rutas y validaciones).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: ¿Qué es FastAPI y Características? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">16. ¿Qué es FastAPI y sus Características?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Definición de FastAPI</h2>
+                    <p class="slide-main-desc">FastAPI es un framework web moderno, rápido (de alto rendimiento) para construir APIs con Python 3.8+ basado en estándares abiertos como <strong>OpenAPI</strong> y <strong>JSON Schema</strong>.</p>
+                    
+                    <div class="callout-card" style="background-color: #eff6ff; border-color: #bfdbfe;">
+                        <div class="callout-title" style="color: #1d4ed8;"><span>🚀</span> Alto Rendimiento</div>
+                        <p class="callout-text">Rendimiento equivalente a NodeJS y Go gracias a estar construido sobre <strong>Starlette</strong> (web) y <strong>Pydantic</strong> (datos).</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">Rápido</div>
+                            <div class="step-content">
+                                <div class="step-title">Velocidad de Desarrollo</div>
+                                <div class="step-desc">Aumenta la velocidad de desarrollo entre un 200% y un 300%.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">Docs</div>
+                            <div class="step-content">
+                                <div class="step-title">Documentación Automática</div>
+                                <div class="step-desc">Genera automáticamente Swagger UI en <code>/docs</code> y ReDoc en <code>/redoc</code>.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">Typing</div>
+                            <div class="step-content">
+                                <div class="step-title">Autocompletado e IDE</div>
+                                <div class="step-desc">Autocompletado perfecto en VS Code y PyCharm gracias a Type Hints.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Origen: ¿Quién lo creó, Cuándo y Por Qué? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">17. Origen: ¿Quién lo creó, Cuándo y Por Qué?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Historia de FastAPI</h2>
+                    <div class="callout-card" style="margin-bottom: 12px;">
+                        <div class="callout-title"><span>👤</span> Creador</div>
+                        <p class="callout-text"><strong>Sebastián Ramírez</strong> (conocido en la comunidad como <em>@tiangolo</em>), desarrollador colombiano radicado en Alemania.</p>
+                    </div>
+
+                    <div class="callout-card" style="background-color: #fefce8; border-color: #fef08a;">
+                        <div class="callout-title" style="color: #ca8a04;"><span>📅</span> Año de Lanzamiento</div>
+                        <p class="callout-text">Publicado oficialmente en <strong>Diciembre de 2018</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <h2 class="slide-section-title" style="font-size: 1.35rem;">¿Por qué nació FastAPI?</h2>
+                    <p class="slide-main-desc" style="font-size: 0.85rem;">Ningún framework existente solucionaba todos los problemas simultáneamente:</p>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">Django / Flask</div>
+                            <div class="step-content">
+                                <div class="step-title">Falta de soporte asíncrono y tipos</div>
+                                <div class="step-desc">No tenían validación nativa basada en type hints ni soporte async moderno de origen.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">La Solución</div>
+                            <div class="step-content">
+                                <div class="step-title">Combinación Perfecta</div>
+                                <div class="step-desc">Unió el poder de Starlette (asíncrono), Pydantic (validación) y OpenAPI (documentación).</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Instalación de FastAPI y Uvicorn -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">18. Instalación de FastAPI y Servidor Uvicorn</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Instalación y Servidor ASGI</h2>
+                    <p class="slide-main-desc">FastAPI requiere un servidor web de interfaz de puerta de enlace asíncrona (ASGI) como <strong>Uvicorn</strong> para ejecutar la aplicación.</p>
+                    
+                    <div class="callout-card">
+                        <div class="callout-title"><span>⚡</span> Modo <code>--reload</code></div>
+                        <p class="callout-text">Permite el recargado automático en caliente cada vez que guardas cambios en tu código Python.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Comandos de Instalación</span>
+                            <div class="editor-header-right"><span class="editor-lang">Bash</span></div>
+                        </div>
+                        <pre style="padding: 12px; font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #f8fafc; background: #121824;"><code><span class="syn-comment"># Opción 1: Con el gestor moderno uv (Recomendado)</span>
+uv add fastapi <span class="syn-str">"uvicorn[standard]"</span>
+
+<span class="syn-comment"># Opción 2: Con pip tradicional</span>
+pip install fastapi <span class="syn-str">"uvicorn[standard]"</span>
+
+<span class="syn-comment"># -----------------------------------------------</span>
+<span class="syn-comment"># Ejecución del Servidor de Desarrollo:</span>
+<span class="syn-comment"># (main es main.py, app es la instancia FastAPI)</span>
+uvicorn main:app --reload
+
+<span class="syn-comment"># Servidor iniciado en http://127.0.0.1:8000</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO: ¿Qué es un Decorador en Python? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Concepto Clave: Decoradores en Python</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="overflow-y: auto; max-height: calc(100vh - 170px); padding-right: 8px;">
+                <h2 class="slide-section-title" style="margin-bottom: 8px; font-size: 1.6rem;">🎀 ¿Qué es un Decorador en Python?</h2>
+                
+                <p class="slide-main-desc" style="margin-bottom: 12px; font-size: 0.95rem; line-height: 1.45;">
+                    Un decorador en Python es una función que recibe otra función como argumento, le añade una funcionalidad extra (la <em>"envuelve"</em>) y devuelve la función modificada, <strong>sin alterar su código original</strong>.<br>
+                    Se utiliza con la sintaxis <code>@nombre_del_decorador</code> justo encima de la función que deseas extender.
+                </p>
+
+                <!-- Analogía de la Persona y la Ropa -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">
+                        💡 Analogía: La Persona y sus Accesorios
+                    </div>
+                    <p style="font-size: 0.88rem; color: #475569; margin-bottom: 12px;">
+                        Imagina que una función es una <strong>persona</strong> que sabe hacer un trabajo específico: <strong>Sabe correr</strong> (hace su tarea principal), pero si sale a la calle sin nada más, pasa frío o no tiene permisos para entrar a ciertos lugares.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                        <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 14px;">
+                            <div style="font-size: 0.95rem; font-weight: 800; color: #1d4ed8; margin-bottom: 6px;">🧥 Abrigo de Invierno</div>
+                            <p style="font-size: 0.82rem; color: #334155; line-height: 1.4;">
+                                Revisa la temperatura antes de salir; si hace frío, lo abriga (añade una <strong>validación previa</strong>).
+                            </p>
+                        </div>
+
+                        <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 10px; padding: 14px;">
+                            <div style="font-size: 0.95rem; font-weight: 800; color: #6d28d9; margin-bottom: 6px;">🆔 Carné de Seguridad (<code>@login_required</code>)</div>
+                            <p style="font-size: 0.82rem; color: #334155; line-height: 1.4;">
+                                El guardia en la puerta revisa el carné antes de dejarlo pasar a la sala (<strong>autenticación/permisos</strong>).
+                            </p>
+                        </div>
+
+                        <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 14px;">
+                            <div style="font-size: 0.95rem; font-weight: 800; color: #047857; margin-bottom: 6px;">⏱️ Cronómetro (<code>@medir_tiempo</code>)</div>
+                            <p style="font-size: 0.82rem; color: #334155; line-height: 1.4;">
+                                Empieza a contar cuando empieza a correr y registra el tiempo exacto al terminar (<strong>monitoreo</strong>).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- La Magia de Python Callout -->
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 12px 16px;">
+                    <strong style="color: #1e40af; font-size: 0.95rem;">✨ La magia de Python:</strong>
+                    <span style="font-size: 0.88rem; color: #1e3a8a;">
+                        Poner <code>@abrigo</code> encima de <code>correr()</code> es simplemente vestir a la persona antes de que salga a hacer su trabajo, sin tener que modificar sus músculos ni su cuerpo (el código interno).
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Decoradores HTTP en FastAPI -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">19. Decoradores HTTP en FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.35rem; margin-bottom: 6px;">Decoradores HTTP en FastAPI</h2>
+                    <p class="slide-main-desc">En FastAPI, los decoradores HTTP transforman funciones normales de Python en <strong>endpoints de una API</strong>, vinculando una ruta URL específica y un verbo HTTP con la función manejadora correspondiente.</p>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">@app.get()</div>
+                            <div class="step-content">
+                                <div class="step-title">Lectura</div>
+                                <div class="step-desc">Obtener o consultar recursos.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">@app.post()</div>
+                            <div class="step-content">
+                                <div class="step-title">Creación</div>
+                                <div class="step-desc">Enviar datos para crear nuevos recursos.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-orange);">@app.put()</div>
+                            <div class="step-content">
+                                <div class="step-title">Actualización</div>
+                                <div class="step-desc">Reemplazar un recurso existente.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">@app.delete()</div>
+                            <div class="step-content">
+                                <div class="step-title">Eliminación</div>
+                                <div class="step-desc">Borrar un recurso del servidor.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">main.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 14px; font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">FastAPI</span>
+
+app = <span class="syn-class">FastAPI</span>()
+
+<span class="syn-dec">@app.get</span>(<span class="syn-str">"/"</span>)
+<span class="syn-kw">def</span> <span class="syn-fn">read_root</span>():
+    <span class="syn-kw">return</span> {<span class="syn-str">"message"</span>: <span class="syn-str">"Hello, FastAPI!"</span>}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Cómo hacer una Petición GET -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">20. Cómo hacer una Petición GET en FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Petición GET (Lectura)</h2>
+                    <p class="slide-main-desc">Las peticiones GET se utilizan para obtener información del servidor. No llevan cuerpo (body) y pueden recibir parámetros de ruta o query strings.</p>
+                    
+                    <div class="callout-card" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                        <div class="callout-title" style="color: #16a34a;"><span>🟢</span> Status Code 200 OK</div>
+                        <p class="callout-text">Por defecto, FastAPI retorna un código HTTP <code>200 OK</code> al responder exitosamente peticiones GET.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">get_endpoint.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 12px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">FastAPI</span>
+
+app = <span class="syn-class">FastAPI</span>()
+
+<span class="syn-comment"># GET Simple (Health Check)</span>
+<span class="syn-dec">@app.get</span>(<span class="syn-str">"/health"</span>)
+<span class="syn-kw">def</span> <span class="syn-fn">health_check</span>():
+    <span class="syn-kw">return</span> {<span class="syn-str">"status"</span>: <span class="syn-str">"ok"</span>, <span class="syn-str">"service"</span>: <span class="syn-str">"backend"</span>}
+
+<span class="syn-comment"># GET con Path Parameter y Query Parameter</span>
+<span class="syn-comment"># URL: http://localhost:8000/users/42?limit=10</span>
+<span class="syn-dec">@app.get</span>(<span class="syn-str">"/users/{user_id}"</span>)
+<span class="syn-kw">def</span> <span class="syn-fn">get_user_profile</span>(user_id: <span class="syn-type">int</span>, limit: <span class="syn-type">int</span> = <span class="syn-num">5</span>):
+    <span class="syn-kw">return</span> {
+        <span class="syn-str">"user_id"</span>: user_id,
+        <span class="syn-str">"limit_results"</span>: limit,
+        <span class="syn-str">"role"</span>: <span class="syn-str">"admin"</span>
+    }</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: Cómo hacer una Petición POST -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">21. Cómo hacer una Petición POST en FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Petición POST (Creación)</h2>
+                    <p class="slide-main-desc">Las peticiones POST envían datos en el cuerpo (<code>Request Body</code>) para crear nuevos recursos en el servidor.</p>
+                    
+                    <div class="callout-card" style="background-color: #eff6ff; border-color: #bfdbfe;">
+                        <div class="callout-title" style="color: #1d4ed8;"><span>🔵</span> Status Code 201 Created</div>
+                        <p class="callout-text">Se debe especificar <code>status_code=201</code> en el decorador para indicar la creación exitosa de un recurso.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">post_endpoint.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">FastAPI</span>
+<span class="syn-kw">from</span> pydantic <span class="syn-kw">import</span> <span class="syn-class">BaseModel</span>, <span class="syn-class">EmailStr</span>
+
+app = <span class="syn-class">FastAPI</span>()
+
+<span class="syn-comment"># 1. Definir el esquema del cuerpo con Pydantic</span>
+<span class="syn-kw">class</span> <span class="syn-class">UserCreate</span>(<span class="syn-class">BaseModel</span>):
+    name: <span class="syn-type">str</span>
+    email: <span class="syn-class">EmailStr</span>
+    age: <span class="syn-type">int</span>
+
+<span class="syn-comment"># 2. Endpoint POST especificando status_code=201</span>
+<span class="syn-dec">@app.post</span>(<span class="syn-str">"/users"</span>, status_code=<span class="syn-num">201</span>)
+<span class="syn-kw">def</span> <span class="syn-fn">create_user</span>(payload: <span class="syn-class">UserCreate</span>):
+    <span class="syn-comment"># FastAPI valida automáticamente payload</span>
+    <span class="syn-kw">return</span> {
+        <span class="syn-str">"message"</span>: <span class="syn-str">"Usuario creado exitosamente"</span>,
+        <span class="syn-str">"user"</span>: payload
+    }</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- SLIDE 25: Errores Comunes en el Diseño de APIs -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">24. Errores Comunes en el Diseño de APIs</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 12px;">Anti-Patrones en el Diseño de APIs REST</h2>
+                
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: #ef4444; color: #ffffff;">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Devolver siempre <code>200 OK</code></div>
+                            <div class="step-desc">Retornar 200 OK incluso cuando ocurre un error en el servidor o el recurso no existe. Usa <code>HTTPException(status_code=404)</code>.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-orange);">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Usar Verbos en las Rutas de Endpoints</div>
+                            <div class="step-desc">Rutas como <code>/getUser</code> o <code>/createUser</code> rompen el estándar REST. Usa sustantivos en plural: <code>GET /users</code> o <code>POST /users</code>.</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number" style="background-color: var(--step-purple);">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Reinventar la Validación Manualmente</div>
+                            <div class="step-desc">Hacer <code>if "email" not in request:</code> manualmente en lugar de aprovechar la validación nativa de Pydantic.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 26: Módulo 5: Proyecto Final & Propuesta de Arquitectura (AL FINAL DE TODO) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">25. Módulo 5: Proyecto Final & Entrega de Arquitectura</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title">Documento <code>ARCHITECTURE_PROPOSAL.md</code></h2>
+                    <p class="slide-main-desc">Plantilla oficial para la entrega de propuesta técnica del proyecto backend en la carpeta <code>/docs</code>.</p>
+                    
+                    <div class="callout-card">
+                        <div class="callout-title"><span>📋</span> Justificación Técnica</div>
+                        <p class="callout-text">Se propone una <strong>Layered Architecture (Domain-Driven)</strong> porque separa la capa web (HTTP) de las reglas del negocio, facilitando pruebas unitarias sin mockear peticiones HTTP.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-blue);">API Layer</div>
+                            <div class="step-content">
+                                <div class="step-title">Routers de FastAPI</div>
+                                <div class="step-desc">Validación HTTP, códigos de estado y parámetros de ruta.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-purple);">Service Layer</div>
+                            <div class="step-content">
+                                <div class="step-title">Servicios de Negocio</div>
+                                <div class="step-desc">Ejecuta reglas del dominio, integraciones y flujos sin dependencias de web.</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number" style="background-color: var(--step-green);">Data Layer</div>
+                            <div class="step-content">
+                                <div class="step-title">Persistencia & ORM</div>
+                                <div class="step-desc">Modelos de datos y transacciones con la base de datos.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- SLIDE RÚBRICA 1: Estructura de carpetas y módulos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Punto 1 Rúbrica: Estructura de Carpetas y Módulos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 6px; font-size: 1.55rem;">📁 1. Estructura de Carpetas y Módulos</h2>
+                <p class="slide-main-desc" style="margin-bottom: 14px; font-size: 0.88rem;">
+                    Decisiones de diseño iniciales: cómo organizar los archivos antes de escribir código.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 14px;">
+                    <div style="background: #fff1f2; border: 2px solid #fecdd3; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1rem; font-weight: 800; color: #be123c; margin-bottom: 6px;">❌ Por Tipo Técnico (Tradicional)</div>
+                        <p style="font-size: 0.82rem; color: #334155; line-height: 1.4;">
+                            Agrupar todos los <code>controllers/</code> juntos, todos los <code>models/</code> juntos y todos los <code>schemas/</code> juntos.<br><br>
+                            <strong>Problema:</strong> Al agregar una nueva función, debes tocar 5 carpetas distintas a la vez.
+                        </p>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 1rem; font-weight: 800; color: #15803d; margin-bottom: 6px;">✅ Por Dominio de Negocio (Modular)</div>
+                        <p style="font-size: 0.82rem; color: #334155; line-height: 1.4;">
+                            Crear módulos independientes como <code>users/</code>, <code>products/</code>, <code>billing/</code>.<br><br>
+                            <strong>Ventaja:</strong> Todo lo referente a un recurso está agrupado en su propio módulo.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 12px 16px;">
+                    <strong style="color: #1e40af; font-size: 0.9rem;">🎯 Principio Fundamental: Separación de Responsabilidades (Separation of Concerns)</strong>
+                    <p style="font-size: 0.83rem; color: #1e3a8a; margin-top: 2px;">
+                        Cada archivo y módulo debe tener <strong>un único motivo para cambiar</strong>. Si cambias la interfaz HTTP, no debes romper las reglas de negocio ni la base de datos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE RÚBRICA 2: Organización de Endpoints y Routers -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Punto 2 Rúbrica: Organización de Endpoints y Routers</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.4rem;">🛣️ 2. Organización de Endpoints (<code>APIRouter</code>)</h2>
+                    <p class="slide-main-desc" style="font-size: 0.85rem;">En lugar de amontonar 50 rutas en <code>main.py</code>, FastAPI utiliza <code>APIRouter</code> como "departamentos" organizados.</p>
+
+                    <div class="callout-card" style="background-color: #fefce8; border-color: #fef08a; margin-bottom: 10px;">
+                        <div class="callout-title" style="color: #ca8a04; font-size: 0.85rem;"><span>🏢</span> APIRouter como Departamentos</div>
+                        <p class="callout-text" style="font-size: 0.78rem;">
+                            Agrupa rutas por recurso o contexto (ej. <code>/auth</code>, <code>/users</code>, <code>/billing</code>) definiendo la jerarquía sin complicar el código.
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a;">Parámetros Clave:</div>
+                        <div style="font-size: 0.78rem; color: #475569; margin-top: 2px;">
+                            • <code>prefix="/users"</code>: Define la ruta base.<br>
+                            • <code>tags=["users"]</code>: Categoriza en Swagger UI (<code>/docs</code>).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">app/api/v1/endpoints/users.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824;"><code><span class="syn-kw">from</span> fastapi <span class="syn-kw">import</span> <span class="syn-class">APIRouter</span>
+
+<span class="syn-comment"># Departamentos independientes con APIRouter</span>
+router = <span class="syn-class">APIRouter</span>(
+    prefix=<span class="syn-str">"/users"</span>,
+    tags=[<span class="syn-str">"users"</span>]
+)
+
+<span class="syn-dec">@router.get</span>(<span class="syn-str">"/"</span>)
+<span class="syn-kw">def</span> <span class="syn-fn">get_users</span>():
+    <span class="syn-kw">return</span> [{<span class="syn-str">"id"</span>: <span class="syn-num">1</span>, <span class="syn-str">"name"</span>: <span class="syn-str">"Ana"</span>}]
+
+<span class="syn-dec">@router.post</span>(<span class="syn-str">"/"</span>)
+<span class="syn-kw">def</span> <span class="syn-fn">create_user</span>():
+    <span class="syn-kw">return</span> {<span class="syn-str">"message"</span>: <span class="syn-str">"Usuario creado"</span>}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE RÚBRICA 3: Convenciones estándar de la comunidad FastAPI -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Punto 3 Rúbrica: Convenciones Estándar en FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 6px; font-size: 1.55rem;">📐 3. Convenciones Estándar de la Comunidad FastAPI</h2>
+                <p class="slide-main-desc" style="margin-bottom: 14px; font-size: 0.88rem;">
+                    Las piezas estándar que todo proyecto profesional de FastAPI incluye para mantener coherencia:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
+                    <div style="background: #f8fafc; border: 2px solid #0056FF; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #0056FF; margin-bottom: 4px;">⚙️ <code>core/config.py</code></div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Variables de entorno y configuraciones globales centralizadas mediante <code>pydantic-settings</code>.
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #8B5CF6; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #6d28d9; margin-bottom: 4px;">🗄️ <code>models/</code></div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Modelos de persistencia en Base de Datos construidos con ORM (SQLAlchemy o SQLModel).
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #10B981; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #047857; margin-bottom: 4px;">📋 <code>schemas/</code></div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Modelos Pydantic para la validación estricta de entrada y salida de datos en peticiones HTTP.
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #F97316; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #c2410c; margin-bottom: 4px;">🧠 <code>services/</code> o <code>crud/</code></div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Lógica pura de negocio, algoritmos y operaciones de consulta a la base de datos independientes de HTTP.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE RÚBRICA 4: Arquitectura Frontend vs Backend Desacoplados -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Punto 4 Rúbrica: Frontend vs Backend Desacoplados</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 6px; font-size: 1.55rem;">🔌 4. Arquitectura Frontend vs. Backend Desacoplados</h2>
+                <p class="slide-main-desc" style="margin-bottom: 14px; font-size: 0.88rem;">
+                    El backend funciona como una <strong>caja negra</strong> que se comunica mediante HTTP/JSON con clientes independientes (React, móvil, etc.).
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;">📦 Repositorios</div>
+                        <p style="font-size: 0.8rem; color: #475569; line-height: 1.4;">
+                            <strong>Polyrepo:</strong> Repositorios separados para frontend y backend.<br>
+                            <strong>Monorepo:</strong> Un solo repositorio pero con carpetas aisladas e independientes.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;">🌐 Configuración CORS</div>
+                        <p style="font-size: 0.8rem; color: #475569; line-height: 1.4;">
+                            Mecanismo de seguridad del navegador. Si el frontend (<code>localhost:3000</code>) y el backend (<code>localhost:8000</code>) están en orígenes distintos, se debe habilitar <code>CORSMiddleware</code>.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;">🔐 Variables de Entorno</div>
+                        <p style="font-size: 0.8rem; color: #475569; line-height: 1.4;">
+                            Las URLs de las APIs y secretos de conexión <strong>NUNCA van hardcodeados</strong> en el código fuente; se leen dinámicamente desde archivos <code>.env</code>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE NUEVO: Monolito vs Microservicios / Arquitectura Desacoplada -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Monolito vs. Microservicios (Arquitectura Desacoplada)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="overflow-y: auto; max-height: calc(100vh - 170px); padding-right: 8px;">
+                <h2 class="slide-section-title" style="margin-bottom: 14px; font-size: 1.5rem;">⚙️ Monolito vs. Microservicios</h2>
+
+                <!-- 1. La Diferencia Fundamental -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 14px;">
+                    <div style="background: #f8fafc; border: 2px solid #0056FF; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #0056FF; margin-bottom: 4px;">🏰 Monolito</div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.45;">
+                            Todo el sistema (usuarios, pagos, catálogo, notificaciones) vive dentro de una <strong>única base de código</strong> y se despliega como una <strong>única unidad ejecutable</strong> en un mismo servidor.
+                        </p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 2px solid #10B981; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #047857; margin-bottom: 4px;">🧩 Microservicios</div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.45;">
+                            El sistema se divide en <strong>múltiples servicios pequeños e independientes</strong>, cada uno con su propio repositorio, base de datos y despliegue, comunicándose por red (HTTP/REST, gRPC o eventos).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. Comparación Rápida Tabla -->
+                <table class="custom-table" style="margin-bottom: 14px; font-size: 0.78rem;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 8px 12px;">Característica</th>
+                            <th style="padding: 8px 12px;">Monolito</th>
+                            <th style="padding: 8px 12px;">Microservicios</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Despliegue</strong></td>
+                            <td style="padding: 6px 12px;">Todo o nada (un cambio pequeño requiere redesplegar toda la app).</td>
+                            <td style="padding: 6px 12px;">Independiente (puedes actualizar <em>Pagos</em> sin tocar <em>Usuarios</em>).</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Bases de Datos</strong></td>
+                            <td style="padding: 6px 12px;">Base de datos centralizada compartida.</td>
+                            <td style="padding: 6px 12px;">Base de datos dedicada por servicio (<em>Database-per-service</em>).</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Escalabilidad</strong></td>
+                            <td style="padding: 6px 12px;">Escalas toda la aplicación completa.</td>
+                            <td style="padding: 6px 12px;">Escalas únicamente el microservicio que tiene alta demanda.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Tolerancia a fallos</strong></td>
+                            <td style="padding: 6px 12px;">Un error crítico (ej. memory leak) puede tumbar toda la plataforma.</td>
+                            <td style="padding: 6px 12px;">Un fallo en un servicio queda aislado; el resto sigue funcionando.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 12px;"><strong>Complejidad</strong></td>
+                            <td style="padding: 6px 12px;">Baja en infraestructura; alta en código a largo plazo.</td>
+                            <td style="padding: 6px 12px;">Alta en infraestructura y redes; código simple por módulo.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 3. Analogía Simple -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
+                    <div style="background: #fefce8; border: 1px solid #fef08a; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-size: 0.88rem; font-weight: 800; color: #b45309; margin-bottom: 4px;">🔪 Analogía Monolito: Navaja Suiza</div>
+                        <p style="font-size: 0.78rem; color: #451a03; line-height: 1.4;">
+                            Es una sola pieza sólida. Si se rompe el destornillador o quieres cambiar las tijeras, tienes que cambiar la navaja completa.
+                        </p>
+                    </div>
+
+                    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-size: 0.88rem; font-weight: 800; color: #1d4ed8; margin-bottom: 4px;">🧰 Analogía Microservicios: Caja de Herramientas</div>
+                        <p style="font-size: 0.78rem; color: #1e3a8a; line-height: 1.4;">
+                            Cada herramienta es independiente; si se rompe el martillo, compras otro sin afectar a los destornilladores ni a las llaves.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE RÚBRICA 5: Riesgos y Puntos de Atención -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Punto 5 Rúbrica: Riesgos y Puntos de Atención</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="margin-bottom: 6px; font-size: 1.55rem;">⚠️ 5. Riesgos y Puntos de Atención (Sin Orden)</h2>
+                <p class="slide-main-desc" style="margin-bottom: 14px; font-size: 0.88rem;">
+                    ¿Qué sucede cuando no hay arquitectura ni orden? Se genera <strong>deuda técnica</strong> y cuellos de botella en el equipo:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                    <div style="background: #fff1f2; border: 2px solid #fecdd3; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #be123c; margin-bottom: 6px;">🔄 Importaciones Circulares</div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Ocurren cuando dos módulos dependen mutuamente entre sí porque las responsabilidades no están aisladas adecuadamente.
+                        </p>
+                    </div>
+
+                    <div style="background: #fff1f2; border: 2px solid #fecdd3; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #be123c; margin-bottom: 6px;">🔀 Conflictos de Git</div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Si todo el equipo edita el mismo archivo <code>main.py</code> o <code>routes.py</code>, la fusión de ramas (<em>merging</em>) se convierte en un caos.
+                        </p>
+                    </div>
+
+                    <div style="background: #fff1f2; border: 2px solid #fecdd3; border-radius: 10px; padding: 14px;">
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #be123c; margin-bottom: 6px;">💧 Fugas de Lógica de Negocio</div>
+                        <p style="font-size: 0.8rem; color: #334155; line-height: 1.4;">
+                            Poner lógica pesada o consultas DB directo en los routers impide reutilizar código y escribir pruebas unitarias limpias.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: Estructura de Directorios Production-Ready -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Estructura de Proyecto Production-Ready</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.4rem;">Estructura <code>backend/</code></h2>
+                    <p class="slide-main-desc" style="font-size: 0.85rem; margin-bottom: 8px;">Organización estándar en producción para aplicaciones FastAPI escalables.</p>
+                    
+                    <div class="callout-card">
+                        <div class="callout-title" style="font-size: 0.88rem;"><span>🎯</span> Principales Carpetas</div>
+                        <p class="callout-text" style="font-size: 0.8rem;">
+                            • <code>core/</code>: Configuración global y seguridad.<br>
+                            • <code>api/v1/endpoints/</code>: Routers por dominio.<br>
+                            • <code>schemas/</code>: Modelos Pydantic.<br>
+                            • <code>services/</code>: Lógica pura de negocio.<br>
+                            • <code>models/</code>: Entidades ORM.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Directorio del Proyecto Backend</span>
+                            <div class="editor-header-right"><span class="editor-lang">Tree</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #121824; max-height: 340px; overflow-y: auto;"><code>backend/
+├── pyproject.toml
+├── uv.lock
+├── app/
+│   ├── __init__.py
+│   ├── main.py                  # App init, CORS, root router
+│   ├── core/                    # Config & Security
+│   │   ├── config.py
+│   │   └── security.py
+│   ├── api/                     # HTTP Routers & Deps
+│   │   ├── deps.py
+│   │   └── v1/
+│   │       ├── api.py           # Master router aggregator
+│   │       └── endpoints/
+│   │           ├── auth.py
+│   │           ├── users.py
+│   │           └── operations.py
+│   ├── schemas/                 # Pydantic schemas
+│   │   ├── user.py
+│   │   └── operation.py
+│   ├── services/                # Business logic layer
+│   │   ├── user_service.py
+│   │   └── operation_service.py
+│   └── models/                  # DB / ORM entities
+│       └── user.py
+└── tests/</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 28: Generación Inteligente con IA: Prompt Maestro -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">27. Generación Inteligente: Prompt Maestro con IA</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body slide-two-cols">
+                <div class="slide-col-left">
+                    <h2 class="slide-section-title" style="font-size: 1.35rem;">Prompt para Generar la Entrega</h2>
+                    <p class="slide-main-desc" style="font-size: 0.84rem; margin-bottom: 10px;">Los estudiantes pueden utilizar este **Prompt Maestro** en su LLM (Antigravity, Gemini, ChatGPT) para estructurar el documento <code>ARCHITECTURE_PROPOSAL.md</code> de su proyecto.</p>
+                    
+                    <div class="callout-card" style="background-color: #eff6ff; border-color: #bfdbfe;">
+                        <div class="callout-title" style="color: #1d4ed8;"><span>🤖</span> Tip de Prompt Engineering</div>
+                        <p class="callout-text" style="font-size: 0.78rem;">Reemplaza los campos entre corchetes <code>[ ]</code> con los detalles específicos de tu proyecto antes de enviar el prompt.</p>
+                    </div>
+                </div>
+
+                <div class="slide-col-right">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">prompt_architecture_proposal.txt</span>
+                            <div class="editor-header-right"><span class="editor-lang">Prompt</span></div>
+                        </div>
+                        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #121824; max-height: 330px; overflow-y: auto;"><code>Actúa como un Arquitecto de Software Senior en Python.
+Genera el archivo docs/ARCHITECTURE_PROPOSAL.md para mi proyecto backend.
+
+Contexto del Proyecto:
+- Nombre del Proyecto: [Nombre de tu Proyecto]
+- Objetivo: API REST para [descripción breve del proyecto]
+- Tecnologías: Python 3.12+, FastAPI, Pydantic, Uvicorn, uv manager.
+- Arquitectura elegida: Layered Architecture con patrón MVC.
+
+Por favor incluye en el documento Markdown:
+1. Resumen Ejecutivo y Objetivos Técnicos del Backend.
+2. Justificación de la Arquitectura (Por qué FastAPI + MVC / Capas).
+3. Mapeo de Capas (Presentación / Servicios / Persistencia).
+4. Árbol de Directorios del proyecto (/backend) formateado en bloque de código.
+5. Estrategia de Coexistencia con el Frontend (CORS, Variables de Entorno .env) y Mitigación de Riesgos.
+
+Genera el documento completo formateado en Markdown técnico listo para guardar en /docs.</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 29</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="../assets/js/presentation.js?v=2"></script>
+</body>
+</html>

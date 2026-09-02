@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 35: Creating a basic agent with python and an API - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=2">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Creating a basic agent with python and an API">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 35 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 35:<br><span>Creating a basic agent with python and an API</span></h1>
+                <p class="cover-subtitle">Presentación interactiva y concisa: 1 párrafo corto al grano por tema, analogías directas y código ejecutable.</p>
+            </div>
+        </div>
+    
+        <!-- SLIDE: Tema 1 - 01.0-llms-vs-agents -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 1: 01.0-llms-vs-agents</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">⚖️ 01.0-llms-vs-agents: Análisis y Enfoques</h2>
+        
+        <div style="background: #fffbebfb; border: 2px solid #FFB800; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px;">
+            <strong style="color: #b45309; font-size: 0.8rem;">💡 Analogía Práctica:</strong>
+            <p style="font-size: 0.76rem; color: #78350f; margin-top: 2px; line-height: 1.35;">"Una llamada simple a un LLM es como pedir una foto."</p>
+        </div>
+
+        <div class="slide-two-cols">
+            <div style="background: #eff6ff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.92rem; font-weight: 800; color: #0056FF; margin-bottom: 6px;">🔵 Puntos Clave</div>
+                <p style="font-size: 0.76rem; color: #1e3a8a; line-height: 1.35;">Cuando interactúas con un <strong>Modelo de Lenguaje (LLM)</strong>, normalmente envías una única entrada y recibes una única...</p>
+            </div>
+            <div style="background: #f0fdf4; border: 2px solid #10B981; border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.92rem; font-weight: 800; color: #047857; margin-bottom: 6px;">🟢 Aplicación Práctica</div>
+                <p style="font-size: 0.76rem; color: #14532d; line-height: 1.35;">Sin embargo, algunas tareas requieren más que una sola respuesta.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 2 - 01.1-how-an-agent-works -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 2: 01.1-how-an-agent-works</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🔄 01.1-how-an-agent-works: Flujo de Implementación</h2>
+        
+        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;">
+            <strong style="color: #0056FF; font-size: 0.8rem;">📌 En Palabras Simples:</strong>
+            <p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">"Un agente trabaja como un detective: 1) Observa huellas, 2) Piensa, 3) Actúa, y 4) Verifica la meta (Goal)."</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px;">
+            <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">1️⃣</div>
+                <strong style="color: #0056FF; font-size: 0.78rem;">Fase 1</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;"><strong>Objetivo:</strong> El agente comienza con un objetivo claro que...</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">2️⃣</div>
+                <strong style="color: #047857; font-size: 0.78rem;">Fase 2</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;"><strong>Observar:</strong> El agente recopila información del entorno, la...</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">3️⃣</div>
+                <strong style="color: #6D28D9; font-size: 0.78rem;">Fase 3</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;"><strong>Razonar:</strong> Usando el Modelo de Lenguaje (LLM), el agente...</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">🎯</div>
+                <strong style="color: #B45309; font-size: 0.78rem;">Goal & Meta</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;"><strong>Actuar:</strong> El agente ejecuta la acción elegida llamando a...</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 3 - 01.2-not-everything-needs-an-agent -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 3: 01.2-not-everything-needs-an-agent</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 01.2-not-everything-needs-an-agent: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Si solo quieres encender la luz, usas el interruptor."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">No todas las tareas requieren la complejidad de un agente de IA.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">01.2-not-everything-needs-an-agent.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">const</span> prompt = <span class="syn-str">`Traduce esta oración al español: "${inputText}"`</span>;
+<span class="syn-kw">const</span> response = <span class="syn-kw">await</span> llm.<span class="syn-fn">call</span>(prompt);
+<span class="syn-kw">return</span> response.text;</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 4 - 02.0-observe-decide-act -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 4: 02.0-observe-decide-act</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 02.0-observe-decide-act: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Es como jugar a las escondidas: 1) Miras (Observar), 2) Decides a dónde correr (Decidir), y 3) Corres (Actuar)."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Los agentes de IA no son solo respondedores puntuales; operan a través de un ciclo continuo que les permite manejar tareas...</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">02.0-observe-decide-act.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code>flowchart TD
+    Observar[<span class="syn-str">"Observar: Recopilar Información"</span>] --&gt; Decidir[<span class="syn-str">"Decidir: Razonar con LLM"</span>]
+    Decidir --&gt; Actuar[<span class="syn-str">"Actuar: Ejecutar Acción"</span>]
+    Actuar --&gt; Observar</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 5 - 02.1-thinking-in-cycles -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 5: 02.1-thinking-in-cycles</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 02.1-thinking-in-cycles: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Es como armar un rompecabezas: tomas una pieza, pruebas dónde encaja y pasas a la siguiente."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">En la programación tradicional, las funciones suelen ejecutarse una vez y devolver un resultado.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">02.1-thinking-in-cycles.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code>max_iterations = <span class="syn-num">10</span>
+iteration = <span class="syn-num">0</span>
+<span class="syn-kw">while</span> iteration &lt; max_iterations:
+    observation = <span class="syn-fn">observe</span>()
+    decision = model.<span class="syn-fn">decide</span>(observation)
+    <span class="syn-kw">if</span> decision == <span class="syn-str">'done'</span>:
+        <span class="syn-kw">break</span>  <span class="syn-comment"># Objetivo alcanzado</span>
+    result = <span class="syn-fn">act</span>(decision)
+    <span class="syn-fn">update_memory</span>(result)
+    iteration += <span class="syn-num">1</span>
+<span class="syn-kw">else</span>:
+    <span class="syn-comment"># Máximo de iteraciones alcanzado sin completar</span>
+    <span class="syn-fn">handle_timeout</span>()</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 6 - 02.2-the-infinite-loop-trap -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 6: 02.2-the-infinite-loop-trap</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 02.2-the-infinite-loop-trap: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Imagina un perrito corriendo tras su cola."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Imagina un agente de IA atrapado en un bucle, repitiendo los mismos pasos una y otra vez sin alcanzar nunca su objetivo.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">02.2-the-infinite-loop-trap.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code>max_iterations = <span class="syn-num">10</span>
+iteration = <span class="syn-num">0</span>
+<span class="syn-kw">while</span> iteration &lt; max_iterations:
+    observation = <span class="syn-fn">observe</span>()
+    decision = model.<span class="syn-fn">reason</span>(observation)
+    <span class="syn-kw">if</span> decision == <span class="syn-str">"done"</span>:
+        <span class="syn-kw">break</span>  <span class="syn-comment"># Objetivo alcanzado</span>
+    result = <span class="syn-fn">act</span>(decision)
+    <span class="syn-fn">update_memory</span>(result)
+    iteration += <span class="syn-num">1</span>
+<span class="syn-kw">else</span>:
+    <span class="syn-fn">handle_timeout</span>()  <span class="syn-comment"># Detener después del máximo de iteraciones</span></code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 7 - 03.0-objective-and-model -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 7: 03.0-objective-and-model</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">⚖️ 03.0-objective-and-model: Análisis y Enfoques</h2><div style="background: #fffbebfb; border: 2px solid #FFB800; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px;"><strong style="color: #b45309; font-size: 0.8rem;">💡 Analogía Práctica:</strong><p style="font-size: 0.76rem; color: #78350f; margin-top: 2px; line-height: 1.35;">"El objetivo es el mapa del tesoro y el modelo es el cerebro del capitán pirata que lo interpreta."</p></div><div class="slide-two-cols"><div style="background: #eff6ff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px;"><div style="font-size: 0.92rem; font-weight: 800; color: #0056FF; margin-bottom: 6px;">🎯 El Objetivo (Goal)</div><p style="font-size: 0.76rem; color: #1e3a8a; line-height: 1.35;">Es el propósito o meta final asignada al agente. Define con claridad <strong>qué resultado debe lograr</strong> y las condiciones para dar por terminada la tarea.</p></div><div style="background: #f0fdf4; border: 2px solid #10B981; border-radius: 10px; padding: 12px;"><div style="font-size: 0.92rem; font-weight: 800; color: #047857; margin-bottom: 6px;">🧠 El Modelo (LLM)</div><p style="font-size: 0.76rem; color: #14532d; line-height: 1.35;">Es el motor de razonamiento (como GPT o Gemini) que <strong>procesa las observaciones, toma decisiones</strong> y determina qué herramientas ejecutar en cada paso.</p></div></div>
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 8 - 03.1-memory-tools-and-loop -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 8: 03.1-memory-tools-and-loop</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🔄 03.1-memory-tools-and-loop: Flujo de Implementación</h2><div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;"><strong style="color: #0056FF; font-size: 0.8rem;">📌 En Palabras Simples:</strong><p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">"Las herramientas son la caja de llaves de un mecánico y la memoria es su libreta de notas."</p></div><div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;"><div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;"><div style="font-size: 1.2rem;">1️⃣</div><div><strong style="color: #0056FF; font-size: 0.8rem;">Fase 1: Registro de Memoria</strong><p style="font-size: 0.74rem; color: #475569; margin-top: 2px;">La Memoria almacena las observaciones, entradas del usuario y resultados de herramientas.</p></div></div><div style="background: #ffffff; border: 2px solid #10B981; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;"><div style="font-size: 1.2rem;">2️⃣</div><div><strong style="color: #047857; font-size: 0.8rem;">Fase 2: Contexto Continuo</strong><p style="font-size: 0.74rem; color: #475569; margin-top: 2px;">Mantiene al agente informado sobre sus decisiones anteriores para evitar repetir acciones.</p></div></div><div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;"><div style="font-size: 1.2rem;">3️⃣</div><div><strong style="color: #6D28D9; font-size: 0.8rem;">Fase 3: Uso de Herramientas (Tools)</strong><p style="font-size: 0.74rem; color: #475569; margin-top: 2px;">Cada herramienta realiza una acción específica (buscar datos, calcular, consultar API).</p></div></div><div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;"><div style="font-size: 1.2rem;">🎯</div><div><strong style="color: #B45309; font-size: 0.8rem;">Fase 4: Cumplimiento del Goal</strong><p style="font-size: 0.74rem; color: #475569; margin-top: 2px;">El agente se detiene inmediatamente cuando la memoria confirma que se alcanzó la meta.</p></div></div></div>
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 9 - 03.2-too-many-tools-no-clear-goal -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Introduction to AI Agents • Tema 9: 03.2-too-many-tools-no-clear-goal</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 03.2-too-many-tools-no-clear-goal: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Si le das a un niño 100 juguetes sin decirle a qué jugar, se confundirá."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Imagina que intentas encontrar un libro en una biblioteca donde cada estante está etiquetado simplemente como "Libros" sin ningún...</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">03.2-too-many-tools-no-clear-goal.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-comment"># 🤖 Ejemplo ejecutable para 03.2-too-many-tools-no-clear-goal</span>
+max_iterations = <span class="syn-num">5</span>
+<span class="syn-kw">for</span> i <span class="syn-kw">in</span> <span class="syn-fn">range</span>(max_iterations):
+    result = <span class="syn-fn">process_step</span>(i)
+    <span class="syn-kw">if</span> result.<span class="syn-fn">is_complete</span>():
+        <span class="syn-kw">break</span>  <span class="syn-comment"># Goal alcanzado</span></code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 10 - 01.0-understanding-the-agent-loop -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 10: 01.0-understanding-the-agent-loop</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 01.0-understanding-the-agent-loop: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">El <strong>bucle del agente</strong> es el motor central que impulsa el proceso de toma de decisiones de un agente de IA.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">01.0-understanding-the-agent-loop.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code>flowchart TD
+    Start[Inicio] --&gt; InitMemory[Inicializar memoria con la entrada del usuario]
+    InitMemory --&gt; LoopStart{¿Iteración menor que max_iterations?}
+    LoopStart -- No --&gt; End[Devolver mensaje de respaldo: Se alcanzó el máximo de iteraciones]
+    LoopStart -- Sí --&gt; CallLLM[Llamar al LLM con el prompt del sistema y la memoria]
+    CallLLM --&gt; Decision{Tipo de respuesta del LLM}
+    Decision -- respuesta final --&gt; ReturnAnswer[Devolver contenido de la respuesta final]
+    Decision -- llamada a herramienta --&gt; ExecuteTool[Ejecutar herramienta con los argumentos dados]
+    ExecuteTool --&gt; AppendMemory[Agregar resultado de la herramienta a la memoria]
+    AppendMemory --&gt; LoopStart</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 11 - 01.1-setting-loop-boundaries -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 11: 01.1-setting-loop-boundaries</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 01.1-setting-loop-boundaries: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Poner max_iterations = 5 es como ponerle un cinturón de seguridad a tu programa."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Los bucles infinitos pueden ser la pesadilla de un desarrollador, consumiendo recursos sin fin y haciendo que los programas se...</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">01.1-setting-loop-boundaries.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">for</span> i <span class="syn-kw">in</span> <span class="syn-fn">range</span>(max_iterations):
+    response = <span class="syn-fn">call_llm</span>(memory)
+    <span class="syn-kw">if</span> response[<span class="syn-str">"type"</span>] == <span class="syn-str">"final_answer"</span>:
+        <span class="syn-kw">return</span> response[<span class="syn-str">"content"</span>]
+    <span class="syn-comment"># Ejecutar la llamada a la herramienta</span>
+    result = <span class="syn-fn">execute_tool</span>(response[<span class="syn-str">"tool"</span>], response[<span class="syn-str">"args"</span>])
+    memory.<span class="syn-fn">append</span>({<span class="syn-str">"role"</span>: <span class="syn-str">"tool"</span>, <span class="syn-str">"content"</span>: result})
+    <span class="syn-comment"># Registrar detalles de la iteración para depuración</span>
+    <span class="syn-fn">print</span>(f<span class="syn-str">"Iteración {i}: llamada a {response['tool']} con {response['args']}"</span>)
+
+<span class="syn-comment"># Si el bucle termina sin una respuesta final</span>
+<span class="syn-kw">return</span> <span class="syn-str">"Se alcanzó el máximo de iteraciones. No se pudo completar la tarea."</span></code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 12 - 02.0-what-are-agent-tools -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 12: 02.0-what-are-agent-tools</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📌 02.0-what-are-agent-tools: Puntos de Control</h2>
+
+        <div style="background: #fffbebfb; border: 1px solid #f59e0b; border-radius: 8px; padding: 6px 10px; margin-bottom: 10px;">
+            <strong style="color: #b45309; font-size: 0.78rem;">💡 Idea Central:</strong>
+            <span style="font-size: 0.74rem; color: #78350f;">"Una herramienta es una función en Python que el modelo puede pedir prestada cuando la necesita."</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px;">
+                <strong style="color: #0056FF; font-size: 0.78rem;">1. Punto Principal</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">El <strong>agente</strong> decide *qué* hacer a continuación basándose en...</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 8px; padding: 10px;">
+                <strong style="color: #047857; font-size: 0.78rem;">2. Implementación</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">La <strong>herramienta</strong> realmente *hace* el trabajo — como...</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 8px; padding: 10px;">
+                <strong style="color: #6D28D9; font-size: 0.78rem;">3. Validación</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">Qué hace la herramienta</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 8px; padding: 10px;">
+                <strong style="color: #B45309; font-size: 0.78rem;">4. Auditoría (Goal)</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">Qué entrada espera</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 13 - 02.1-structuring-effective-tools -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 13: 02.1-structuring-effective-tools</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">⚖️ 02.1-structuring-effective-tools: Análisis y Enfoques</h2>
+        
+        <div style="background: #fffbebfb; border: 2px solid #FFB800; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px;">
+            <strong style="color: #b45309; font-size: 0.8rem;">💡 Analogía Práctica:</strong>
+            <p style="font-size: 0.76rem; color: #78350f; margin-top: 2px; line-height: 1.35;">"Poner descripciones claras en tus funciones es como etiquetar los frascos para no confundir sal con azúcar."</p>
+        </div>
+
+        <div class="slide-two-cols">
+            <div style="background: #eff6ff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.92rem; font-weight: 800; color: #0056FF; margin-bottom: 6px;">🔵 Puntos Clave</div>
+                <p style="font-size: 0.76rem; color: #1e3a8a; line-height: 1.35;">¿Sabías que? La claridad en la descripción de tu herramienta puede determinar la capacidad de tu agente de IA para elegir la...</p>
+            </div>
+            <div style="background: #f0fdf4; border: 2px solid #10B981; border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.92rem; font-weight: 800; color: #047857; margin-bottom: 6px;">🟢 Aplicación Práctica</div>
+                <p style="font-size: 0.76rem; color: #14532d; line-height: 1.35;">Cuando tu agente de IA decide qué hacer a continuación, no ve tu código Python — solo lee la <strong>descripción</strong> que...</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 14 - 02.2-building-your-first-tool -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 14: 02.2-building-your-first-tool</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🔄 02.2-building-your-first-tool: Flujo de Implementación</h2>
+        
+        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;">
+            <strong style="color: #0056FF; font-size: 0.8rem;">📌 En Palabras Simples:</strong>
+            <p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">"Creamos nuestra primera función de Python y la registramos en el diccionario de herramientas."</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px;">
+            <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">1️⃣</div>
+                <strong style="color: #0056FF; font-size: 0.78rem;">Fase 1</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">La función acepta dos parámetros:</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">2️⃣</div>
+                <strong style="color: #047857; font-size: 0.78rem;">Fase 2</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">`name`: el nombre de la persona a saludar.</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">3️⃣</div>
+                <strong style="color: #6D28D9; font-size: 0.78rem;">Fase 3</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">`language`: una cadena que indica el idioma, ya sea "en" o "es".</p>
+            </div>
+            <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 8px; padding: 10px; text-align: center;">
+                <div style="font-size: 1.1rem; margin-bottom: 2px;">🎯</div>
+                <strong style="color: #B45309; font-size: 0.78rem;">Goal & Meta</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;">Verifica si el idioma es español (`"es"`) y devuelve el saludo...</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 15 - 03.0-crafting-agent-instructions -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 15: 03.0-crafting-agent-instructions</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.2rem; margin-bottom: 8px;">💻 03.0-crafting-agent-instructions: Código en Vivo</h2><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;"><div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;"><strong style="color: #c2410c; font-size: 0.78rem;">💡 Concepto Clave:</strong><p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El System Prompt son las reglas del juego que le leemos al agente antes de empezar."</p></div><div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 10px;"><strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong><p style="font-size: 0.74rem; color: #475569; margin-top: 2px; line-height: 1.3;">Definir un System Prompt claro con instrucciones y formato JSON evita ambigüedades y alucinaciones.</p></div></div><div class="editor-container"><div class="editor-header"><div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div><span class="editor-filename">03.0-crafting-agent-instructions.py</span><div class="editor-header-right"><span class="editor-lang">Python</span></div></div><pre style="padding: 8px 12px; font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #f8fafc; background: #121824; max-height: 180px; overflow-y: hidden;"><code>Eres un agente. Tu objetivo es: [objetivo].
+Herramientas disponibles:
+- get_weather: Devuelve el clima actual de una ciudad.
+- search_web: Busca en internet una consulta.
+
+En cada turno, responde con JSON en uno de estos formatos:
+{"type": "tool_call", "tool": "nombre_herramienta", "args": {"param": "valor"}}
+O
+{"type": "final_answer", "content": "Tu respuesta aquí."}
+
+Si la pregunta puede responderse directamente, responde con final_answer.</code></pre></div>
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 16 - 03.1-avoiding-prompting-mistakes -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 16: 03.1-avoiding-prompting-mistakes</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 03.1-avoiding-prompting-mistakes: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Pedir respuestas en JSON estricto evita que el agente invente o adivine cosas falsas."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Al diseñar prompts para tu agente de IA, la claridad y la simplicidad son tus mejores aliados.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">03.1-avoiding-prompting-mistakes.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-str">"Si el usuario pregunta por el clima, llama a get_weather. De lo contrario, responde con final_answer."</span></code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 17 - 03.2-writing-agent-system-prompts -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 17: 03.2-writing-agent-system-prompts</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 03.2-writing-agent-system-prompts: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Construimos el prompt del sistema combinando el objetivo (Goal), las herramientas y el JSON."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Crear prompts efectivos para el sistema es esencial para guiar el comportamiento de tu agente de IA.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">03.2-writing-agent-system-prompts.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-comment"># Función para construir el prompt del sistema</span>
+
+<span class="syn-kw">def</span> <span class="syn-fn">build_system_prompt</span>(tools: dict, objective: str) -&gt; str:
+    <span class="syn-comment"># Comienza con el objetivo del agente</span>
+    prompt = f<span class="syn-str">"Eres un agente. Objetivo: {objective}\n"</span>
+    prompt += <span class="syn-str">"Herramientas disponibles:\n"</span>
+
+    <span class="syn-comment"># Añade el nombre y descripción de cada herramienta</span>
+    <span class="syn-kw">for</span> name, info <span class="syn-kw">in</span> tools.<span class="syn-fn">items</span>():
+        prompt += f<span class="syn-str">"- {name}: {info['description']}\n"</span>
+
+    <span class="syn-comment"># Indica al LLM el formato exacto de respuesta JSON</span>
+    prompt += (
+        <span class="syn-str">"Responde con JSON en uno de estos formatos:\n"</span>
+        <span class="syn-str">'{"type": "tool_call", "tool": "tool_name", "args": {}}\n'</span>
+        <span class="syn-str">'o {"type": "final_answer", "content": "..."}\n'</span>
+    )
+
+    <span class="syn-kw">return</span> prompt</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 18 - 04.0-best-practices-for-agents -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 2: Building a Basic AI Agent in Python • Tema 18: 04.0-best-practices-for-agents</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 04.0-best-practices-for-agents: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Las 4 reglas de oro: herramientas simples, validación de entradas, límite de vueltas y auditoría."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Construir agentes de IA confiables no se trata solo de escribir código; se trata de diseñar con claridad, simplicidad y control.</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">04.0-best-practices-for-agents.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-comment"># Ejemplo de validación de entrada antes de llamar a una herramienta</span>
+args = response.<span class="syn-fn">get</span>(<span class="syn-str">'args'</span>, {})
+city = args.<span class="syn-fn">get</span>(<span class="syn-str">'city'</span>, <span class="syn-str">''</span>)
+<span class="syn-kw">if</span> not city:
+    <span class="syn-fn">print</span>(f<span class="syn-str">"Argumento de ciudad inválido: '{city}'"</span>)
+    <span class="syn-kw">break</span>  <span class="syn-comment"># o manejar el error de forma adecuada</span>
+<span class="syn-kw">else</span>:
+    result = <span class="syn-fn">get_weather</span>(city)</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 19</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="../assets/js/presentation.js?v=2"></script>
+</body>
+</html>

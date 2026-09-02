@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 36: Storing data in light databases - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=2">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Storing data in light databases">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 36 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 36:<br><span>Storing data in light databases</span></h1>
+                <p class="cover-subtitle">Presentación interactiva y concisa: 1 párrafo corto al grano por tema, analogías directas y código ejecutable.</p>
+            </div>
+        </div>
+    
+        <!-- SLIDE: Tema 1 - ¿Por qué Almacenar Datos? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 1: ¿Por qué Almacenar Datos?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 ¿Por qué Almacenar Datos?: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Imagina que estás construyendo una API de contactos donde los usuarios agregan contactos durante una sesión.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>El <strong>almacenamiento en memoria</strong> pierde todos los datos al reiniciar el servidor.</li><li>El <strong>almacenamiento en archivos</strong> persiste los datos pero es lento y no seguro...</li><li>Las <strong>bases de datos</strong> ofrecen persistencia rápida, estructurada y segura.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_2591680496.png" alt="¿Por qué Almacenar Datos?" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">¿Por qué Almacenar Datos?</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 2 - Introducción a TinyDB -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 2: Introducción a TinyDB</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Introducción a TinyDB: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Imagina convertir tu aplicación Python en un programa que recuerda todo lo que guardas, incluso después de que deja de ejecutarse.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>Instala TinyDB con `pipenv install tinydb`.</li><li>Crea una instancia de base de datos con `db = TinyDB('db.</li><li>TinyDB almacena diccionarios de Python como JSON en un archivo.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_2755981273.png" alt="Introducción a TinyDB" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Introducción a TinyDB</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 3 - Insertar y Guardar Registros -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 3: Insertar y Guardar Registros</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 Insertar y Guardar Registros: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Imagina que tienes un cuaderno donde anotas contactos, pero cada vez que agregas un nuevo contacto, el cuaderno asigna...</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">02.1-insert-and-save-records.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">from</span> tinydb <span class="syn-kw">import</span> TinyDB
+
+db = <span class="syn-fn">TinyDB</span>(<span class="syn-str">'db.json'</span>)  <span class="syn-comment"># Crea o abre el archivo JSON</span></code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 4 - Búsqueda y Filtrado de Datos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 4: Búsqueda y Filtrado de Datos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 Búsqueda y Filtrado de Datos: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Imagina que tienes un cajón lleno de fichas, cada una representando un contacto con campos como <strong>nombre</strong>,...</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">03.0-search-and-filter-data.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">from</span> tinydb <span class="syn-kw">import</span> TinyDB, Query
+
+db = <span class="syn-fn">TinyDB</span>(<span class="syn-str">'db.json'</span>)
+Contact = <span class="syn-fn">Query</span>()</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 5 - Actualizar y Eliminar Registros -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 5: Actualizar y Eliminar Registros</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 Actualizar y Eliminar Registros: Código en Vivo</h2>
+
+        <div class="slide-two-cols">
+            <div class="slide-col-left">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
+                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Imagina que tienes una agenda digital donde no solo puedes buscar contactos, sino también actualizar sus detalles o eliminarlos...</p>
+                </div>
+            </div>
+            <div class="slide-col-right">
+                
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="editor-dots">
+                <span class="editor-dot dot-red"></span>
+                <span class="editor-dot dot-yellow"></span>
+                <span class="editor-dot dot-green"></span>
+            </div>
+            <span class="editor-filename">03.1-update-and-delete-records.py</span>
+            <div class="editor-header-right">
+                <span class="editor-lang">Python</span>
+            </div>
+        </div>
+        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">from</span> tinydb <span class="syn-kw">import</span> TinyDB, Query
+
+db = <span class="syn-fn">TinyDB</span>(<span class="syn-str">'db.json'</span>)
+Contact = <span class="syn-fn">Query</span>()
+
+db.<span class="syn-fn">update</span>({<span class="syn-str">'email'</span>: <span class="syn-str">'ana.new@mail.com'</span>}, Contact.name == <span class="syn-str">'Ana'</span>)</code></pre>
+    </div>
+    
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 6 - Pydantic como Capa de Esquema -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 6: Pydantic como Capa de Esquema</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Pydantic como Capa de Esquema: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Imagina los datos de tu aplicación como invitados que llegan a una fiesta.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>TinyDB almacena datos sin imponer estructura.</li><li>Los modelos de Pydantic definen y hacen cumplir el esquema de datos esperado.</li><li>Valida los datos sin procesar con Pydantic antes de insertarlos en TinyDB.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_2298574440.png" alt="Pydantic como Capa de Esquema" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Pydantic como Capa de Esquema</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 7 - Antipatrones de Almacenamiento -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 7: Antipatrones de Almacenamiento</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Antipatrones de Almacenamiento: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">¿Alguna vez te has preguntado por qué algunas bases de datos se vuelven desordenadas y lentas con el tiempo? A menudo, es debido...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>Siempre <strong>valida los datos</strong> con Pydantic antes de insertarlos en TinyDB.</li><li>Usa un <strong>esquema único</strong> para mantener los nombres de campos consistentes.</li><li>Evita <strong>consultas redundantes</strong> almacenando en caché los resultados dentro del...</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_1573956523.png" alt="Antipatrones de Almacenamiento" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Antipatrones de Almacenamiento</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 8 - TinyDB en Endpoints de FastAPI -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 8: TinyDB en Endpoints de FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 TinyDB en Endpoints de FastAPI: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">En aplicaciones del mundo real, la persistencia de datos es esencial.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>TinyDB</strong> ofrece una base de datos basada en archivos y sin configuración que...</li><li>Los modelos <strong>Pydantic</strong> validan los datos entrantes antes de que lleguen a la...</li><li>Inicializar la instancia de TinyDB a nivel de módulo comparte la base de datos entre todos los...</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_3627959279.png" alt="TinyDB en Endpoints de FastAPI" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">TinyDB en Endpoints de FastAPI</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 9 - ¿Qué es un Seeder? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 9: ¿Qué es un Seeder?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 ¿Qué es un Seeder?: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">En el desarrollo de software, especialmente cuando se trabaja con bases de datos, contar con un conjunto consistente y realista...</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li><strong>Realistas pero falsos:</strong> Imitan datos del mundo real sin contener información...</li><li><strong>Estructurados:</strong> Siguen el esquema o modelo de datos esperado de tu aplicación.</li><li><strong>Consistentes:</strong> Proporcionan un punto de partida confiable para el desarrollo,...</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_3535764442.png" alt="¿Qué es un Seeder?" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">¿Qué es un Seeder?</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 10 - Ejecutando Seeders con Pipenv -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 10: Ejecutando Seeders con Pipenv</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 Ejecutando Seeders con Pipenv: Diagrama Visual</h2>
+
+        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
+            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
+                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
+                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El programa sigue instrucciones paso a paso para completar su objetivo sin fallar."</p>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
+                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
+                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Crear y ejecutar seeders es un paso esencial para poblar tu base de datos TinyDB con datos iniciales y validados.</p>
+                </div>
+                
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
+            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
+            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
+                <li>Crea un script `seed.</li><li>Usa modelos <strong>Pydantic</strong> para garantizar la consistencia de datos antes de la...</li><li>Limpia los datos existentes con `db.</li>
+            </ul>
+        </div>
+        
+            </div>
+            <div class="slide-col-right" style="text-align: center;">
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
+                    <img src="images/img_3737431499.png" alt="Ejecutando Seeders con Pipenv" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
+                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">Ejecutando Seeders con Pipenv</span>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 11 - Resumen de Patrones de Persistencia -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Practice 1: Storing Information • Tema 11: Resumen de Patrones de Persistencia</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                
+        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🎯 Resumen de Patrones de Persistencia: Cumplimiento de Meta</h2>
+
+        <div style="background: #f0fdf4; border: 2px solid #10B981; border-radius: 10px; padding: 12px; margin-bottom: 12px;">
+            <div style="font-size: 0.95rem; font-weight: 800; color: #047857; margin-bottom: 4px;">🏁 Meta Principal (Goal):</div>
+            <p style="font-size: 0.76rem; color: #14532d; line-height: 1.35;">Ahora has dominado el flujo de trabajo esencial que lleva tus aplicaciones desde la memoria volátil hasta un almacenamiento de...</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                <strong style="color: #0056FF; font-size: 0.78rem;">1. Aspecto Clave</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;"><strong>Operaciones CRUD:</strong></p>
+            </div>
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                <strong style="color: #8B5CF6; font-size: 0.78rem;">2. Recomendación</strong>
+                <p style="font-size: 0.72rem; color: #475569; margin-top: 2px;"><strong>Crear:</strong> Insertar nuevos registros.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+                
+        <!-- SLIDE: Tema 12 - Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 36 • Tema 12: Práctica en Clase</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 Práctica en Clase: Ejercicio Práctico</h2><div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);"><div style="font-size: 1.15rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar!</div><p style="font-size: 0.88rem; color: #1e293b; line-height: 1.55; margin-bottom: 20px;">Desarrolla el ejercicio práctico aplicando persistencia de datos en TinyDB, esquemas Pydantic y endpoints de FastAPI.</p><div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;"><div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px; text-align: center;"><strong style="color: #0056FF; font-size: 0.85rem;">📌 Proyecto</strong><p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">ai-eng-supplier-directory</p></div><div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px; text-align: center;"><strong style="color: #10B981; font-size: 0.85rem;">🛠️ Stack Técnico</strong><p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">Python • FastAPI • TinyDB • Pydantic</p></div><div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px; text-align: center;"><strong style="color: #8B5CF6; font-size: 0.85rem;">🎯 Entregable</strong><p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">API persistente con validación y seeders</p></div></div></div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 13</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="../assets/js/presentation.js?v=2"></script>
+</body>
+</html>

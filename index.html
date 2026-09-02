@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Unificado de Presentaciones - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=2">
+    <style>
+        body { background-color: #0b1120; color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; font-family: 'Inter', sans-serif; }
+        .hub-container { width: 100%; max-width: 1100px; display: flex; flex-direction: column; gap: 35px; }
+        .hub-header { background: linear-gradient(135deg, rgba(0, 86, 255, 0.15) 0%, rgba(255, 184, 0, 0.15) 100%); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 35px 40px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .hub-brand { font-weight: 800; font-size: 1.1rem; color: #FFB800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .hub-title { font-size: 2.3rem; font-weight: 800; color: #ffffff; margin: 0; }
+        .hub-title span { color: #0056FF; }
+        
+        .tabs-container { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
+        .tab-btn { background: #151d30; border: 1px solid #1e293b; color: #94a3b8; padding: 10px 18px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
+        .tab-btn:hover { border-color: #0056FF; color: #ffffff; }
+        .tab-btn.active { background: #0056FF; color: #ffffff; border-color: #0056FF; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.3); }
+
+        .module-block { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 20px; transition: all 0.3s ease; }
+        .module-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #1f2937; padding-bottom: 16px; }
+        .module-badge { background: rgba(0, 86, 255, 0.15); color: #60a5fa; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(0, 86, 255, 0.3); text-transform: uppercase; }
+        .module-title { font-size: 1.6rem; font-weight: 800; color: #ffffff; margin-top: 6px; }
+        .module-stats { font-size: 0.85rem; font-weight: 700; color: #10B981; background: rgba(16, 185, 129, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.2); }
+
+        .classes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; }
+        .class-card { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease; }
+        .class-card:hover { border-color: #0056FF; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+        .class-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+        .class-number-badge { background-color: #FFB800; color: #000; font-weight: 800; font-size: 0.78rem; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+        .date-badge { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; font-weight: 700; font-size: 0.75rem; padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .status-badge { font-size: 0.73rem; font-weight: 700; padding: 4px 8px; border-radius: 20px; }
+        .status-ready { background-color: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-pending { background-color: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .class-card-title { font-size: 1.15rem; font-weight: 800; color: #ffffff; margin-bottom: 8px; line-height: 1.35; }
+        .class-card-desc { font-size: 0.84rem; color: #94a3b8; margin-bottom: 18px; line-height: 1.45; }
+        .class-card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: #64748b; margin-bottom: 16px; border-top: 1px solid #1e293b; padding-top: 12px; }
+        .class-btn { background-color: #0056FF; color: #ffffff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+        .class-btn:hover { background-color: #0044cc; }
+        .class-btn-secondary { background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+    </style>
+</head>
+<body>
+    <div class="hub-container">
+        <header class="hub-header">
+            <div>
+                <div class="hub-brand">&lt;/&gt; 4Geeks Academy</div>
+                <h1 class="hub-title">Repositorio <span>Unificado de Presentaciones</span></h1>
+                <p style="color: #94a3b8; margin-top: 6px;">Selecciona cualquier módulo o clase para acceder a sus diapositivas interactivas en vivo.</p>
+            </div>
+        </header>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="filtrarModulo('todos')">✨ Todos los Módulos</button><button class="tab-btn" onclick="filtrarModulo('backenddevelopmentpresentation4geeks')">Backend Development</button><button class="tab-btn" onclick="filtrarModulo('authenticationinwebapplicationspresentation4geeks')">Authentication in Web Applications</button><button class="tab-btn" onclick="filtrarModulo('errorhandlingdebuggingtestingpresentation4geeks')">Error Handling, Debugging and Testing</button>
+        </div>
+
+        
+            <section class="module-block" data-modid="backenddevelopmentpresentation4geeks">
+                <div class="module-header">
+                    <div>
+                        <span class="module-badge">📦 Módulo Académico</span>
+                        <h2 class="module-title">Backend Development</h2>
+                    </div>
+                    <span class="module-stats">⚡ 5 / 5 Clases Disponibles</span>
+                </div>
+                <div class="classes-grid">
+                    
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 32</span>
+                                <span class="date-badge">📅 Viernes 21/08/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (170 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Defining the backend architecture</h3>
+                        <p class="class-card-desc">Definiendo la arquitectura backend: patrones de diseño, comunicación cliente-servidor, separación de capas.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 170 Diapositivas</span>
+                            <span>💻 Arquitectura</span>
+                        </div>
+                        <a href="Backend-development-presentation-4geeks/clase32/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 33</span>
+                                <span class="date-badge">📅 Lunes 24/08/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (74 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Answering frontend requests with APIs</h3>
+                        <p class="class-card-desc">Respondiendo peticiones del frontend con APIs: diseño de endpoints RESTful, verbos HTTP y formateo JSON.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 74 Diapositivas</span>
+                            <span>💻 APIs REST</span>
+                        </div>
+                        <a href="Backend-development-presentation-4geeks/clase33/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 34</span>
+                                <span class="date-badge">📅 Miércoles 26/08/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (80 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Managing files from the backend</h3>
+                        <p class="class-card-desc">Gestión de archivos desde el backend: lectura y escritura (I/O), CSVs, logs append-only y persistencia.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 80 Diapositivas</span>
+                            <span>💻 Archivos I/O</span>
+                        </div>
+                        <a href="Backend-development-presentation-4geeks/clase34/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 35</span>
+                                <span class="date-badge">📅 Viernes 28/08/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (107 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Creating a basic agent with python and an API ⭐</h3>
+                        <p class="class-card-desc">Creando un agente básico con Python y una API: ciclo Observe-Think-Act, tool calling sin frameworks y auditoría.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 107 Diapositivas</span>
+                            <span>💻 Agentes AI</span>
+                        </div>
+                        <a href="Backend-development-presentation-4geeks/clase35/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 36</span>
+                                <span class="date-badge">📅 Lunes 31/08/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (80 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Storing data in light databases</h3>
+                        <p class="class-card-desc">Almacenamiento de datos en bases de datos ligeras: TinyDB, esquemas Pydantic y persistencia de datos.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 80 Diapositivas</span>
+                            <span>💻 BD Ligeras</span>
+                        </div>
+                        <a href="Backend-development-presentation-4geeks/clase36/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                </div>
+            </section>
+        
+            <section class="module-block" data-modid="authenticationinwebapplicationspresentation4geeks">
+                <div class="module-header">
+                    <div>
+                        <span class="module-badge">📦 Módulo Académico</span>
+                        <h2 class="module-title">Authentication in Web Applications</h2>
+                    </div>
+                    <span class="module-stats">⚡ 2 / 2 Clases Disponibles</span>
+                </div>
+                <div class="classes-grid">
+                    
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 37</span>
+                                <span class="date-badge">📅 Miércoles 02/09/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (73 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Securing the API: Authentication in FastAPI</h3>
+                        <p class="class-card-desc">Autenticación en Backend: Fundamentos de autenticación, contraseñas seguras y JWT en FastAPI.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 73 Diapositivas</span>
+                            <span>💻 Backend Auth</span>
+                        </div>
+                        <a href="Authentication-in-web-applications-presentation-4geeks/clase37/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 38</span>
+                                <span class="date-badge">📅 Viernes 04/09/2026</span>
+                            </div>
+                            <span class="status-badge status-ready">● Lista (67 Slides)</span>
+                        </div>
+                        <h3 class="class-card-title">Connecting the Lock: Authentication Flows & Password Reset</h3>
+                        <p class="class-card-desc">Gestionando Sesiones en el Frontend: Estrategias de almacenamiento, ciclo de vida del estado y password reset.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 67 Diapositivas</span>
+                            <span>💻 Frontend Auth</span>
+                        </div>
+                        <a href="Authentication-in-web-applications-presentation-4geeks/clase38/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                    </div>
+                </div>
+            
+                </div>
+            </section>
+        
+            <section class="module-block" data-modid="errorhandlingdebuggingtestingpresentation4geeks">
+                <div class="module-header">
+                    <div>
+                        <span class="module-badge">📦 Módulo Académico</span>
+                        <h2 class="module-title">Error Handling, Debugging and Testing</h2>
+                    </div>
+                    <span class="module-stats">⚡ 0 / 2 Clases Disponibles</span>
+                </div>
+                <div class="classes-grid">
+                    
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 39</span>
+                                <span class="date-badge">📅 Lunes 07/09/2026</span>
+                            </div>
+                            <span class="status-badge status-pending">● Pendiente</span>
+                        </div>
+                        <h3 class="class-card-title">Error Handling & Robust Apps</h3>
+                        <p class="class-card-desc">Manejo defensivo de errores, excepciones y registros en aplicaciones.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 10 Diapositivas</span>
+                            <span>💻 Error Handling</span>
+                        </div>
+                        <a href="Error-handling-debugging-testing-presentation-4geeks/clase39/index.html" class="class-btn class-btn-secondary">Generar / Ver Clase ⚙️</a>
+                    </div>
+                </div>
+            
+                <div class="class-card">
+                    <div>
+                        <div class="class-card-top">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="class-number-badge">Clase 40</span>
+                                <span class="date-badge">📅 Miércoles 09/09/2026</span>
+                            </div>
+                            <span class="status-badge status-pending">● Pendiente</span>
+                        </div>
+                        <h3 class="class-card-title">Building Bullet-Proof Applications</h3>
+                        <p class="class-card-desc">Baterías de pruebas unitarias e integración para aplicaciones robustas en FastAPI.</p>
+                    </div>
+                    <div>
+                        <div class="class-card-meta">
+                            <span>📊 10 Diapositivas</span>
+                            <span>💻 Testing</span>
+                        </div>
+                        <a href="Error-handling-debugging-testing-presentation-4geeks/clase40/index.html" class="class-btn class-btn-secondary">Generar / Ver Clase ⚙️</a>
+                    </div>
+                </div>
+            
+                </div>
+            </section>
+        
+    </div>
+
+    <script>
+        function filtrarModulo(modId) {
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const blocks = document.querySelectorAll('.module-block');
+            blocks.forEach(block => {
+                if (modId === 'todos' || block.getAttribute('data-modid') === modId) {
+                    block.style.display = 'flex';
+                } else {
+                    block.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
