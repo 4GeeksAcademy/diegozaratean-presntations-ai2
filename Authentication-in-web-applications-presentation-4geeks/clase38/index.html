@@ -29,479 +29,262 @@
             <ul class="summary-box-list">
                 <li>🦾 <strong>Práctica 1:</strong> Almacenamiento de Sesiones en Frontend</li>
 <li>🦾 <strong>Práctica 2:</strong> Ciclo de Vida de Sesión en Cliente</li>
-<li>💻 <strong>Proyecto Final:</strong> Connecting the Lock: Authentication Flows in Frontend & Password Reset Flow & Platform – Federated Authentication</li>
+<li>💻 <strong>Proyecto Final:</strong> Connecting the Lock: Authentication Flows & Password Reset</li>
             </ul>
         </div>
     
             </div>
         </div>
     
-        <!-- SLIDE: Tema 1 - 1. ¿Qué es la Autenticación y por qué es crucial? -->
+        <!-- SLIDE INTRO 0A (Clase 38): Dominio vs Origen - Parte Teórica y Ejemplo -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 1: 1. ¿Qué es la Autenticación y por qué es crucial?</div>
+                <div class="slide-title-header">Clase 38 • Conceptos Clave: Dominio vs Origen (Teoría y URL)</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
             <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 . ¿Qué es la Autenticación y por qué es crucial?: Diagrama Visual</h2>
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 12px;">🌐 Dominio vs Origen: Definición Técnica y Ejemplo</h2>
 
-        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
-            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
-                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
-                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"Entender 1."</p>
+                <!-- Bloque de Ejemplo Práctico -->
+                <div style="background: #0f172a; border-radius: 10px; padding: 14px 18px; color: #ffffff; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <strong style="color: #38bdf8; font-size: 0.95rem; display: block; margin-bottom: 6px;">🔗 Dada la URL de ejemplo:</strong>
+                    <code style="background: #1e293b; color: #38bdf8; padding: 8px 14px; border-radius: 6px; font-size: 1.0rem; display: block; text-align: center; font-weight: 600; letter-spacing: 0.5px; border: 1px solid #334155;">https://tienda.ejemplo.com:443/productos</code>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px;">
+                        <div style="background: rgba(253, 224, 71, 0.1); border: 1px solid #fde047; padding: 10px 14px; border-radius: 8px;">
+                            <strong style="color: #fde047; font-size: 0.92rem;">🏷️ Dominio (Domain):</strong>
+                            <p style="color: #fef08a; font-size: 0.90rem; margin-top: 2px;"><code>tienda.ejemplo.com</code> <span style="font-size: 0.82rem; color: #cbd5e1;">(o raíz <code>ejemplo.com</code>)</span></p>
+                        </div>
+                        <div style="background: rgba(74, 222, 128, 0.1); border: 1px solid #4ade80; padding: 10px 14px; border-radius: 8px;">
+                            <strong style="color: #4ade80; font-size: 0.92rem;">📍 Origen (Origin):</strong>
+                            <p style="color: #bbf7d0; font-size: 0.90rem; margin-top: 2px;"><code>https://tienda.ejemplo.com:443</code></p>
+                        </div>
+                    </div>
                 </div>
-                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
-                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">La <strong>Autenticación</strong> es el proceso de verificar la identidad de un usuario (¿quién eres?).</p>
+
+                <!-- Bloques de Definiciones Técnicas -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #1d4ed8; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🏷️</span> Dominio (Domain)
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.45;">
+                            Es la dirección legible por humanos que identifica una red o servidor en internet (parte del sistema DNS).
+                        </p>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #15803d; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🔒</span> Origen (Origin)
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #14532d; line-height: 1.45;">
+                            Se define strictly por la tupla triple de 3 elementos obligatorios:<br>
+                            <code style="background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px; font-weight: 700; display: inline-block; margin-top: 4px; font-size: 0.88rem;">&lt;protocolo&gt;://&lt;host&gt;:&lt;puerto&gt;</code>
+                        </p>
+                    </div>
                 </div>
-                
-        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
-            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
-            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
-                <li>Definición de 1. ¿Qué es la Autenticación y por qué es crucial?.</li>
-                <li>Evitar complejidad innecesaria.</li>
-            </ul>
+            </div>
         </div>
         
-            </div>
-            <div class="slide-col-right" style="text-align: center;">
-                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
-                    <img src="images/img_1176903713.png" alt="." style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
-                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">.</span>
-                </div>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 2 - Tipos de Autenticación más comunes: -->
+        <!-- SLIDE INTRO 0B (Clase 38): Dominio vs Origen - Analogía Didáctica -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 2: Tipos de Autenticación más comunes:</div>
+                <div class="slide-title-header">Clase 38 • Conceptos Clave: Dominio vs Origen (Analogía Didáctica)</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
             <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🔄 Tipos de Autenticación más comunes:: Flujo de Implementación</h2>
-        
-        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;">
-            <strong style="color: #0056FF; font-size: 0.8rem;">📌 En Palabras Simples:</strong>
-            <p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">"Entender Tipos de Autenticación más comunes: permite aplicar buenas prácticas de seguridad e ingeniería en la aplicación."</p>
-        </div>
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 12px;">🏡 Analogía Cotidiana: La Casa de Juegos</h2>
 
-        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-            <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">1️⃣</div>
-                <div>
-                    <strong style="color: #0056FF; font-size: 0.82rem;">Fase 1</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Definición de Tipos de Autenticación más comunes:.</p>
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;">
+                    <p style="font-size: 0.95rem; color: #9a3412; font-weight: 600;">
+                        Imagina una casa de juegos:
+                    </p>
                 </div>
-            </div>
-            <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">2️⃣</div>
-                <div>
-                    <strong style="color: #047857; font-size: 0.82rem;">Fase 2</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Evitar complejidad innecesaria.</p>
+
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 16px;">
+                        <strong style="color: #1d4ed8; font-size: 0.98rem; display: block; margin-bottom: 4px;">🏷️ El Dominio es el nombre de la casa</strong>
+                        <p style="font-size: 0.90rem; color: #334155; line-height: 1.4;">
+                            Es como decir la <strong>"Casa del Árbol"</strong>. Solo te dice qué lugar es, para que todos sepan de qué casa estás hablando.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 16px;">
+                        <strong style="color: #047857; font-size: 0.98rem; display: block; margin-bottom: 4px;">🔑 El Origen es la regla completa para poder entrar</strong>
+                        <p style="font-size: 0.88rem; color: #064e3b; margin-bottom: 6px; font-weight: 600;">
+                            Para que cuente como la misma casa exacta, necesitas tres cosas obligatorias:
+                        </p>
+                        <ul style="font-size: 0.88rem; color: #334155; line-height: 1.45; padding-left: 20px;">
+                            <li>🚴 <strong>Cómo vas:</strong> ¿Llegas en bicicleta o en patineta? <em>(El protocolo: <code>http</code> o <code>https</code>)</em>.</li>
+                            <li>📍 <strong>El nombre del lugar:</strong> La Casa del Árbol <em>(El dominio)</em>.</li>
+                            <li>🔑 <strong>Por cuál puerta entras:</strong> ¿Por la puerta principal o por la trampilla del techo? <em>(El puerto: <code>:443</code>, <code>:80</code>)</em>.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">3️⃣</div>
-                <div>
-                    <strong style="color: #6D28D9; font-size: 0.82rem;">Fase 3</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Verificar condición de parada (Goal).</p>
-                </div>
-            </div>
-            <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">🎯</div>
-                <div>
-                    <strong style="color: #B45309; font-size: 0.82rem;">Goal & Meta</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Auditar eventos en logs.</p>
+
+                <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 16px;">
+                    <strong style="color: #b91c1c; font-size: 0.94rem; display: flex; align-items: center; gap: 6px;">
+                        <span>🚨</span> El Guardia de Seguridad del Navegador (SOP / CORS)
+                    </strong>
+                    <p style="font-size: 0.86rem; color: #7f1d1d; margin-top: 4px; line-height: 1.4;">
+                        Si cambias de bicicleta a patineta (<code>http</code> vs <code>https</code>), o intentas entrar por otra puerta (puerto diferente), el guardia de seguridad del navegador dice: <em>"¡Un momento, este ya es otro origen diferente!"</em> y no te deja tocar los juguetes del cuarto.
+                    </p>
                 </div>
             </div>
         </div>
         
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 3 - 2. Seguridad de Contraseñas en el Backend -->
+        <!-- SLIDE INTRO 1 (Clase 38): Comparativa Técnica de Almacenamiento Frontend -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 3: 2. Seguridad de Contraseñas en el Backend</div>
+                <div class="slide-title-header">Clase 38 • Comparativa: Mecanismos de Almacenamiento Frontend</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
             <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.35rem; margin-bottom: 8px;">💾 Mecanismos de Almacenamiento en el Cliente (Frontend)</h2>
                 
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 . Seguridad de Contraseñas en el Backend: Código en Vivo</h2>
+                <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 14px; border-radius: 8px; margin-bottom: 10px;">
+                    <p style="font-size: 0.86rem; color: #1e293b; line-height: 1.35;">
+                        Estos cuatro mecanismos sirven para guardar información en el desarrollo web frontend, pero varían drásticamente en <strong>persistencia</strong>, <strong>capacidad</strong> y <strong>comunicación con el servidor</strong>.
+                    </p>
+                </div>
 
-        <div class="slide-two-cols">
-            <div class="slide-col-left">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
-                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Entender 2."</p>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-bottom: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: #0f172a; color: #ffffff;">
+                            <th style="padding: 6px 10px; text-align: left; font-size: 0.82rem;">Característica</th>
+                            <th style="padding: 6px 10px; text-align: left; font-size: 0.82rem; color: #38bdf8;">Variables (JS)</th>
+                            <th style="padding: 6px 10px; text-align: left; font-size: 0.82rem; color: #a7f3d0;">Session Storage</th>
+                            <th style="padding: 6px 10px; text-align: left; font-size: 0.82rem; color: #fde047;">Local Storage</th>
+                            <th style="padding: 6px 10px; text-align: left; font-size: 0.82rem; color: #f472b6;">Cookies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                            <td style="padding: 5px 10px; font-weight: 700; color: #334155;">Persistencia</td>
+                            <td style="padding: 5px 10px; color: #475569;">Se pierden al recargar la página (<code>F5</code>).</td>
+                            <td style="padding: 5px 10px; color: #475569;">Persiste recargas; se borra al cerrar la pestaña.</td>
+                            <td style="padding: 5px 10px; color: #475569;">Persiste indefinidamente hasta que se borre manualmente.</td>
+                            <td style="padding: 5px 10px; color: #475569;">Depende de la fecha de expiración configurada (o de sesión).</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 5px 10px; font-weight: 700; color: #334155;">Alcance</td>
+                            <td style="padding: 5px 10px; color: #475569;">Contexto de ejecución actual / memoria RAM.</td>
+                            <td style="padding: 5px 10px; color: #475569;">Exclusivo de la pestaña actual (mismo origen).</td>
+                            <td style="padding: 5px 10px; color: #475569;">Compartido entre todas las pestañas de un mismo origen.</td>
+                            <td style="padding: 5px 10px; color: #475569;">Compartido entre todas las pestañas de un mismo dominio.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                            <td style="padding: 5px 10px; font-weight: 700; color: #334155;">Capacidad</td>
+                            <td style="padding: 5px 10px; color: #475569;">Limitada por la RAM disponible.</td>
+                            <td style="padding: 5px 10px; color: #475569;">~5 MB por origen.</td>
+                            <td style="padding: 5px 10px; color: #475569;">~5 MB a 10 MB por origen.</td>
+                            <td style="padding: 5px 10px; color: #475569;">~4 KB por cookie.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 5px 10px; font-weight: 700; color: #334155;">Envío al servidor</td>
+                            <td style="padding: 5px 10px; color: #475569;">No (solo cliente).</td>
+                            <td style="padding: 5px 10px; color: #475569;">No (solo cliente).</td>
+                            <td style="padding: 5px 10px; color: #475569;">No (solo cliente).</td>
+                            <td style="padding: 5px 10px; color: #166534; font-weight: 700;">Sí, viajan automáticamente en cada petición HTTP vía headers.</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 5px 10px; font-weight: 700; color: #334155;">Acceso API</td>
+                            <td style="padding: 5px 10px; color: #475569;">Lenguaje directo (<code>let</code>, <code>const</code>).</td>
+                            <td style="padding: 5px 10px; color: #475569;"><code>sessionStorage.setItem()</code></td>
+                            <td style="padding: 5px 10px; color: #475569;"><code>localStorage.setItem()</code></td>
+                            <td style="padding: 5px 10px; color: #475569;"><code>document.cookie</code> o cabeceras HTTP (<code>Set-Cookie</code>).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                    <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 7px 9px;">
+                        <strong style="color: #0369a1; font-size: 0.80rem; display: block; margin-bottom: 2px;">⚡ Variables (Memoria)</strong>
+                        <p style="font-size: 0.75rem; color: #0c4a6e; line-height: 1.3;">Almacenan datos efímeros en RAM mientras corre el script.</p>
+                        <p style="font-size: 0.73rem; color: #0284c7; margin-top: 3px;"><strong>Uso típico:</strong> Estados de componentes en React/Vue, contadores.</p>
+                    </div>
+                    <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 7px 9px;">
+                        <strong style="color: #047857; font-size: 0.80rem; display: block; margin-bottom: 2px;">⏱️ Session Storage</strong>
+                        <p style="font-size: 0.75rem; color: #064e3b; line-height: 1.3;">Pares clave-valor aislados por pestaña.</p>
+                        <p style="font-size: 0.73rem; color: #059669; margin-top: 3px;"><strong>Uso típico:</strong> Formularios multipaso, filtros temporales.</p>
+                    </div>
+                    <div style="background: #fefce8; border: 1px solid #fef08a; border-radius: 8px; padding: 7px 9px;">
+                        <strong style="color: #a16207; font-size: 0.80rem; display: block; margin-bottom: 2px;">💾 Local Storage</strong>
+                        <p style="font-size: 0.75rem; color: #713f12; line-height: 1.3;">Persistente en disco sin caducidad automática.</p>
+                        <p style="font-size: 0.73rem; color: #ca8a04; margin-top: 3px;"><strong>Uso típico:</strong> Tema oscuro/claro, preferencias UI, carrito offline.</p>
+                    </div>
+                    <div style="background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 8px; padding: 7px 9px;">
+                        <strong style="color: #be185d; font-size: 0.80rem; display: block; margin-bottom: 2px;">🍪 Cookies</strong>
+                        <p style="font-size: 0.75rem; color: #831843; line-height: 1.3;">Mantienen estado cliente-backend. Banderas <code>HttpOnly</code>/<code>Secure</code>.</p>
+                        <p style="font-size: 0.73rem; color: #db2777; margin-top: 3px;"><strong>Uso típico:</strong> Tokens de autenticación, sesiones, privacidad.</p>
+                    </div>
                 </div>
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
-                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;"><strong>Regla de oro:</strong> Nunca, bajo ninguna circunstancia, almacenes contraseñas en texto plano.</p>
-                </div>
-            </div>
-            <div class="slide-col-right">
-                
-    <div class="editor-container">
-        <div class="editor-header">
-            <div class="editor-dots">
-                <span class="editor-dot dot-red"></span>
-                <span class="editor-dot dot-yellow"></span>
-                <span class="editor-dot dot-green"></span>
-            </div>
-            <span class="editor-filename">sec-3.py</span>
-            <div class="editor-header-right">
-                <span class="editor-lang">Python</span>
-            </div>
-        </div>
-        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-comment"># 🤖 Ejemplo ejecutable para 2. Seguridad de Contraseñas en el Backend</span>
-max_iterations = <span class="syn-num">5</span>
-<span class="syn-kw">for</span> i <span class="syn-kw">in</span> <span class="syn-fn">range</span>(max_iterations):
-    result = <span class="syn-fn">process_step</span>(i)
-    <span class="syn-kw">if</span> result.<span class="syn-fn">is_complete</span>():
-        <span class="syn-kw">break</span>  <span class="syn-comment"># Goal alcanzado</span></code></pre>
-    </div>
-    
             </div>
         </div>
         
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 4 - Requisitos actuales de una contraseña segura: -->
+        <!-- SLIDE INTRO 2 (Clase 38): Analogía Didáctica con Juguetes -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 4: Requisitos actuales de una contraseña segura:</div>
+                <div class="slide-title-header">Clase 38 • Analogía Didáctica: Almacenamiento Explicado con Juguetes</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
             <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.35rem; margin-bottom: 10px;">🧸 Analogía Cotidiana: Entendiendo el Almacenamiento Frontend</h2>
                 
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">⚠️ Requisitos actuales de una contraseña segura:: Prevención de Errores</h2>
-
-        <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 12px; margin-bottom: 12px;">
-            <div style="font-size: 0.95rem; font-weight: 800; color: #991b1b; margin-bottom: 4px;">🚨 ¿Qué error debemos evitar en Requisitos actuales de una contraseña segura:?</div>
-            <p style="font-size: 0.76rem; color: #7f1d1d; line-height: 1.35;">Desarrollo y aplicación práctica de Requisitos actuales de una contraseña segura:.</p>
-        </div>
-
-        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px; border-radius: 8px;">
-            <strong style="color: #0056FF; font-size: 0.8rem;">💡 Solución de Ingeniería:</strong>
-            <p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">Principios clave de ingeniería para Requisitos actuales de una contraseña segura:.</p>
-        </div>
-        
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 5 - Cifrado Unidireccional (Hashing) y Salting: -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 5: Cifrado Unidireccional (Hashing) y Salting:</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 Cifrado Unidireccional (Hashing) y Salting:: Código en Vivo</h2>
-
-        <div class="slide-two-cols">
-            <div class="slide-col-left">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
-                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Entender Cifrado Unidireccional (Hashing) y Salting: permite aplicar buenas prácticas de seguridad e ingeniería en la aplicación."</p>
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 14px; border-radius: 8px; margin-bottom: 12px;">
+                    <p style="font-size: 0.90rem; color: #9a3412; font-weight: 600;">
+                        Imagina que estás jugando en tu habitación con tus juguetes favoritos:
+                    </p>
                 </div>
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
-                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">Un <strong>Hash</strong> es una función matemática que transforma una entrada de texto en una cadena de longitud fija ilegible e...</p>
-                </div>
-            </div>
-            <div class="slide-col-right">
-                
-    <div class="editor-container">
-        <div class="editor-header">
-            <div class="editor-dots">
-                <span class="editor-dot dot-red"></span>
-                <span class="editor-dot dot-yellow"></span>
-                <span class="editor-dot dot-green"></span>
-            </div>
-            <span class="editor-filename">sec-5.py</span>
-            <div class="editor-header-right">
-                <span class="editor-lang">Python</span>
-            </div>
-        </div>
-        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code>flowchart LR
-    A[Contraseña: MiS3cr3to] --&gt; B[+ Sal Aleatoria]
-    B --&gt; C[Algoritmo de Hash: bcrypt]
-    C --&gt; D[Hash Resultante: $2b$<span class="syn-num">12</span>$...]</code></pre>
-    </div>
-    
-            </div>
-        </div>
-        
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 6 - 1. El peligro de la decodificación de JWT -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 6: 1. El peligro de la decodificación de JWT</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 . El peligro de la decodificación de JWT: Diagrama Visual</h2>
 
-        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
-            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
-                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
-                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"El flujo JWT es como una discoteca: verificas tu DNI en la entrada (login) y te dan una pulsera (JWT) para pedir consumiciones en..."</p>
-                </div>
-                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
-                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Un error común de los desarrolladores junior es creer que un JWT está encriptado.</p>
-                </div>
-                
-        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
-            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
-            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
-                <li><strong>Solución Defensiva:</strong> Nunca guardes contraseñas, tokens de API externos ni...</li>
-            </ul>
-        </div>
-        
-            </div>
-            <div class="slide-col-right" style="text-align: center;">
-                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
-                    <img src="images/img_1599861586.png" alt="." style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
-                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">.</span>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 1.3rem;">✋</span>
+                            <strong style="color: #1d4ed8; font-size: 0.96rem;">Variables (Tus manos)</strong>
+                        </div>
+                        <ul style="font-size: 0.86rem; color: #1e3a8a; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;">Es lo que sostienes en las manos en este momento exacto.</li>
+                            <li>Si te distraes o parpadeas rápido (recargar la página <code>F5</code>), sueltas el juguete y ya no lo tienes en las manos.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #ecfdf5; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 1.3rem;">📦</span>
+                            <strong style="color: #047857; font-size: 0.96rem;">Session Storage (Tu cajita de juegos de hoy)</strong>
+                        </div>
+                        <ul style="font-size: 0.86rem; color: #064e3b; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;">Es una cajita donde guardas los juguetes con los que estás jugando hoy mientras la puerta del cuarto está abierta.</li>
+                            <li>Si sales y cierras la puerta (cerrar la pestaña del navegador), la cajita se limpia mágicamente y queda vacía para la próxima vez.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fefce8; border: 2px solid #eab308; border-radius: 10px; padding: 12px 14px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 1.3rem;">🧰</span>
+                            <strong style="color: #a16207; font-size: 0.96rem;">Local Storage (Tu baúl de juguetes favorito)</strong>
+                        </div>
+                        <ul style="font-size: 0.86rem; color: #713f12; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;">Es un baúl grande y pesado en tu habitación.</li>
+                            <li>Todo lo que guardas ahí se queda para siempre, aunque te vayas a dormir, apagues la luz y regreses días después, hasta que tú mismo decidas tirarlo.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fdf2f8; border: 2px solid #ec4899; border-radius: 10px; padding: 12px 14px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 1.3rem;">✉️</span>
+                            <strong style="color: #be185d; font-size: 0.96rem;">Cookies (Una cartita pegada en tu lonchera)</strong>
+                        </div>
+                        <ul style="font-size: 0.86rem; color: #831843; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;">Es una nota pequeña pegada en tu mochila.</li>
+                            <li>Cada vez que vas a la cocina a pedirle una merienda a tus papás (el servidor), ellos leen la notita para saber exactamente quién eres y qué merienda te toca recibir.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
         
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 7 - 2. Hardcoding de Secretos -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 7: 2. Hardcoding de Secretos</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">📊 . Hardcoding de Secretos: Diagrama Visual</h2>
-
-        <div class="slide-two-cols" style="grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: center;">
-            <div class="slide-col-left" style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 10px; border-radius: 8px;">
-                    <strong style="color: #c2410c; font-size: 0.78rem;">💡 Idea Central:</strong>
-                    <p style="font-size: 0.74rem; color: #7c2d12; margin-top: 2px; line-height: 1.3;">"Entender 2."</p>
-                </div>
-                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px;">
-                    <strong style="color: #0056FF; font-size: 0.78rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.74rem; color: #1e3a8a; margin-top: 2px; line-height: 1.3;">Subir la clave de firma (`SECRET_KEY`) a GitHub es el equivalente a dejar la llave de tu caja fuerte pegada a la puerta.</p>
-                </div>
-                
-        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 8px 10px;">
-            <strong style="color: #166534; font-size: 0.78rem;">📋 Puntos a Tener en Cuenta:</strong>
-            <ul style="font-size: 0.72rem; color: #14532d; margin-top: 3px; padding-left: 15px; line-height: 1.3;">
-                <li><strong>Solución Defensiva:</strong> Carga siempre las variables de configuración desde el...</li>
-            </ul>
-        </div>
-        
-            </div>
-            <div class="slide-col-right" style="text-align: center;">
-                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center;">
-                    <img src="images/img_1176903713.png" alt="." style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px;">
-                    <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 600;">.</span>
-                </div>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 8 - 1. Hashing de Contraseñas con `libpass` (Bcrypt) -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 8: 1. Hashing de Contraseñas con `libpass` (Bcrypt)</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">🔄 . Hashing de Contraseñas con `libpass` (Bcrypt): Flujo de Implementación</h2>
-        
-        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;">
-            <strong style="color: #0056FF; font-size: 0.8rem;">📌 En Palabras Simples:</strong>
-            <p style="font-size: 0.76rem; color: #1e293b; margin-top: 2px; line-height: 1.35;">"Las contraseñas robustas son la cerradura principal: si es débil, cualquiera entra a tu casa sin esfuerzo."</p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-            <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">1️⃣</div>
-                <div>
-                    <strong style="color: #0056FF; font-size: 0.82rem;">Fase 1</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Definición de 1. Hashing de Contraseñas con `libpass` (Bcrypt).</p>
-                </div>
-            </div>
-            <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">2️⃣</div>
-                <div>
-                    <strong style="color: #047857; font-size: 0.82rem;">Fase 2</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Evitar complejidad innecesaria.</p>
-                </div>
-            </div>
-            <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">3️⃣</div>
-                <div>
-                    <strong style="color: #6D28D9; font-size: 0.82rem;">Fase 3</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Verificar condición de parada (Goal).</p>
-                </div>
-            </div>
-            <div style="background: #ffffff; border: 2px solid #F59E0B; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px;">
-                <div style="font-size: 1.2rem;">🎯</div>
-                <div>
-                    <strong style="color: #B45309; font-size: 0.82rem;">Goal & Meta</strong>
-                    <p style="font-size: 0.76rem; color: #475569; margin-top: 2px; line-height: 1.35;">Auditar eventos en logs.</p>
-                </div>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 9 - 2. Generación y Validación de JWT con `python-jose` -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 9: 2. Generación y Validación de JWT con `python-jose`</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 . Generación y Validación de JWT con `python-jose`: Código en Vivo</h2>
-
-        <div class="slide-two-cols">
-            <div class="slide-col-left">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
-                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"El flujo JWT es como una discoteca: verificas tu DNI en la entrada (login) y te dan una pulsera (JWT) para pedir consumiciones en..."</p>
-                </div>
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
-                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">`python-jose` es la librería estándar para firmar y verificar tokens en el ecosistema de FastAPI.</p>
-                </div>
-            </div>
-            <div class="slide-col-right">
-                
-    <div class="editor-container">
-        <div class="editor-header">
-            <div class="editor-dots">
-                <span class="editor-dot dot-red"></span>
-                <span class="editor-dot dot-yellow"></span>
-                <span class="editor-dot dot-green"></span>
-            </div>
-            <span class="editor-filename">sec-9.py</span>
-            <div class="editor-header-right">
-                <span class="editor-lang">Python</span>
-            </div>
-        </div>
-        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">from</span> datetime <span class="syn-kw">import</span> datetime, timedelta
-<span class="syn-kw">from</span> jose <span class="syn-kw">import</span> jwt, JWTError
-
-SECRET_KEY = <span class="syn-str">"mi_clave_secreta_super_segura_para_desarrollo"</span>
-ALGORITHM = <span class="syn-str">"HS256"</span>
-
-<span class="syn-kw">def</span> <span class="syn-fn">create_access_token</span>(data: dict, expires_delta: timedelta = <span class="syn-kw">None</span>) -&gt; str:
-    to_encode = data.<span class="syn-fn">copy</span>()
-    expire = datetime.<span class="syn-fn">utcnow</span>() + (expires_delta or <span class="syn-fn">timedelta</span>(minutes=<span class="syn-num">15</span>))
-    to_encode.<span class="syn-fn">update</span>({<span class="syn-str">"exp"</span>: expire})
-    <span class="syn-kw">return</span> jwt.<span class="syn-fn">encode</span>(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
-<span class="syn-kw">def</span> <span class="syn-fn">verify_access_token</span>(token: str) -&gt; dict:
-    <span class="syn-kw">try</span>:
-        payload = jwt.<span class="syn-fn">decode</span>(token, SECRET_KEY, algorithms=[ALGORITHM])
-        <span class="syn-kw">return</span> payload
-    <span class="syn-kw">except</span> JWTError:
-        <span class="syn-comment"># Captura firmas inválidas, tokens expirados o malformados</span>
-        <span class="syn-kw">return</span> <span class="syn-kw">None</span></code></pre>
-    </div>
-    
-            </div>
-        </div>
-        
-            </div>
-        </div>
-            
-        <!-- SLIDE: Tema 10 - 3. Relaciones 1-a-1 en TinyDB -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 38 • Tema 10: 3. Relaciones 1-a-1 en TinyDB</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body">
-                
-        <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">💻 . Relaciones 1-a-1 en TinyDB: Código en Vivo</h2>
-
-        <div class="slide-two-cols">
-            <div class="slide-col-left">
-                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                    <strong style="color: #c2410c; font-size: 0.8rem;">💡 Concepto Clave:</strong>
-                    <p style="font-size: 0.76rem; color: #7c2d12; margin-top: 2px; line-height: 1.35;">"Entender 3."</p>
-                </div>
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
-                    <strong style="color: #0056FF; font-size: 0.8rem;">📌 Explicación Técnica:</strong>
-                    <p style="font-size: 0.75rem; color: #475569; margin-top: 4px; line-height: 1.35;">TinyDB es una base de datos documental basada en JSON.</p>
-                </div>
-            </div>
-            <div class="slide-col-right">
-                
-    <div class="editor-container">
-        <div class="editor-header">
-            <div class="editor-dots">
-                <span class="editor-dot dot-red"></span>
-                <span class="editor-dot dot-yellow"></span>
-                <span class="editor-dot dot-green"></span>
-            </div>
-            <span class="editor-filename">sec-10.py</span>
-            <div class="editor-header-right">
-                <span class="editor-lang">Python</span>
-            </div>
-        </div>
-        <pre style="padding: 10px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #121824; max-height: 220px; overflow-y: auto;"><code><span class="syn-kw">from</span> tinydb <span class="syn-kw">import</span> TinyDB, Query
-
-db = <span class="syn-fn">TinyDB</span>(<span class="syn-str">"db.json"</span>)
-users_table = db.<span class="syn-fn">table</span>(<span class="syn-str">"users"</span>)
-profiles_table = db.<span class="syn-fn">table</span>(<span class="syn-str">"profiles"</span>)
-
-<span class="syn-comment"># Crear un usuario y su perfil vinculado</span>
-<span class="syn-kw">def</span> <span class="syn-fn">register_user_with_profile</span>(email: str, hashed_pass: str, name: str):
-    user_id = <span class="syn-str">"user_uuid_generado_123"</span> <span class="syn-comment"># Usa uuid.uuid4() en producción</span>
-    
-    <span class="syn-comment"># Insertar en tabla de credenciales</span>
-    users_table.<span class="syn-fn">insert</span>({
-        <span class="syn-str">"id"</span>: user_id,
-        <span class="syn-str">"email"</span>: email,
-        <span class="syn-str">"hashed_password"</span>: hashed_pass
-    })
-    
-    <span class="syn-comment"># Insertar en tabla de perfiles (Relación 1-a-1 mediante user_id)</span>
-    profiles_table.<span class="syn-fn">insert</span>({
-        <span class="syn-str">"id"</span>: <span class="syn-str">"profile_uuid_456"</span>,
-        <span class="syn-str">"user_id"</span>: user_id,
-        <span class="syn-str">"name"</span>: name
-    })</code></pre>
-    </div>
-    
-            </div>
-        </div>
-        
-            </div>
-        </div>
-            
         <!-- SLIDE FINAL: Práctica en Clase -->
         <div class="slide">
             <div class="slide-header">
@@ -511,26 +294,755 @@ profiles_table = db.<span class="syn-fn">table</span>(<span class="syn-str">"pro
             <div class="slide-body">
                 <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
                 
-                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
-                    <div style="font-size: 1.3rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
-                    <p style="font-size: 0.9rem; color: #1e293b; line-height: 1.55; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
                         Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
                     </p>
 
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; text-align: center;">
-                        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px;">
-                            <strong style="color: #0056FF; font-size: 0.85rem;">📌 Proyecto Práctico</strong>
-                            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">ai-eng-user-authentication-flows</p>
-                        </div>
-                        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px;">
-                            <strong style="color: #10B981; font-size: 0.85rem;">🛠️ Stack Técnico</strong>
-                            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">Python • FastAPI • JWT • LearnPack</p>
-                        </div>
-                        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 14px;">
-                            <strong style="color: #8B5CF6; font-size: 0.85rem;">🎯 Entregable</strong>
-                            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; font-weight: 600;">Código funcional, tests en verde & repo actualizado</p>
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">Connecting the Lock: Authentication Flows in the Frontend</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE INTRO 3 (Clase 38): ¿Qué es un Guard? Client-Side vs Server-Side Guard -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Protección de Rutas: ¿Qué es un Guard?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 10px;">🛡️ ¿Qué es un Guard? (Client-Side vs. Server-Side Guard)</h2>
+
+                <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;">
+                    <strong style="color: #0056FF; font-size: 0.96rem;">🛡️ Definición de Guard:</strong>
+                    <p style="font-size: 0.90rem; color: #1e293b; margin-top: 3px; line-height: 1.4;">
+                        Es un mecanismo de control que intercepta la navegación hacia una ruta para validar credenciales o permisos antes de permitir el acceso al contenido.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #0056FF; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>🖥️</span> Server-Side Guard (Middleware / Edge)
+                        </strong>
+                        <ul style="font-size: 0.88rem; color: #334155; line-height: 1.45; padding-left: 20px;">
+                            <li style="margin-bottom: 5px;">📍 <strong>Dónde:</strong> Servidor <em>(antes de enviar el HTML)</em>.</li>
+                            <li style="margin-bottom: 5px;">🔑 <strong>Dato clave:</strong> Usa <strong>Cookies</strong> <em>(viajan solas en el header HTTP)</em>.</li>
+                            <li>🚀 <strong>Ventaja:</strong> Bloquea en la puerta <em>(redirección instantánea 302, cero parpadeo, código 100% protegido)</em>.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #8B5CF6; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #7c3aed; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>💻</span> Client-Side Guard (useAuth / AuthGuard)
+                        </strong>
+                        <ul style="font-size: 0.88rem; color: #334155; line-height: 1.45; padding-left: 20px;">
+                            <li style="margin-bottom: 5px;">📍 <strong>Dónde:</strong> Navegador <em>(tras descargar y montar el bundle JS)</em>.</li>
+                            <li style="margin-bottom: 5px;">🔑 <strong>Dato clave:</strong> Usa <strong>localStorage</strong> <em>(el servidor es ciego a él)</em>.</li>
+                            <li>⏳ <strong>Reto:</strong> Redirección tardía en React; requiere spinners para evitar parpadeos visuales <em>(FOUC)</em>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 16px;">
+                    <strong style="color: #15803d; font-size: 0.96rem; display: flex; align-items: center; gap: 6px;">
+                        <span>💡</span> En Resumen:
+                    </strong>
+                    <p style="font-size: 0.90rem; color: #14532d; margin-top: 4px; line-height: 1.4;">
+                        Si guardas el token en <code>localStorage</code>, tu protección debe ser <strong>Client-Side</strong>; si usas <strong>Cookies HttpOnly</strong>, puedes proteger directamente en el <code>middleware.ts</code>.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 4 (Clase 38): Analogía Didáctica - El Club Secreto de Juegos (Guards) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Analogía Didáctica: Guards Explicados con el Club Secreto</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.35rem; margin-bottom: 8px;">🏰 Analogía Cotidiana: El Club Secreto de Juegos</h2>
+
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.90rem;">🎟️ Imagina que estás jugando a entrar a un Club Secreto de Juegos:</strong>
+                    <p style="font-size: 0.82rem; color: #7c2d12; margin-top: 2px;">
+                        Para entrar necesitas una <strong>ficha dorada</strong> (tu pase de entrada). El problema es dónde guardas esa ficha y quién te revisa.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <!-- Problema: Ficha en el bolsillo -->
+                    <div style="background: #f8fafc; border: 2px solid #94a3b8; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #334155; font-size: 0.92rem; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                            <span>👖</span> El Problema: En tu bolsillo
+                        </strong>
+                        <ul style="font-size: 0.80rem; color: #475569; line-height: 1.4; padding-left: 16px;">
+                            <li style="margin-bottom: 4px;"><code>localStorage</code> es como el <strong>bolsillo de tu pantalón</strong> en tu casa <em>(el navegador)</em>.</li>
+                            <li>El <strong>guardia de la entrada del castillo</strong> (<code>middleware.ts</code>) está lejos. Al tocar la puerta, no puede meter la mano en tu bolsillo. ¡Solo ve lo que mandas en la lonchera (las <strong>Cookies</strong>)!</li>
+                        </ul>
+                    </div>
+
+                    <!-- Server-Side Guard -->
+                    <div style="background: #eff6ff; border: 2px solid #0056FF; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #0056FF; font-size: 0.92rem; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                            <span>🏰</span> Server-Side Guard
+                        </strong>
+                        <ul style="font-size: 0.80rem; color: #1e3a8a; line-height: 1.4; padding-left: 16px;">
+                            <li style="margin-bottom: 4px;">Si usaras <strong>Cookies</strong>, el guardia de la puerta mira la lonchera antes de dejarte dar un paso. Si no hay ficha, te frena en seco.</li>
+                            <li>Pero si tu ficha está en el bolsillo (<code>localStorage</code>), este guardia no puede hacer su trabajo.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Client-Side Guard -->
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #7e22ce; font-size: 0.92rem; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                            <span>🤖</span> Client-Side Guard
+                        </strong>
+                        <ul style="font-size: 0.80rem; color: #581c87; line-height: 1.4; padding-left: 16px;">
+                            <li style="margin-bottom: 4px;">Al cruzar la puerta de la sala de juegos, hay un <strong>guardia robot adentro</strong> (<code>AuthGuard</code> / <code>useAuth</code>).</li>
+                            <li style="margin-bottom: 4px;">Al entrar, te dice: <em>"¡Alto! Muéstrame el bolsillo"</em>.</li>
+                            <li>Si tienes la ficha en <code>localStorage</code>, juegas; si no, te saca a la calle <em>(pantalla de login)</em>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 5 (Clase 38): Custom Hook useAuth -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Implementación Frontend: Custom Hook useAuth</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 12px;">🧠 useAuth (El Cerebro / La Lógica de Autenticación)</h2>
+
+                <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;">
+                    <strong style="color: #0056FF; font-size: 0.98rem;">⚛️ ¿Qué es <code>useAuth</code>?</strong>
+                    <p style="font-size: 0.92rem; color: #1e293b; margin-top: 3px; line-height: 1.4;">
+                        Un <strong>Custom Hook de React</strong> que centraliza el estado y todas las operaciones relativas a la sesión del usuario.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #1d4ed8; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>📋</span> Responsabilidades Principales
+                        </strong>
+                        <ul style="font-size: 0.90rem; color: #334155; line-height: 1.5; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;">📂 Lee y valida el token en el cliente (<code>localStorage</code>).</li>
+                            <li style="margin-bottom: 8px;">🌐 Expone el estado global: <code>user</code>, <code>isAuthenticated</code>, <code>isLoading</code>.</li>
+                            <li>🔐 Provee métodos de autenticación: <code>login()</code>, <code>logout()</code>.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #15803d; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>💡</span> Rol Clave en la Arquitectura
+                        </strong>
+                        <p style="font-size: 0.90rem; color: #14532d; line-height: 1.55; margin-top: 6px;">
+                            Sabe quién es el usuario y si tiene permiso, pero <strong>no decide qué renderizar</strong> en pantalla.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 6 (Clase 38): Wrapper Component AuthGuard -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Protección de Componentes: Wrapper AuthGuard</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 12px;">🛡️ AuthGuard (El Escudo / La Barrera Visual)</h2>
+
+                <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;">
+                    <strong style="color: #7e22ce; font-size: 0.98rem;">🛡️ ¿Qué es <code>AuthGuard</code>?</strong>
+                    <p style="font-size: 0.92rem; color: #3b0764; margin-top: 3px; line-height: 1.4;">
+                        Un <strong>componente contenedor (Wrapper)</strong> que envuelve páginas o layouts protegidos para restringir el acceso no autorizado.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div style="background: #ffffff; border: 2px solid #a855f7; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #7e22ce; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>📋</span> Responsabilidades Principales
+                        </strong>
+                        <ul style="font-size: 0.90rem; color: #334155; line-height: 1.5; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;">🧠 Consume <code>useAuth</code> para evaluar la sesión actual.</li>
+                            <li style="margin-bottom: 8px;">⏳ Muestra un estado de carga (<strong>Spinner</strong>) mientras se valida el token <em>(evita parpadeos / FOUC)</em>.</li>
+                            <li>🚪 Redirige a <code>/login</code> si no hay sesión válida; renderiza <code>children</code> si está autorizado.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #b91c1c; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>💡</span> Rol Clave en la Arquitectura
+                        </strong>
+                        <p style="font-size: 0.90rem; color: #7f1d1d; line-height: 1.55; margin-top: 6px;">
+                            Actúa como el <strong>filtro visual</strong>: decide si el usuario puede ver la interfaz o es expulsado de la ruta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 7 (Clase 38): Analogía Didáctica - useAuth vs AuthGuard (La Zona Secreta) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Analogía Didáctica: useAuth y AuthGuard Explicados</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.35rem; margin-bottom: 8px;">🎮 Analogía Cotidiana: La Zona Secreta de Videojuegos</h2>
+
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong style="color: #c2410c; font-size: 0.90rem;">🎮 Imagina que juegas a entrar a una zona secreta de videojuegos:</strong>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 12px;">
+                    <!-- useAuth Card -->
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🧠</span> useAuth (Tu amigo el sabelotodo)
+                        </strong>
+                        <ul style="font-size: 0.84rem; color: #1e3a8a; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 6px;">Es tu amigo que tiene una lista en la cabeza y sabe todo sobre ti.</li>
+                            <li style="margin-bottom: 6px;">Si le preguntan, él dice al instante:
+                                <ul style="margin-top: 3px; padding-left: 14px; color: #1e40af;">
+                                    <li>• <em>"Sí, él tiene su ficha en el bolsillo"</em>, o</li>
+                                    <li>• <em>"No, viene con las manos vacías"</em>, o</li>
+                                    <li>• <em>"Espera un segundo, todavía estoy buscando en su mochila"</em>.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Rol clave:</strong> Él solo sabe la verdad, pero no te empuja ni te abre puertas.</li>
+                        </ul>
+                    </div>
+
+                    <!-- AuthGuard Card -->
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #7e22ce; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🛡️</span> AuthGuard (El guardia grandote en la puerta)
+                        </strong>
+                        <p style="font-size: 0.84rem; color: #581c87; margin-bottom: 6px; line-height: 1.35;">
+                            Es un guardia parado justo enfrente de la entrada. No te revisa los bolsillos él mismo; se voltea y le pregunta a tu amigo sabelotodo (<code>useAuth</code>): <em>"Oye, ¿este niño tiene su ficha dorada?"</em>:
+                        </p>
+                        <ul style="font-size: 0.82rem; color: #334155; line-height: 1.4; padding-left: 16px;">
+                            <li style="margin-bottom: 5px;">⏳ <strong>"Aún estoy buscando":</strong> El guardia te dice <em>"Espera aquí un segundo con un relojito de arena"</em> (pantalla de carga).</li>
+                            <li style="margin-bottom: 5px;">🚪 <strong>"No tiene ficha":</strong> El guardia te da la vuelta y te manda derechito a la fila de afuera (pantalla de login).</li>
+                            <li>✅ <strong>"¡Sí la tiene!":</strong> El guardia se hace a un lado y te deja pasar a jugar con todos los juguetes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 8 (Clase 38): Conceptos Clave que Deben Dominar -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Síntesis: Conceptos Clave que Deben Dominar</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 25px 35px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.50rem; margin-bottom: 0px;">🎯 Conceptos Clave que Deben Dominar</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <!-- El Token como Pasaporte -->
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #1d4ed8; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🎟️</span> El Token como Pasaporte
+                        </strong>
+                        <p style="font-size: 0.94rem; color: #1e3a8a; line-height: 1.45;">
+                            El frontend no "sabe" quién es el usuario hasta que el backend le entrega una cadena opaca (JWT). El frontend no valida la firma criptográfica; solo se encarga de tres cosas: <strong>guardarlo, enviarlo en cada petición y destruirlo al salir</strong>.
+                        </p>
+                    </div>
+
+                    <!-- El Header HTTP de Autorización -->
+                    <div style="background: #0f172a; border-radius: 10px; padding: 14px 16px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🔑</span> El Header HTTP de Autorización
+                        </strong>
+                        <p style="font-size: 0.90rem; color: #94a3b8; margin-bottom: 6px;">El estándar de transporte en las peticiones HTTP:</p>
+                        <code style="background: #1e293b; color: #38bdf8; padding: 8px 12px; border-radius: 6px; font-size: 1.02rem; text-align: center; font-weight: 700; border: 1px solid #334155; display: block;">Authorization: Bearer &lt;token&gt;</code>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px;">
+                    <!-- Ciclo de Vida de la Sesión -->
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #15803d; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🔄</span> Ciclo de Vida de la Sesión
+                        </strong>
+                        <ol style="font-size: 0.93rem; color: #14532d; line-height: 1.45; padding-left: 18px;">
+                            <li style="margin-bottom: 3px;"><strong>Login / Register:</strong> Guardar en <code>localStorage</code>.</li>
+                            <li style="margin-bottom: 3px;"><strong>Requests:</strong> Leer de <code>localStorage</code> y adjuntar header.</li>
+                            <li style="margin-bottom: 3px;"><strong>Error 401:</strong> Token vencido o alterado ➔ Borrar <code>localStorage</code> y redirigir a <code>/login</code>.</li>
+                            <li><strong>Logout:</strong> Borrar <code>localStorage</code> y redirigir a <code>/login</code>.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Client-Side vs Server-Side Guard (Next.js) -->
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #7e22ce; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🛡️</span> Client-Side vs. Server-Side Guard
+                        </strong>
+                        <p style="font-size: 0.93rem; color: #581c87; line-height: 1.45;">
+                            El <code>localStorage</code> <strong>solo existe en el navegador</strong>. Por eso, el <code>middleware.ts</code> no puede leerlo directamente (a menos que usen Cookies). En este proyecto la protección debe ser <strong>Client-Side</strong> (un hook <code>useAuth</code> o un <code>AuthGuard</code> envolviendo los layouts protegidos).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 9 (Clase 38): Arquitectura Técnica del Proyecto -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Arquitectura Técnica del Proyecto</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 2px;">📐 Arquitectura Técnica del Proyecto</h2>
+                <p style="font-size: 0.96rem; color: #475569; margin-bottom: 6px;">
+                    Diseña la pizarra o el diagrama mental dividiéndolo en <strong>4 piezas modulares</strong>:
+                </p>
+
+                <!-- Diagrama visual de arquitectura -->
+                <div style="background: #0f172a; border-radius: 12px; padding: 18px 24px; color: #e2e8f0; font-family: 'Fira Code', monospace; box-shadow: 0 8px 20px rgba(0,0,0,0.25); border: 1px solid #1e293b;">
+                    
+                    <!-- Pieza 1: Navegador -->
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="background: #1e293b; border: 1.5px solid #38bdf8; color: #38bdf8; padding: 6px 16px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;">
+                            [ Navegador / Vista ]
                         </div>
                     </div>
+
+                    <!-- Arrow 1 -->
+                    <div style="color: #64748b; padding-left: 50px; font-size: 1.0rem; line-height: 1.1;">
+                        │<br>▼
+                    </div>
+
+                    <!-- Pieza 2: AuthGuard -->
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div style="background: #1e293b; border: 1.5px solid #a855f7; color: #c084fc; padding: 6px 16px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;">
+                            [ AuthGuard (Hook / Layout) ]
+                        </div>
+                        <div style="color: #94a3b8; font-size: 0.88rem; margin-top: 2px;">
+                            — (¿Hay token en localStorage?)
+                            <div style="margin-top: 2px; padding-left: 12px; border-left: 2px solid #334155;">
+                                ├─ <span style="color: #f87171; font-weight: 700;">NO ──&gt;</span> Redirigir a <code>/login</code><br>
+                                └─ <span style="color: #4ade80; font-weight: 700;">SÍ ──&gt;</span> Renderiza vista
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 2 -->
+                    <div style="color: #64748b; padding-left: 50px; font-size: 1.0rem; line-height: 1.1;">
+                        │<br>▼
+                    </div>
+
+                    <!-- Pieza 3: API Client Wrapper -->
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div style="background: #1e293b; border: 1.5px solid #f59e0b; color: #fbbf24; padding: 6px 16px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;">
+                            [ API Client Wrapper (apiFetch) ]
+                        </div>
+                        <div style="color: #94a3b8; font-size: 0.86rem; margin-top: 2px;">
+                            ├─ <strong style="color: #38bdf8;">Inyecta:</strong> <code>"Authorization: Bearer " + token</code><br>
+                            └─ <strong style="color: #f87171;">Intercepta:</strong> si <code>status === 401</code> ──&gt; <code>removeItem('token') + router.push('/login')</code>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 3 -->
+                    <div style="color: #64748b; padding-left: 50px; font-size: 1.0rem; line-height: 1.1;">
+                        │<br>▼
+                    </div>
+
+                    <!-- Pieza 4: Backend API -->
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="background: #1e293b; border: 1.5px solid #22c55e; color: #4ade80; padding: 6px 16px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;">
+                            [ Backend API ]
+                        </div>
+                        <div style="color: #cbd5e1; font-size: 0.88rem;">
+                            <code>(GET /auth/me, PUT /profiles/me, etc.)</code>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">The Missing Piece: Password Reset Flow</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE INTRO 10 (Clase 38): Prevención de Enumeración de Usuarios -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Seguridad Web: Prevención de Enumeración de Usuarios</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 22px 32px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 2px;">🛡️ Prevención de Enumeración de Usuarios</h2>
+
+                <!-- ¿Qué es? -->
+                <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 16px;">
+                    <strong style="color: #1d4ed8; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                        <span>🔍</span> ¿Qué es la Enumeración de Usuarios?
+                    </strong>
+                    <p style="font-size: 0.90rem; color: #1e3a8a; line-height: 1.4;">
+                        Técnica de seguridad que evita que un atacante descubra qué correos o usuarios existen en la base de datos mediante pruebas masivas.
+                    </p>
+                </div>
+
+                <!-- El Error Común -->
+                <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 16px;">
+                    <strong style="color: #b91c1c; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                        <span>⚠️</span> El Error Común
+                    </strong>
+                    <p style="font-size: 0.90rem; color: #7f1d1d; line-height: 1.4;">
+                        Dar respuestas distintas según el fallo: <em>"Usuario no registrado"</em> vs. <em>"Contraseña incorrecta"</em>. Esto le confirma al atacante qué cuentas son reales.
+                    </p>
+                </div>
+
+                <!-- Buenas Prácticas -->
+                <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 16px;">
+                    <strong style="color: #15803d; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span>💡</span> Buenas Prácticas de Seguridad
+                    </strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px;">
+                            <strong style="color: #166534; font-size: 0.88rem; display: block; margin-bottom: 4px;">💬 Mensajes Genéricos</strong>
+                            <p style="font-size: 0.82rem; color: #334155; line-height: 1.35;">
+                                Responder siempre <em>"Credenciales incorrectas"</em> o <em>"Si el correo existe, te enviaremos instrucciones"</em>.
+                            </p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px;">
+                            <strong style="color: #166534; font-size: 0.88rem; display: block; margin-bottom: 4px;">⏱️ Tiempo de Respuesta</strong>
+                            <p style="font-size: 0.82rem; color: #334155; line-height: 1.35;">
+                                Evitar fugas por demoras del servidor (<em>timing attacks</em> al hashear passwords).
+                            </p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px;">
+                            <strong style="color: #166534; font-size: 0.88rem; display: block; margin-bottom: 4px;">🚦 Rate Limiting</strong>
+                            <p style="font-size: 0.82rem; color: #334155; line-height: 1.35;">
+                                Bloquear intentos reiterados desde una misma IP.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 11 (Clase 38): Ejemplo Extremo de Enumeración -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Ejemplo Práctico: Lo que NUNCA debes hacer</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 0px;">🚨 Ejemplo Real: El Peor Escenario de Enumeración</h2>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; align-items: center;">
+                    <!-- Imagen del meme / fail -->
+                    <div style="text-align: center; background: #0f172a; padding: 12px; border-radius: 12px; border: 2px solid #ef4444; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <img src="images/user_enumeration_fail.webp" alt="User Enumeration Fail" style="max-height: 330px; border-radius: 8px; width: auto; object-fit: contain;">
+                    </div>
+
+                    <!-- Explicación Didáctica -->
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 14px 16px;">
+                            <strong style="color: #b91c1c; font-size: 1.0rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                <span>❌</span> ¿Por qué es un error catastrófico?
+                            </strong>
+                            <p style="font-size: 0.90rem; color: #7f1d1d; line-height: 1.45;">
+                                El sistema no solo revela que la contraseña ingresada pertenece a otra cuenta (<em>"Joe Smith"</em>), sino que le entrega al atacante el correo electrónico exacto de la víctima: <code>joe.smith@gmail.com</code>.
+                            </p>
+                        </div>
+
+                        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 14px 16px;">
+                            <strong style="color: #1d4ed8; font-size: 1.0rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                <span>🛡️</span> Regla de Oro de Seguridad
+                            </strong>
+                            <p style="font-size: 0.90rem; color: #1e3a8a; line-height: 1.45;">
+                                NUNCA des pistas ni devuelvas información privada de otros usuarios en los mensajes de validación. Usa siempre respuestas genéricas como <strong>"Credenciales incorrectas"</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 12 (Clase 38): Tokens de Sesión vs Tokens de Recuperación -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Comparativa: Tokens de Sesión vs. Tokens de Recuperación</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 2px;">🔑 Tokens de Sesión vs. Tokens de Recuperación</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <!-- Token de Sesión -->
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 1.02rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>🎟️</span> Token de Sesión (JWT / Session Token)
+                        </strong>
+                        <ul style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.45; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;"><strong>Objetivo:</strong> Mantener al usuario autenticado para navegar y consumir la API.</li>
+                            <li style="margin-bottom: 4px;"><strong>Vida útil:</strong> Media / Larga (horas o días; renovable).</li>
+                            <li style="margin-bottom: 4px;"><strong>Uso:</strong> Reutilizable en cada petición HTTP.</li>
+                            <li><strong>Entrega:</strong> Respuesta directa del Login (Cookies <code>HttpOnly</code> o JSON).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Token de Recuperación -->
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #7e22ce; font-size: 1.02rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <span>🔑</span> Token de Recuperación (Reset Token)
+                        </strong>
+                        <ul style="font-size: 0.88rem; color: #581c87; line-height: 1.45; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;"><strong>Objetivo:</strong> Permitir cambiar una contraseña olvidada sin haber iniciado sesión.</li>
+                            <li style="margin-bottom: 4px;"><strong>Vida útil:</strong> Muy corta (10 a 15 minutos).</li>
+                            <li style="margin-bottom: 4px;"><strong>Uso:</strong> <strong>Un solo uso</strong> (<em>single-use</em>); se invalida inmediatamente tras el cambio.</li>
+                            <li><strong>Entrega:</strong> Enlace único enviado por canal externo (correo electrónico o SMS).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Resumen Didáctico -->
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; border-radius: 8px; padding: 10px 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                    <p style="font-size: 0.94rem; color: #9a3412; line-height: 1.45; font-weight: 600; margin: 0;">
+                        💡 <strong>En resumen:</strong> El de <strong>sesión</strong> es tu pase temporal para moverte por toda la app; el de <strong>recuperación</strong> es una llave de emergencia que se destruye tras abrir una sola puerta.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 13 (Clase 38): El Problema del Token Reutilizado (Single-Use) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Seguridad Avanzada: El Problema del Token Reutilizado (Single-Use)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 2px;">⚠️ El Problema del Token Reutilizado (Single-Use)</h2>
+
+                <!-- Limitación y Riesgo -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>⚙️</span> La Limitación del JWT
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.4;">
+                            Es <strong>stateless</strong>: matemáticamente sigue siendo válido hasta que expire su fecha límite (<code>exp</code>). El servidor no puede "revocarlo" por sí solo tras el primer uso.
+                        </p>
+                    </div>
+
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>🚨</span> El Riesgo de Seguridad
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #7f1d1d; line-height: 1.4;">
+                            Si un enlace de recuperación sigue activo tras cambiar la clave, un atacante podría reutilizarlo antes de que expire.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Soluciones Backend -->
+                <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 16px;">
+                    <strong style="color: #15803d; font-size: 1.0rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span>🛡️</span> Solución: Añadir Estado en el Backend
+                    </strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px;">
+                            <strong style="color: #166534; font-size: 0.90rem; display: block; margin-bottom: 4px;">💾 Opción A: Tabla de Tokens</strong>
+                            <p style="font-size: 0.84rem; color: #334155; line-height: 1.38;">
+                                Guardar el token (o su hash) en la base de datos con un flag <code style="background: #dcfce7; color: #166534; padding: 2px 5px; border-radius: 3px;">used: true</code> que se activa inmediatamente al consumirlo.
+                            </p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px;">
+                            <strong style="color: #166534; font-size: 0.90rem; display: block; margin-bottom: 4px;">⏱️ Opción B: Timestamp en Usuario</strong>
+                            <p style="font-size: 0.84rem; color: #334155; line-height: 1.38;">
+                                Guardar <code style="background: #dcfce7; color: #166534; padding: 2px 5px; border-radius: 3px;">password_changed_at</code> en el usuario y rechazar cualquier token cuya emisión (<code style="background: #dcfce7; color: #166534; padding: 2px 5px; border-radius: 3px;">iat</code>) sea anterior a esa fecha.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 14 (Clase 38): Servicio de Email Transaccional (Vertical Stack) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Infraestructura Backend: Servicio de Email Transaccional</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 20px 32px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 6px;">📧 Servicio de Email Transaccional</h2>
+
+                <!-- Stack Vertical de 4 Cajas -->
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    
+                    <!-- Caja 1: ¿Qué es? -->
+                    <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                        <strong style="color: #1d4ed8; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                            <span>📨</span> 1. ¿Qué es un Email Transaccional?
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.38; margin: 0;">
+                            Correos automatizados e inmediatos disparados por eventos críticos del usuario (ej. restablecimiento de contraseña, bienvenida, 2FA).
+                        </p>
+                    </div>
+
+                    <!-- Caja 2: ¿Por qué NO SMTP propio? -->
+                    <div style="background: #fef2f2; border-left: 5px solid #ef4444; border-radius: 8px; padding: 10px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                        <strong style="color: #b91c1c; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                            <span>⚠️</span> 2. ¿Por qué NO montar un servidor SMTP propio?
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #7f1d1d; line-height: 1.38; margin: 0;">
+                            Alta probabilidad de caer en <strong>Spam</strong>, baja reputación de IP y alta complejidad de mantenimiento de registros de dominio (<code>SPF</code>, <code>DKIM</code>, <code>DMARC</code>).
+                        </p>
+                    </div>
+
+                    <!-- Caja 3: La Solución -->
+                    <div style="background: #f0fdf4; border-left: 5px solid #22c55e; border-radius: 8px; padding: 10px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                        <strong style="color: #15803d; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                            <span>🚀</span> 3. La Solución: APIs Externas (Resend / SendGrid)
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #14532d; line-height: 1.38; margin: 0;">
+                            El backend realiza peticiones HTTP seguras hacia el proveedor de mensajería, quien gestiona colas de envío, entregabilidad garantizada y analítica.
+                        </p>
+                    </div>
+
+                    <!-- Caja 4: Seguridad API Key -->
+                    <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                        <strong style="color: #7e22ce; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                            <span>🔐</span> 4. Seguridad de la API Key
+                        </strong>
+                        <p style="font-size: 0.88rem; color: #581c87; line-height: 1.38; margin: 0;">
+                            Debe residir estrictamente en variables de entorno (<code>.env</code>) y <strong>NUNCA</strong> exponerse en el repositorio de Git ni en el código cliente (Frontend).
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 15 (Clase 38): Síntesis: Conceptos Clave que Deben Dominar -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Síntesis: Conceptos Clave que Deben Dominar</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 2px;">🎯 Conceptos Clave que Deben Dominar</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <!-- 1. Prevención de Enumeración -->
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>🛡️</span> Prevención de Enumeración de Usuarios
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #1e3a8a; line-height: 1.38;">
+                            <code>POST /auth/forgot-password</code> y la vista devuelven siempre <code>200 OK</code> y el mensaje genérico: <em>"Si el correo existe, recibirás un enlace"</em>. Nunca responder <em>"Usuario no encontrado"</em>.
+                        </p>
+                    </div>
+
+                    <!-- 2. Tokens Reset vs Sesión -->
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #7e22ce; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>🔑</span> Tokens de Recuperación vs. Sesión
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #581c87; line-height: 1.38;">
+                            El de <strong>sesión</strong> dura días/semanas para navegar. El de <strong>reset</strong> es de corta duración (15-60 min), propósito único (<code>type: "reset"</code>) y de un solo uso (<em>single-use</em>).
+                        </p>
+                    </div>
+
+                    <!-- 3. Token Reutilizado (Single-Use) -->
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #15803d; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>⚠️</span> El Problema del Token Reutilizado (Single-Use)
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #14532d; line-height: 1.38;">
+                            El JWT <em>stateless</em> no se revoca solo. El backend requiere estado: guardar el token en DB con <code>used: true</code> o verificar <code>password_changed_at</code> vs fecha de emisión (<code>iat</code>).
+                        </p>
+                    </div>
+
+                    <!-- 4. Email Transaccional -->
+                    <div style="background: #0f172a; border-radius: 10px; padding: 12px 14px; color: #ffffff; border: 1px solid #334155;">
+                        <strong style="color: #38bdf8; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>📧</span> Servicio de Email Transaccional
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #cbd5e1; line-height: 1.38;">
+                            El backend delega el envío a una API externa (<strong>Resend</strong> o <strong>SendGrid</strong>) en lugar de SMTP propio. La API Key reside estrictamente en <code>.env</code> (nunca en Git ni Frontend).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 16 (Clase 38): Arquitectura Técnica del Proyecto - Password Reset Flow -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Arquitectura Técnica del Proyecto: Flujo de Reset Password</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; gap: 10px; padding: 20px 28px; height: calc(100% - 56px); overflow-y: auto;">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 2px;">📐 Arquitectura Técnica del Proyecto</h2>
+                <p style="font-size: 0.92rem; color: #475569; margin-bottom: 6px;">
+                    Diagrama de Secuencia: Flujo completo entre <strong>Frontend</strong>, <strong>Backend</strong> y <strong>Servicio de Email</strong>:
+                </p>
+
+                <!-- Container para la Imagen Completa (con scroll vertical en esta diapositiva) -->
+                <div style="background: #ffffff; border-radius: 12px; padding: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: flex-start; width: 100%;">
+                    <img src="images/reset_password_sequence.png" alt="Diagrama de Secuencia Reset Password" style="width: 100%; max-width: 980px; height: auto; display: block; border-radius: 6px;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 38 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 40px 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 0px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
                 </div>
             </div>
         </div>
@@ -543,7 +1055,7 @@ profiles_table = db.<span class="syn-fn">table</span>(<span class="syn-str">"pro
             <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
             <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
         </div>
-        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 12</div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 22</div>
         <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
     </div>
 

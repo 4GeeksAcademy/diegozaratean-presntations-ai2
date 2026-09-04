@@ -98,7 +98,7 @@ body {
 }
 
 .slide-title-header {
-    font-size: 1.15rem;
+    font-size: 1.28rem;
     font-weight: 800;
     color: #000000;
     letter-spacing: -0.2px;
@@ -109,7 +109,7 @@ body {
     align-items: center;
     gap: 6px;
     font-weight: 800;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     color: #000000;
     letter-spacing: 0.5px;
 }
@@ -164,7 +164,7 @@ body {
     background-color: var(--4geeks-yellow);
     color: #000;
     font-weight: 800;
-    font-size: 0.75rem;
+    font-size: 0.88rem;
     padding: 6px 14px;
     border-radius: 20px;
     width: fit-content;
@@ -174,7 +174,7 @@ body {
 }
 
 .cover-title {
-    font-size: 2.25rem;
+    font-size: 2.45rem;
     font-weight: 800;
     line-height: 1.15;
     color: #0f172a;
@@ -186,7 +186,7 @@ body {
 }
 
 .cover-subtitle {
-    font-size: 0.98rem;
+    font-size: 1.12rem;
     color: #4b5563;
     line-height: 1.5;
 }
@@ -202,7 +202,7 @@ body {
 }
 
 .summary-box-title {
-    font-size: 0.95rem;
+    font-size: 1.10rem;
     font-weight: 800;
     color: #0f172a;
     margin-bottom: 8px;
@@ -211,7 +211,7 @@ body {
 .summary-box-list {
     margin: 0;
     padding-left: 18px;
-    font-size: 0.86rem;
+    font-size: 0.98rem;
     color: #334155;
     line-height: 1.5;
 }
