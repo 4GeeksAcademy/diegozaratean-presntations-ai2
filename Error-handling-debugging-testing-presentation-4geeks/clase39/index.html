@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 39: Gestión Defensiva de Errores & Robust Apps - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Gestión Defensiva de Errores & Robust Apps">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 39 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 39:<br><span>Gestión Defensiva de Errores & Robust Apps</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>🦾 <strong>Práctica 1:</strong> Centralized Incident Manager & Logging Engine</li>
+<li>💻 <strong>Proyecto Final:</strong> Error Handling & Robust Apps</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE INTRO 1 (Clase 39): ¿Por qué es crucial el Manejo de Errores? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Manejo de Errores: ¿Por qué es Crucial?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 2px;">💥 Aplicaciones Frágiles vs Aplicaciones Robustas</h2>
+                <p style="font-size: 0.92rem; color: #475569; margin-bottom: 4px;">
+                    El manejo defensivo de errores distingue un prototipo inestable de un software profesional de producción:
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <!-- Caja 1: Sin Manejo de Errores -->
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #b91c1c; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>❌</span> Sin Manejo de Errores (Crash 500 Unhandled)
+                        </strong>
+                        <ul style="font-size: 0.85rem; color: #7f1d1d; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;">Excepción no capturada detiene la ejecución o rompe el hilo.</li>
+                            <li style="margin-bottom: 4px;">Expone trazas de pila (Stacktraces) con rutas de archivos y variables.</li>
+                            <li>Devuelve error <code>500 Internal Server Error</code> confuso sin ayuda al cliente.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Caja 2: Con Manejo Defensivo -->
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 14px 16px;">
+                        <strong style="color: #15803d; font-size: 0.98rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>✅</span> Con Manejo Defensivo (Handled Exceptions)
+                        </strong>
+                        <ul style="font-size: 0.85rem; color: #14532d; line-height: 1.4; padding-left: 18px;">
+                            <li style="margin-bottom: 4px;">Captura oportuna de fallos sin interrumpir el servicio.</li>
+                            <li style="margin-bottom: 4px;">Responde con un código HTTP preciso (<code>400</code>, <code>404</code>, <code>422</code>).</li>
+                            <li>Proporciona un cuerpo JSON claro y estructurado para el Frontend.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 2A (Clase 39): Manejo de Errores en JavaScript try...catch...finally -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Fundamentos JS: try...catch...finally</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 16px 28px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.35rem; margin-bottom: 2px;">⚡ Manejo de Errores en JavaScript: try...catch...finally</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; min-height: 0;">
+                    <!-- Columna Izquierda: Explicación de los bloques -->
+                    <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center;">
+                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 8px 12px; border-radius: 8px;">
+                            <strong style="color: #1d4ed8; font-size: 0.84rem; display: block; margin-bottom: 2px;">🔵 <code>try</code> (Intentar):</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.35;">Bloque donde se coloca el código que podría generar un error en tiempo de ejecución.</p>
+                        </div>
+                        
+                        <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 8px 12px; border-radius: 8px;">
+                            <strong style="color: #7e22ce; font-size: 0.84rem; display: block; margin-bottom: 2px;">🟣 <code>catch(error)</code> (Capturar):</strong>
+                            <p style="font-size: 0.78rem; color: #581c87; margin: 0; line-height: 1.35;">Se activa únicamente si ocurre un fallo en el <code>try</code>. Recibe el error y permite gestionarlo sin detener la aplicación.</p>
+                        </div>
+
+                        <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 8px 12px; border-radius: 8px;">
+                            <strong style="color: #15803d; font-size: 0.84rem; display: block; margin-bottom: 2px;">🟢 <code>finally</code> (Siempre):</strong>
+                            <p style="font-size: 0.78rem; color: #14532d; margin: 0; line-height: 1.35;">Bloque de cierre que se ejecuta pase lo que pase (con o sin error). Ideal para tareas de limpieza (cerrar loaders, liberar memoria, etc.).</p>
+                        </div>
+
+                        <div style="background: #fff7ed; border: 1.5px solid #f97316; padding: 8px 12px; border-radius: 8px;">
+                            <strong style="color: #c2410c; font-size: 0.82rem; display: block; margin-bottom: 2px;">💡 Regla de Oro:</strong>
+                            <p style="font-size: 0.78rem; color: #7c2d12; margin: 0; line-height: 1.35;">Si <code>try</code> funciona bien, salta a <code>finally</code>. Si <code>try</code> falla, pasa a <code>catch</code> y termina en <code>finally</code>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Editor de Código JS -->
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">ejemplo_try_catch.js</span>
+                            <div class="editor-header-right"><span class="editor-lang">JavaScript</span></div>
+                        </div>
+                        <pre style="padding: 10px 12px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35; overflow-x: auto; white-space: pre-wrap; word-break: break-word;"><code><span class="syn-kw">try</span> &#123;
+  <span class="syn-comment">// Código que puede fallar</span>
+  <span class="syn-kw">const</span> resultado = <span class="syn-num">10</span> / variableInexistente; 
+  console.<span class="syn-fn">log</span>(<span class="syn-str">"Esto no se ejecuta si la línea anterior falla"</span>);
+&#125; <span class="syn-kw">catch</span> (error) &#123;
+  <span class="syn-comment">// Qué hacer si ocurre un error</span>
+  console.<span class="syn-fn">error</span>(<span class="syn-str">"Ocurrió un error:"</span>, error.message);
+&#125; <span class="syn-kw">finally</span> &#123;
+  <span class="syn-comment">// Siempre se ejecuta</span>
+  console.<span class="syn-fn">log</span>(<span class="syn-str">"Operación finalizada (limpieza de recursos)"</span>);
+&#125;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 2B (Clase 39): Analogía Cotidiana de try...catch...finally -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Analogía Cotidiana: El Vaso de Leche Chocolatada</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 14px 26px; height: calc(100% - 56px); box-sizing: border-box;">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 0px;">🥛 Analogía Cotidiana: El Vaso de Leche Chocolatada</h2>
+                <p style="font-size: 0.80rem; color: #475569; margin-bottom: 2px;">Imagina que vas a la cocina a prepararte un vaso con leche chocolatada:</p>
+
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <!-- try -->
+                    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 6px 10px; border-radius: 6px;">
+                        <strong style="color: #1d4ed8; font-size: 0.78rem; display: block; margin-bottom: 1px;">🔵 <code>try</code> (Intentar):</strong>
+                        <p style="font-size: 0.75rem; color: #1e3a8a; margin: 0; line-height: 1.3;">Tomas el vaso de vidrio con mucho cuidado e intentas servir la leche. Es lo que quieres hacer, pero como el vaso es frágil, existe el riesgo de que se te resbale de las manos.</p>
+                    </div>
+
+                    <!-- catch -->
+                    <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 6px 10px; border-radius: 6px;">
+                        <strong style="color: #7e22ce; font-size: 0.78rem; display: block; margin-bottom: 1px;">🟣 <code>catch</code> (Atrapar el problema):</strong>
+                        <p style="font-size: 0.75rem; color: #581c87; margin: 0; line-height: 1.3;">Si el vaso se te resbala y se rompe contra el suelo, no te pones a llorar ni te quedas congelado. Entra el plan de rescate: buscas una escoba, avisas qué pasó (<em>"¡se rompió el vaso!"</em>) y limpias el desastre para que nadie se corte. Si el vaso nunca se cayó, este paso se ignora por completo.</p>
+                    </div>
+
+                    <!-- finally -->
+                    <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 6px 10px; border-radius: 6px;">
+                        <strong style="color: #15803d; font-size: 0.78rem; display: block; margin-bottom: 1px;">🟢 <code>finally</code> (Pase lo que pase):</strong>
+                        <p style="font-size: 0.75rem; color: #14532d; margin: 0; line-height: 1.3;">Ya sea que te tomaste tu chocolatada feliz de la vida o que el vaso se rompió y tuviste que barrerlo, hay algo que siempre tienes que hacer al terminar: lavarte las manos y apagar la luz de la cocina.</p>
+                    </div>
+                </div>
+
+                <!-- En la computadora funciona exactamente igual -->
+                <div style="background: #0f172a; border-radius: 8px; padding: 8px 12px; border: 1px solid #334155; color: #f8fafc;">
+                    <strong style="color: #38bdf8; font-size: 0.80rem; display: block; margin-bottom: 3px;">💻 En la computadora funciona exactamente igual:</strong>
+                    <ul style="font-size: 0.74rem; color: #cbd5e1; margin: 0; padding-left: 18px; line-height: 1.35;">
+                        <li>Con <strong><code>try</code></strong>, el programa intenta hacer una tarea difícil.</li>
+                        <li>Con <strong><code>catch</code></strong>, si algo sale mal, el programa atrapa el problema y lo arregla para que la aplicación no se apague de golpe ni se rompa.</li>
+                        <li>Con <strong><code>finally</code></strong>, el programa siempre guarda sus juguetes y deja todo limpio y ordenado antes de seguir jugando.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 4 (Clase 39): Logging y Auditoría en Aplicaciones Backend -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Auditoría y Diagnóstico: Sistema de Logging</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 18px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 2px;">📝 Niveles de Log & Seguridad en Auditoría</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <!-- Niveles de Log -->
+                    <div style="background: #0f172a; border-radius: 10px; padding: 12px 14px; color: #ffffff; border: 1px solid #334155;">
+                        <strong style="color: #38bdf8; font-size: 0.94rem; display: block; margin-bottom: 6px;">📊 Niveles Estándar de Logging:</strong>
+                        <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; font-family: 'Fira Code', monospace;">
+                            <div style="color: #94a3b8;">🔍 <strong>DEBUG:</strong> Detalles finos para desarrollo.</div>
+                            <div style="color: #60a5fa;">ℹ️ <strong>INFO:</strong> Confirmación de eventos (Login OK).</div>
+                            <div style="color: #facc15;">⚠️ <strong>WARNING:</strong> Inesperado pero no fatal.</div>
+                            <div style="color: #f87171;">❌ <strong>ERROR:</strong> Fallo en solicitud específica.</div>
+                            <div style="color: #ef4444; font-weight: 700;">🚨 <strong>CRITICAL:</strong> Fallo grave del sistema (DB caída).</div>
+                        </div>
+                    </div>
+
+                    <!-- Regla de Seguridad de Logs -->
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.94rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span>🔐</span> Regla de Oro en Logging: Nunca Fugar Sensibles
+                        </strong>
+                        <ul style="font-size: 0.82rem; color: #7f1d1d; line-height: 1.38; padding-left: 16px;">
+                            <li style="margin-bottom: 4px;"><strong>NUNCA</strong> registrar contraseñas en texto plano.</li>
+                            <li style="margin-bottom: 4px;"><strong>NUNCA</strong> loguear tokens JWT o API Keys de terceros (.env).</li>
+                            <li><strong>SIEMPRE</strong> sanitizar datos personales (PII) antes de escribir al archivo de log.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO 5 (Clase 39): Conceptos Clave que Deben Dominar -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Síntesis: Conceptos Clave que Deben Dominar</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.45rem; margin-bottom: 2px;">🎯 Conceptos Clave que Deben Dominar</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <!-- 1. HTTP Status Codes -->
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>🔢</span> HTTP Status Codes semánticos
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #1e3a8a; line-height: 1.38;">
+                            Usar el código preciso: <code>400 Bad Request</code>, <code>401 Unauthorized</code>, <code>403 Forbidden</code>, <code>404 Not Found</code>, <code>422 Unprocessable Entity</code>.
+                        </p>
+                    </div>
+
+                    <!-- 2. JSON Uniforme -->
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #7e22ce; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>📦</span> Formato JSON Uniforme
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #581c87; line-height: 1.38;">
+                            Estructurar todos los errores con las mismas claves (ej. <code>&#123;"detail": "..."&#125;</code>) para que el Frontend los procese sin romper la interfaz.
+                        </p>
+                    </div>
+
+                    <!-- 3. Logging Seguro -->
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #15803d; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>📜</span> Logging y Auditoría Silenciosa
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #14532d; line-height: 1.38;">
+                            Registrar errores técnicos completos en el servidor (con traceback), pero enviar respuestas amigables y limpias hacia el cliente.
+                        </p>
+                    </div>
+
+                    <!-- 4. Fail-Fast -->
+                    <div style="background: #fff7ed; border: 2px solid #f97316; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #c2410c; font-size: 0.96rem; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span>⚡</span> Programación Defensiva (Fail-Fast)
+                        </strong>
+                        <p style="font-size: 0.83rem; color: #7c2d12; line-height: 1.38;">
+                            Validar los datos a la entrada del endpoint antes de consultar bases de datos o servicios externos. Fallar lo más rápido posible.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">Centralized Incident Manager: Centralized Logging & Audit Engine</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (1/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Concepto 1/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 1: Audit Trail & Logging Centralizado de Incidentes</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; align-items: stretch; flex-grow: 1;">
+            <div style="display: flex; flex-direction: column; gap: 12px; justify-content: space-around;">
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; padding: 16px 20px; border-radius: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #0056FF; font-size: 0.92rem; display: block; margin-bottom: 6px;">📌 Fundación del Concepto:</strong>
+                    <p style="font-size: 0.86rem; color: #1e293b; margin: 0; line-height: 1.45;">Registrar automáticamente eventos de fallo y cambios críticos en la aplicación en un archivo log rotativo estructurado en formato JSON.</p>
+                </div>
+                
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 16px 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #334155; font-size: 0.90rem; display: block; margin-bottom: 6px;">🔍 Profundización Técnica & Aplicación:</strong>
+                    <p style="font-size: 0.84rem; color: #475569; margin: 0; line-height: 1.45;">Evita perder visibilidad sobre errores que ocurren silenciosamente en producción sin saturar los logs de la consola.</p>
+                </div>
+            </div>
+            
+            <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
+                <span style="background: #10b981; color: #ffffff; padding: 4px 10px; border-radius: 4px; font-size: 0.74rem; font-weight: 700; width: fit-content; margin-bottom: 10px;">ESTRATEGIA SENIOR</span>
+                <strong style="color: #047857; font-size: 0.98rem; display: block; margin-bottom: 8px;">💡 ¿Por Qué Importa en Arquitectura?</strong>
+                <p style="font-size: 0.88rem; color: #064e3b; margin: 0; line-height: 1.5; font-weight: 500;">Permite correlacionar fallos con transacciones de usuario específicas y realizar auditorías de seguridad en producción.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (1/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Ejemplo 1/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Audit Trail & Logging Centralizado de Incidentes</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Imagina que tienes una libreta secreta donde anotas cada vez que un juguete se rompe o se cae el jugo a las 3:00, para saber exactamente qué pasó y cuándo arreglarlo.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Es como el diario de a bordo de un barco: el capitán anota cada evento o tormenta para que la tripulación entienda el recorrido sin perder ningún detalle.</p>
+        </div>
+    </div>
+    
+            <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0; min-width: 0;">
+                <div style="background: #1e293b; padding: 6px 12px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="color: #38bdf8; font-family: 'Fira Code', monospace; font-size: 0.76rem; font-weight: 600;">💻 Ejemplo de Código / Contrato</span>
+                    <span style="color: #94a3b8; font-size: 0.70rem;">Python / FastAPI</span>
+                </div>
+                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #38bdf8; background: #0f172a; padding: 10px 12px; margin: 0; line-height: 1.35; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">logger.error('Incident detected', extra={'incident_id': 'inc_992', 'severity': 'CRITICAL', 'timestamp': '2026-09-07T14:30:00Z'})</pre>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (2/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Concepto 2/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 2: Nivel de Severidad y Categorización de Eventos</h2>
+                    <span style="background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 14px; flex-grow: 1; justify-content: center;">
+            <div style="background: #0f172a; border-radius: 12px; padding: 16px 20px; color: #f8fafc; border: 2px solid #0056FF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                <strong style="color: #38bdf8; font-size: 0.94rem; display: block; margin-bottom: 6px;">⚡ Principio Fundamental:</strong>
+                <p style="font-size: 0.88rem; color: #e2e8f0; margin: 0; line-height: 1.45;">Clasificar incidentes según niveles de gravedad (INFO, WARNING, ERROR, CRITICAL) y código de evento único.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex-grow: 1;">
+                <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #6d28d9; font-size: 0.90rem; display: block; margin-bottom: 6px;">🔬 Detalle Técnico Interno:</strong>
+                    <p style="font-size: 0.84rem; color: #334155; margin: 0; line-height: 1.42;">Los sistemas de monitoreo automáticos (Datadog, CloudWatch) dependen de categorías uniformes para disparar alertas inmediatas.</p>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #b45309; font-size: 0.90rem; display: block; margin-bottom: 6px;">🎯 Valor Directo en Producción:</strong>
+                    <p style="font-size: 0.84rem; color: #78350f; margin: 0; line-height: 1.42;">Facilita la filtración y automatización de alertas en tableros de infraestructura sin intervención manual.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (2/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Ejemplo 2/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Nivel de Severidad y Categorización de Eventos</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Es como los colores del semáforo: Verde si todo está bien, Amarillo si se cayó una galleta al suelo, Rojo si se rompió una torre de Lego, y Sirena si se fue la luz en toda la casa.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como la clasificación en un centro médico: una curita para un rasguño simple (INFO/WARN), una venda para una torcedura (ERROR) y ambulancia inmediata para una emergencia médica (CRITICAL).</p>
+        </div>
+    </div>
+    
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; flex-shrink: 0; width: 100%; box-sizing: border-box;">
+                <div style="background: #0f172a; border-radius: 10px; padding: 8px 10px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: center; min-width: 0; box-sizing: border-box; overflow: hidden;">
+                    <strong style="color: #34d399; font-size: 0.76rem; display: block; margin-bottom: 3px;">💻 Código Técnico del Contrato:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #34d399; background: #1e293b; padding: 6px 8px; border-radius: 6px; margin: 0; line-height: 1.28; max-height: 120px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">class IncidentSeverity(str, Enum):
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    CRITICAL = 'critical'</pre>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 6px; justify-content: center; min-width: 0; box-sizing: border-box;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 6px 10px; box-sizing: border-box;">
+                        <strong style="color: #0056FF; font-size: 0.76rem; display: block; margin-bottom: 2px;">🔍 Aplicación en el Código:</strong>
+                        <p style="font-size: 0.73rem; color: #334155; margin: 0; line-height: 1.28;">Los sistemas de monitoreo automáticos (Datadog, CloudWatch) dependen de categorías uniformes para disparar alertas inmediatas.</p>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 8px; padding: 6px 10px; box-sizing: border-box;">
+                        <strong style="color: #047857; font-size: 0.76rem; display: block; margin-bottom: 2px;">✅ Criterio de Producción:</strong>
+                        <p style="font-size: 0.73rem; color: #064e3b; margin: 0; line-height: 1.28;">Facilita la filtración y automatización de alertas en tableros de infraestructura sin intervención manual.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (3/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Concepto 3/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 3: Persistencia de Incidentes en Archivos Rotativos</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1; justify-content: space-around;">
+            <div style="background: #f8fafc; border-left: 6px solid #0284c7; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <strong style="color: #0369a1; font-size: 0.90rem; display: block; margin-bottom: 4px;">📖 Definición Técnica:</strong>
+                <p style="font-size: 0.86rem; color: #1e293b; margin: 0; line-height: 1.45;">Utilizar manejadores de archivos rotativos (RotatingFileHandler) para guardar logs sin agotar el espacio en disco del servidor.</p>
+            </div>
+            
+            <div style="background: #f8fafc; border-left: 6px solid #7c3aed; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <strong style="color: #6d28d9; font-size: 0.90rem; display: block; margin-bottom: 4px;">⚙️ Mecanismo e Implementación:</strong>
+                <p style="font-size: 0.84rem; color: #334155; margin: 0; line-height: 1.45;">Configurar límite de tamaño por archivo (ej. 10MB) y número máximo de copias de respaldo (ej. 5 archivos).</p>
+            </div>
+            
+            <div style="background: #f0fdf4; border-left: 6px solid #10b981; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🛡️ Criterio de Arquitectura Senior:</strong>
+                <p style="font-size: 0.84rem; color: #064e3b; margin: 0; line-height: 1.45;">Evita caídas catastróficas del servidor por saturación del almacenamiento de disco local.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (3/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Ejemplo 3/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Persistencia de Incidentes en Archivos Rotativos</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Tienes una caja para guardar tus cuadernos de dibujo. Cuando el cuaderno 1 se llena, abres el 2. Y si se llenan 5 cuadernos, borras las hojas del cuaderno más viejo para tener espacio siempre limpio.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como una cámara instantánea con memoria fija: la foto número 11 toma el lugar de la foto número 1 de forma automática sin saturar la memoria.</p>
+        </div>
+    </div>
+    
+            <div style="background: #1e1e2e; border-radius: 10px; padding: 8px 10px; border: 2px solid #8b5cf6; box-shadow: 0 4px 14px rgba(139,92,246,0.15); flex-shrink: 0; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56;"></div>
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e;"></div>
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f;"></div>
+                    <span style="color: #a6adc8; font-family: 'Fira Code', monospace; font-size: 0.72rem; margin-left: 8px;">ejemplo_practico.py</span>
+                </div>
+                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #cdd6f4; background: #181825; padding: 8px 10px; border-radius: 6px; margin: 0; line-height: 1.32; max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">from logging.handlers import RotatingFileHandler
+handler = RotatingFileHandler('incidents.log', maxBytes=10*1024*1024, backupCount=5)</pre>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (4/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Concepto 4/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 4: Enmascaramiento de Datos Sensibles (PII Redaction)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex-grow: 1; align-items: stretch;">
+            <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <strong style="color: #1d4ed8; font-size: 0.94rem; display: block; margin-bottom: 8px;">📌 ¿Qué es este concepto?</strong>
+                    <p style="font-size: 0.86rem; color: #1e3a8a; margin: 0; line-height: 1.45;">Sanear los datos de incidentes antes de ser guardados en log, censurando tokens de autenticación, contraseñas y PII.</p>
+                </div>
+                <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #bfdbfe;">
+                    <strong style="color: #2563eb; font-size: 0.82rem;">🔍 Detalle Técnico:</strong>
+                    <p style="font-size: 0.80rem; color: #1e40af; margin: 4px 0 0 0; line-height: 1.4;">Exponer PII (Personally Identifiable Information) en los logs viola normativas internacionales como GDPR, PCI-DSS y HIPAA.</p>
+                </div>
+            </div>
+            
+            <div style="background: #0f172a; border: 2px solid #10b981; border-radius: 12px; padding: 18px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                <span style="color: #34d399; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px;">ESTRATEGIA ARQUITECTÓNICA</span>
+                <h4 style="color: #ffffff; font-size: 1.02rem; margin: 8px 0 10px 0;">💡 ¿Por Qué Importa?</h4>
+                <p style="font-size: 0.86rem; color: #cbd5e1; margin: 0; line-height: 1.5;">Protege la privacidad de los usuarios y previene fugas de seguridad en el almacenamiento de logs.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (4/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (1/2) • Ejemplo 4/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Enmascaramiento de Datos Sensibles (PII Redaction)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Juegas a ser un agente secreto. Cuando escribes una carta, le pones cinta negra encima a tu contraseña para que si un villano la encuentra, solo vea rectángulos negros.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como usar una máscara en una fiesta de disfraces: todos pueden ver tu disfraz y tus movimientos, pero tu identidad y cara real permanecen protegidas.</p>
+        </div>
+    </div>
+    
+            <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0; min-width: 0;">
+                <div style="background: #1e293b; padding: 6px 12px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="color: #38bdf8; font-family: 'Fira Code', monospace; font-size: 0.76rem; font-weight: 600;">💻 Ejemplo de Código / Contrato</span>
+                    <span style="color: #94a3b8; font-size: 0.70rem;">Python / FastAPI</span>
+                </div>
+                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #38bdf8; background: #0f172a; padding: 10px 12px; margin: 0; line-height: 1.35; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">def sanitize_payload(data: dict) -> dict:
+    data['password'] = '***REDACTED***'
+    data['token'] = '***REDACTED***'
+    return data</pre>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT: Diagrama Conceptual -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect Guide (1/2) • Flujo de Datos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">📡 Diagrama Conceptual / Flujo de Datos</h2>
+                
+                <div style="background: #0f172a; border-radius: 12px; padding: 14px 18px; color: #f8fafc; border: 2px solid #0056FF; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                    <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 8px;">🔄 Diagrama de Secuencia & Flujo de Datos de la Arquitectura:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #38bdf8; background: #1e293b; padding: 12px 14px; border-radius: 8px; margin: 0; line-height: 1.3; border: 1px solid #334155; overflow: hidden;">+------------------+         +-----------------------+         +--------------------------+
+|  Client Request  | ------> | Incident Router       | ------> | Redaction Filter         |
++------------------+         +-----------------------+         | (Redact Passwords/PII)   |
+                                                               +--------------------------+
+                                                                             |
++------------------+         +-----------------------+                       v
+| Audit Trail JSON | <------ | RotatingFileHandler   | <---------------------+
+| (incidents.log)  |         | (JSON Log Formatter)  |
++------------------+         +-----------------------+</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE LEAD ARCHITECT: Estructura de Archivos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect Guide (1/2) • Estructura de Archivos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">📂 Estructura de Archivos Sugerida</h2>
+                
+                <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 14px 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 8px;">🌳 Árbol Limpio de Organización de Código del Proyecto:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #0f172a; background: #f8fafc; padding: 12px 14px; border-radius: 8px; margin: 0; line-height: 1.3; border: 1px solid #cbd5e1; overflow: hidden;">app/
+├── core/
+│   ├── logger.py       # RotatingFileHandler & JSON Formatter
+│   └── security.py     # PII Redaction Filter
+├── schemas/
+│   └── incident.py     # Schema Incident (severity, code, payload)
+├── routers/
+│   └── incidents.py    # Endpoints de reporte e inspección
+└── main.py             # Registro de logger audit</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE LEAD ARCHITECT: Gotchas & Checklist -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect Guide (1/2) • Gotchas & Checklist</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">⚠️ Puntos Trampa (Gotchas) & Criterios Ready for Production</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 8px;">🚨 Gotchas / Errores Comunes de Estudiantes:</strong>
+                        <div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Fuga de PII en Logs:</strong> Guardar contraseñas o tokens JWT en texto plano dentro de los archivos de log.</div><div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Uso de print() en lugar de logging:</strong> Usar <code>print()</code> simple en lugar del módulo estándar <code>logging</code>.</div><div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Saturación de Disco:</strong> No configurar rotación de archivos permitiendo que el log crezca infinitamente hasta llenar el almacenamiento.</div><div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Omisión de IDs de Correlación:</strong> Guardar errores aislados sin un ID de incidente que permita rastrearlo en la petición del cliente.</div>
+                    </div>
+                    
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 8px;">✅ Checklist "Listo para Producción":</strong>
+                        <div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Se utiliza <code>RotatingFileHandler</code> con tamaño máximo y retención de archivos.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Se aplica un filtro de desinfección de PII antes de escribir cualquier entrada en el log.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Cada log de incidente incluye un timestamp ISO-8601 y un ID de correlación único.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Los incidentes están categorizados con severidades estándar (<code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>, <code>CRITICAL</code>).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">Building Bulletproof Applications: Defensive Error Handling & Custom Exceptions</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (1/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Concepto 1/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 1: Jerarquía de Excepciones Personalizadas</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; align-items: stretch; flex-grow: 1;">
+            <div style="display: flex; flex-direction: column; gap: 12px; justify-content: space-around;">
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; padding: 16px 20px; border-radius: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #0056FF; font-size: 0.92rem; display: block; margin-bottom: 6px;">📌 Fundación del Concepto:</strong>
+                    <p style="font-size: 0.86rem; color: #1e293b; margin: 0; line-height: 1.45;">Definir excepciones derivadas de una clase base propia (ej. AppBaseException) para separar errores de dominio de errores de infraestructura.</p>
+                </div>
+                
+                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 16px 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #334155; font-size: 0.90rem; display: block; margin-bottom: 6px;">🔍 Profundización Técnica & Aplicación:</strong>
+                    <p style="font-size: 0.84rem; color: #475569; margin: 0; line-height: 1.45;">Permite a la aplicación lanzar fallos expresivos de negocio (ej. UserNotFoundError) sin acoplar la lógica de dominio al framework web HTTP.</p>
+                </div>
+            </div>
+            
+            <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
+                <span style="background: #10b981; color: #ffffff; padding: 4px 10px; border-radius: 4px; font-size: 0.74rem; font-weight: 700; width: fit-content; margin-bottom: 10px;">ESTRATEGIA SENIOR</span>
+                <strong style="color: #047857; font-size: 0.98rem; display: block; margin-bottom: 8px;">💡 ¿Por Qué Importa en Arquitectura?</strong>
+                <p style="font-size: 0.88rem; color: #064e3b; margin: 0; line-height: 1.5; font-weight: 500;">Permite clasificar y tratar fallos de negocio de forma extensible sin duplicar condicionales en los controladores.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (1/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Ejemplo 1/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Jerarquía de Excepciones Personalizadas</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Tienes una caja grande llamada 'Problemas', y adentro cajitas etiquetadas: 'Sin galletas', 'Sin osito' y 'Crayón roto'. Así sabes a quién pedirle ayuda rápida.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como un tablero con botones de emergencia específicos: un botón para pedir agua al plomero y otro botón diferente para llamar al electricista.</p>
+        </div>
+    </div>
+    
+            <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0; min-width: 0;">
+                <div style="background: #1e293b; padding: 6px 12px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="color: #38bdf8; font-family: 'Fira Code', monospace; font-size: 0.76rem; font-weight: 600;">💻 Ejemplo de Código / Contrato</span>
+                    <span style="color: #94a3b8; font-size: 0.70rem;">Python / FastAPI</span>
+                </div>
+                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #38bdf8; background: #0f172a; padding: 10px 12px; margin: 0; line-height: 1.35; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">class AppBaseException(Exception):
+    def __init__(self, message: str, code: str, status_code: int = 400):
+        self.message = message
+        self.code = code
+        self.status_code = status_code</pre>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (2/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Concepto 2/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 2: Manejadores Globales en FastAPI (@app.exception_handler)</h2>
+                    <span style="background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 14px; flex-grow: 1; justify-content: center;">
+            <div style="background: #0f172a; border-radius: 12px; padding: 16px 20px; color: #f8fafc; border: 2px solid #0056FF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                <strong style="color: #38bdf8; font-size: 0.94rem; display: block; margin-bottom: 6px;">⚡ Principio Fundamental:</strong>
+                <p style="font-size: 0.88rem; color: #e2e8f0; margin: 0; line-height: 1.45;">Interceptar excepciones lanzadas en cualquier punto de la aplicación y transformarlas centralizadamente en respuestas HTTP estructuradas.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex-grow: 1;">
+                <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #6d28d9; font-size: 0.90rem; display: block; margin-bottom: 6px;">🔬 Detalle Técnico Interno:</strong>
+                    <p style="font-size: 0.84rem; color: #334155; margin: 0; line-height: 1.42;">Elimina la necesidad de envolver cada endpoint en bloques try-except manuales, delegando la transformación de errores al framework.</p>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center;">
+                    <strong style="color: #b45309; font-size: 0.90rem; display: block; margin-bottom: 6px;">🎯 Valor Directo en Producción:</strong>
+                    <p style="font-size: 0.84rem; color: #78350f; margin: 0; line-height: 1.42;">Mantiene los endpoints limpios y concentrados exclusivamente en la lógica de negocio principal.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (2/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Ejemplo 2/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Manejadores Globales en FastAPI (@app.exception_handler)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Es como tener a tu mamá cuidando el parque de juegos: no importa en qué resbaladilla te caigas, ella siempre sale corriendo a curarte con la misma curita suavecita.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como una central única de atención 911: recibe todas las llamadas de auxilio de la ciudad y emite la respuesta estandarizada correcta de inmediato.</p>
+        </div>
+    </div>
+    
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; flex-shrink: 0; width: 100%; box-sizing: border-box;">
+                <div style="background: #0f172a; border-radius: 10px; padding: 8px 10px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: center; min-width: 0; box-sizing: border-box; overflow: hidden;">
+                    <strong style="color: #34d399; font-size: 0.76rem; display: block; margin-bottom: 3px;">💻 Código Técnico del Contrato:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #34d399; background: #1e293b; padding: 6px 8px; border-radius: 6px; margin: 0; line-height: 1.28; max-height: 120px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">@app.exception_handler(AppBaseException)
+def custom_exception_handler(request: Request, exc: AppBaseException):
+    return JSONResponse(status_code=exc.status_code, content={'error': True, 'code': exc.code, 'message': exc.message})</pre>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 6px; justify-content: center; min-width: 0; box-sizing: border-box;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 6px 10px; box-sizing: border-box;">
+                        <strong style="color: #0056FF; font-size: 0.76rem; display: block; margin-bottom: 2px;">🔍 Aplicación en el Código:</strong>
+                        <p style="font-size: 0.73rem; color: #334155; margin: 0; line-height: 1.28;">Elimina la necesidad de envolver cada endpoint en bloques try-except manuales, delegando la transformación de errores al framework.</p>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 8px; padding: 6px 10px; box-sizing: border-box;">
+                        <strong style="color: #047857; font-size: 0.76rem; display: block; margin-bottom: 2px;">✅ Criterio de Producción:</strong>
+                        <p style="font-size: 0.73rem; color: #064e3b; margin: 0; line-height: 1.28;">Mantiene los endpoints limpios y concentrados exclusivamente en la lógica de negocio principal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (3/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Concepto 3/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 3: Esquema Unificado de Respuesta de Error (JSON Envelope)</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1; justify-content: space-around;">
+            <div style="background: #f8fafc; border-left: 6px solid #0284c7; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <strong style="color: #0369a1; font-size: 0.90rem; display: block; margin-bottom: 4px;">📖 Definición Técnica:</strong>
+                <p style="font-size: 0.86rem; color: #1e293b; margin: 0; line-height: 1.45;">Garantizar que todas las respuestas de error (4xx y 5xx) mantengan exactamente la misma estructura JSON con código de error, mensaje y timestamp.</p>
+            </div>
+            
+            <div style="background: #f8fafc; border-left: 6px solid #7c3aed; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <strong style="color: #6d28d9; font-size: 0.90rem; display: block; margin-bottom: 4px;">⚙️ Mecanismo e Implementación:</strong>
+                <p style="font-size: 0.84rem; color: #334155; margin: 0; line-height: 1.45;">El cliente frontend o cliente HTTP puede consumir cualquier respuesta de error utilizando un único contrato estandarizado de parseo.</p>
+            </div>
+            
+            <div style="background: #f0fdf4; border-left: 6px solid #10b981; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🛡️ Criterio de Arquitectura Senior:</strong>
+                <p style="font-size: 0.84rem; color: #064e3b; margin: 0; line-height: 1.45;">Facilita la integración limpia con el frontend y evita respuestas desestructuradas o inesperadas.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (3/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Ejemplo 3/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Esquema Unificado de Respuesta de Error (JSON Envelope)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Todas las loncheras de la escuela tienen la misma forma: un compartimento para el jugo, uno para el sándwich y la etiqueta. La maestra abre cualquier lonchera sin confundirse.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como los pasaportes internacionales: todos tienen la foto a la izquierda y los datos al centro, permitiendo a cualquier autoridad leer la información con la misma plantilla.</p>
+        </div>
+    </div>
+    
+            <div style="background: #1e1e2e; border-radius: 10px; padding: 8px 10px; border: 2px solid #8b5cf6; box-shadow: 0 4px 14px rgba(139,92,246,0.15); flex-shrink: 0; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56;"></div>
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e;"></div>
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f;"></div>
+                    <span style="color: #a6adc8; font-family: 'Fira Code', monospace; font-size: 0.72rem; margin-left: 8px;">ejemplo_practico.py</span>
+                </div>
+                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #cdd6f4; background: #181825; padding: 8px 10px; border-radius: 6px; margin: 0; line-height: 1.32; max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">{
+  "error": true,
+  "code": "RESOURCE_NOT_FOUND",
+  "message": "El recurso solicitado no fue encontrado.",
+  "timestamp": "2026-09-07T14:30:00Z"
+}</pre>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EXPLICACION (4/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Concepto 4/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 4: Degradación Grácil (Graceful Degradation)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+                </div>
+                
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex-grow: 1; align-items: stretch;">
+            <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <strong style="color: #1d4ed8; font-size: 0.94rem; display: block; margin-bottom: 8px;">📌 ¿Qué es este concepto?</strong>
+                    <p style="font-size: 0.86rem; color: #1e3a8a; margin: 0; line-height: 1.45;">Capturar fallos inesperados y ofrecer fallbacks seguros o respuestas 500 controladas sin comprometer la disponibilidad del sistema.</p>
+                </div>
+                <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #bfdbfe;">
+                    <strong style="color: #2563eb; font-size: 0.82rem;">🔍 Detalle Técnico:</strong>
+                    <p style="font-size: 0.80rem; color: #1e40af; margin: 4px 0 0 0; line-height: 1.4;">Si un servicio secundario (ej. caché o recomendador) falla, la API retorna una respuesta parcial segura en lugar de colapsar la petición entera.</p>
+                </div>
+            </div>
+            
+            <div style="background: #0f172a; border: 2px solid #10b981; border-radius: 12px; padding: 18px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                <span style="color: #34d399; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px;">ESTRATEGIA ARQUITECTÓNICA</span>
+                <h4 style="color: #ffffff; font-size: 1.02rem; margin: 8px 0 10px 0;">💡 ¿Por Qué Importa?</h4>
+                <p style="font-size: 0.86rem; color: #cbd5e1; margin: 0; line-height: 1.5;">Mantiene la alta disponibilidad y la experiencia de usuario aun en situaciones de fallo parcial.</p>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE CONCEPTO EJEMPLO (4/4) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect (2/2) • Ejemplo 4/4</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Degradación Grácil (Graceful Degradation)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                </div>
+                
+        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
+            
+    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
+        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
+            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Si estás armando un castillo con bloques azules y se te acaban, no tiras todo al suelo ni te pones a llorar; usas un bloque amarillo y tu castillo sigue siendo genial.</p>
+        </div>
+        
+        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
+            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como las luces de emergencia en un hospital: si falla la energía principal, el generador auxiliar enciende luces básicas para mantener todo funcionando de forma segura.</p>
+        </div>
+    </div>
+    
+            <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0; min-width: 0;">
+                <div style="background: #1e293b; padding: 6px 12px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="color: #38bdf8; font-family: 'Fira Code', monospace; font-size: 0.76rem; font-weight: 600;">💻 Ejemplo de Código / Contrato</span>
+                    <span style="color: #94a3b8; font-size: 0.70rem;">Python / FastAPI</span>
+                </div>
+                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #38bdf8; background: #0f172a; padding: 10px 12px; margin: 0; line-height: 1.35; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">try:
+    user_recommendations = recommendation_service.get(user_id)
+except ServiceUnavailableError:
+    user_recommendations = get_fallback_default_recommendations()</pre>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT: Diagrama Conceptual -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect Guide (2/2) • Flujo de Datos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">📡 Diagrama Conceptual / Flujo de Datos</h2>
+                
+                <div style="background: #0f172a; border-radius: 12px; padding: 14px 18px; color: #f8fafc; border: 2px solid #0056FF; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                    <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 8px;">🔄 Diagrama de Secuencia & Flujo de Datos de la Arquitectura:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #38bdf8; background: #1e293b; padding: 12px 14px; border-radius: 8px; margin: 0; line-height: 1.3; border: 1px solid #334155; overflow: hidden;">+------------------+         +-----------------------+         +--------------------------+
+|  Client Request  | ------> |   FastAPI Router      | ------> | Exception Raised         |
++------------------+         +-----------------------+         | (ej: UserNotFoundError)  |
+                                                               +--------------------------+
+                                                                             |
++------------------+         +-----------------------+                       v
+| Clean JSON Error | <------ |  Centralized Handler  | <---------------------+
+| (404/400 Status) |         |  + Audit Logger       |
++------------------+         +-----------------------+</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE LEAD ARCHITECT: Estructura de Archivos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect Guide (2/2) • Estructura de Archivos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">📂 Estructura de Archivos Sugerida</h2>
+                
+                <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 14px 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 8px;">🌳 Árbol Limpio de Organización de Código del Proyecto:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #0f172a; background: #f8fafc; padding: 12px 14px; border-radius: 8px; margin: 0; line-height: 1.3; border: 1px solid #cbd5e1; overflow: hidden;">app/
+├── core/
+│   ├── exceptions.py   # Excepciones personalizadas
+│   ├── handlers.py     # Global exception handlers
+│   └── logger.py       # Configuración de logging audit
+├── schemas/
+│   └── error.py        # Schema ErrorResponse JSON
+├── routers/
+│   └── items.py        # Endpoints limpios sin try/except
+└── main.py             # Registro de handlers</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE LEAD ARCHITECT: Gotchas & Checklist -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Lead Architect Guide (2/2) • Gotchas & Checklist</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 10px;">⚠️ Puntos Trampa (Gotchas) & Criterios Ready for Production</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 8px;">🚨 Gotchas / Errores Comunes de Estudiantes:</strong>
+                        <div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Fuga de Información Sensible:</strong> Retornar tracebacks de Python o errores de base de datos directamente al cliente en respuestas HTTP 500.</div><div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Silenciar Excepciones:</strong> Usar bloques <code>except: pass</code> vacíos que ocultan fallos críticos sin dejar rastro en logs.</div><div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Status Codes Incorrectos:</strong> Devolver <code>200 OK</code> con un payload <code>{"status": "error"}</code> confundiendo al cliente HTTP.</div><div style='background: #fff1f2; border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #881337; line-height: 1.3; margin-bottom: 6px;'>🚨 <strong>Duplicación de Código:</strong> Repetir bloques try/except manuales en cada endpoint en lugar de delegar al handler global.</div>
+                    </div>
+                    
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 8px;">✅ Checklist "Listo para Producción":</strong>
+                        <div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Todas las excepciones derivan de una clase base personalizada <code>AppBaseException</code>.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ El handler global captura excepciones no controladas y devuelve 500 sin exponer tracebacks.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Se valida el esquema de error JSON en el 100% de los endpoints.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Los logs guardan timestamps, nivel de log (<code>ERROR</code>, <code>CRITICAL</code>) y ruta solicitada.</div><div style='background: #f0fdf4; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; color: #064e3b; line-height: 1.3; margin-bottom: 6px;'>✅ Las pruebas unitarias verifican que los status codes 400, 404 y 422 se lancen correctamente.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE MEME DE CIERRE (Clase 39) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 39 • Cierre de Clase & Humor Developer</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 56px); padding: 14px 24px; box-sizing: border-box; text-align: center;">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 8px;">🎭 Cuando el Error Handler Funciona en Producción</h2>
+                <div style="background: #0f172a; border: 2px solid #3b82f6; border-radius: 14px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; max-height: 75%;">
+                    <img src="images/task_failed_successfully.png" alt="Task Failed Successfully" style="max-height: 360px; max-width: 100%; object-fit: contain; border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 31</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>
