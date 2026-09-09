@@ -41,35 +41,226 @@
                 <div class="slide-title-header">Clase 40 • Building Bullet-Proof Applications: La Pirámide de Pruebas</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 20px 30px; height: calc(100% - 56px);">
-                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 2px;">🔺 La Pirámide de Testing</h2>
-                <p style="font-size: 0.92rem; color: #475569; margin-bottom: 4px;">
-                    Las pruebas automatizadas garantizan que los cambios futuros no rompan la funcionalidad existente:
-                </p>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; padding: 16px 24px; height: calc(100% - 56px); box-sizing: border-box;">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0; text-align: center;">🔺 La Pirámide de Pruebas (Testing Pyramid)</h2>
+                <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; max-height: 82%; width: 100%; min-height: 0;">
+                    <img src="images/piramide_testing.png" alt="La Pirámide de Testing" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);">
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE PIRAMIDE PRUEBAS (1/5) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pirámide de Pruebas (1/5)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🧪 Nivel 1: Unit Tests (Pruebas Unitarias)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Base de la Pirámide • Aislada y Rápida</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📌 ¿Qué es?</strong>
+                        <p style="font-size: 0.82rem; color: #1e293b; margin: 0; line-height: 1.4;">Es la base de la pirámide y el tipo de prueba más pequeño y rápido. Evalúa la pieza de código más diminuta posible (una sola función, método o cálculo) de forma completamente aislada del resto del sistema.</p>
+                    </div>
+                    
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 14px 16px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚡ ¿Qué hace?</strong>
+                        <p style="font-size: 0.82rem; color: #e2e8f0; margin: 0; line-height: 1.4;">Le pasa una entrada fija a una función y verifica que devuelva exactamente la salida esperada, sin tocar bases de datos, redes ni pantallas.</p>
+                    </div>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-size: 1.1rem;">🚲</span>
+                        <strong style="color: #b45309; font-size: 0.90rem;">Ejemplo estilo Feynman (La Bicicleta):</strong>
+                    </div>
+                    <p style="font-size: 0.83rem; color: #78350f; margin: 0; line-height: 1.42; font-weight: 500;">Imagina que estás construyendo una bicicleta. Antes de armar nada, tomas un solo eslabón de la cadena, lo pones sobre la mesa y tiras de él con unas pinzas para ver si aguanta la tensión sin romperse. No te importa el resto de la bicicleta; solo quieres saber si esa pieza de metal hace su único trabajo individual.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE PIRAMIDE PRUEBAS (2/5) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pirámide de Pruebas (2/5)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🧩 Nivel 2: Component Tests (Pruebas de Componentes)</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Nivel Intermedio • Subsistema Autónomo</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📌 ¿Qué es?</strong>
+                        <p style="font-size: 0.82rem; color: #1e293b; margin: 0; line-height: 1.4;">Un nivel intermedio donde agrupas varias unidades que juntas forman un subsistema autónomo (por ejemplo, un formulario completo en pantalla o un módulo de facturación).</p>
+                    </div>
+                    
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 14px 16px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚡ ¿Qué hace?</strong>
+                        <p style="font-size: 0.82rem; color: #e2e8f0; margin: 0; line-height: 1.4;">Prueba cómo interactúan esas pocas piezas internas entre sí dentro de un entorno controlado, simulando ("mockeando") todo lo que venga de afuera para no depender de factores externos.</p>
+                    </div>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-size: 1.1rem;">🚲</span>
+                        <strong style="color: #b45309; font-size: 0.90rem;">Ejemplo estilo Feynman (La Bicicleta):</strong>
+                    </div>
+                    <p style="font-size: 0.83rem; color: #78350f; margin: 0; line-height: 1.42; font-weight: 500;">Ya comprobaste que los rayos, el rin y la llanta funcionan por separado. Ahora los ensamblas para armar la rueda completa. La colocas en un soporte de calibración en el taller y la haces girar con la mano: verificas que gire derecha y que el neumático no roce. La rueda aún no está pegada a la bicicleta ni toca el suelo, pero su mecanismo interno funciona como una unidad.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE PIRAMIDE PRUEBAS (3/5) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pirámide de Pruebas (3/5)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔌 Nivel 3: Integration Tests (Pruebas de Integración)</h2>
+                    <span style="background: #0284c7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fronteras y Conexiones • Servicios Reales</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📌 ¿Qué es?</strong>
+                        <p style="font-size: 0.82rem; color: #1e293b; margin: 0; line-height: 1.4;">Pruebas enfocadas exclusivamente en las fronteras y conexiones entre diferentes subsistemas, servicios o dependencias externas reales (como el servidor conectándose a la base de datos o una pasarela de pagos).</p>
+                    </div>
+                    
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 14px 16px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚡ ¿Qué hace?</strong>
+                        <p style="font-size: 0.82rem; color: #e2e8f0; margin: 0; line-height: 1.4;">Verifica que el protocolo de comunicación, el formato de datos y las respuestas entre dos partes distintas encajen sin fricción y sin romper el contrato acordado.</p>
+                    </div>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-size: 1.1rem;">🚲</span>
+                        <strong style="color: #b45309; font-size: 0.90rem;">Ejemplo estilo Feynman (La Bicicleta):</strong>
+                    </div>
+                    <p style="font-size: 0.83rem; color: #78350f; margin: 0; line-height: 1.42; font-weight: 500;">Tomas los pedales, el plato y la rueda trasera con sus piñones, y les pasas la cadena. No estás rodando la bicicleta por la calle todavía; solo estás girando los pedales con la mano para comprobar un punto crítico de fricción: ¿la cadena salta entre los dientes o los engranajes transmiten el movimiento suavemente de una pieza a la otra?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE PIRAMIDE PRUEBAS (4/5) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pirámide de Pruebas (4/5)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🤖 Nivel 4: End-to-End (Pruebas de Extremo a Extremo / E2E)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Flujo Completo Automatizado • Simulación Real</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📌 ¿Qué es?</strong>
+                        <p style="font-size: 0.82rem; color: #1e293b; margin: 0; line-height: 1.4;">Pruebas automatizadas que simulan el flujo completo de un usuario real a través de toda la aplicación, desde la interfaz visual hasta la base de datos y los servidores de fondo.</p>
+                    </div>
+                    
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 14px 16px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚡ ¿Qué hace?</strong>
+                        <p style="font-size: 0.82rem; color: #e2e8f0; margin: 0; line-height: 1.4;">Abre un navegador o dispositivo virtual, hace clics, llena campos, envía formularios y comprueba que todo el sistema responda al unísono tal como lo experimentaría un cliente final.</p>
+                    </div>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-size: 1.1rem;">🚲</span>
+                        <strong style="color: #b45309; font-size: 0.90rem;">Ejemplo estilo Feynman (La Bicicleta):</strong>
+                    </div>
+                    <p style="font-size: 0.83rem; color: #78350f; margin: 0; line-height: 1.42; font-weight: 500;">La bicicleta está completamente armada. Un robot se sube a ella, pedalea 500 metros en una pista de pruebas, frena en una curva y enciende la luz delantera. Si el cable del freno estaba suelto o el sillín se baja con el peso, la prueba falla. Comprueba el propósito final del objeto: llevar a alguien de un punto a otro.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE PIRAMIDE PRUEBAS (5/5) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pirámide de Pruebas (5/5)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">👑 Nivel 5: Pruebas de Usuario / Manuales y Exploratorias</h2>
+                    <span style="background: #f59e0b; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">👑 Cúspide de la Pirámide • Juicio Humano Directo</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📌 ¿Qué es?</strong>
+                        <p style="font-size: 0.82rem; color: #1e293b; margin: 0; line-height: 1.4;">La cúspide de la pirámide, donde interviene el juicio humano directo (exploratorio, pruebas de usabilidad y de aceptación).</p>
+                    </div>
+                    
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 14px 16px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚡ ¿Qué hace?</strong>
+                        <p style="font-size: 0.82rem; color: #e2e8f0; margin: 0; line-height: 1.4;">Una persona real navega la aplicación buscando comportamientos extraños, inconsistencias visuales, problemas de comodidad o escenarios imprevistos que a ningún script automatizado se le ocurrió programar.</p>
+                    </div>
+                </div>
+                
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-size: 1.1rem;">🚲</span>
+                        <strong style="color: #b45309; font-size: 0.90rem;">Ejemplo estilo Feynman (La Bicicleta):</strong>
+                    </div>
+                    <p style="font-size: 0.83rem; color: #78350f; margin: 0; line-height: 1.42; font-weight: 500;">Un ciclista de carne y hueso saca la bicicleta a la montaña bajo la lluvia. Ninguna máquina puede medir si el manillar se siente resbaloso con guantes mojados, si el asiento es incómodo después de dos horas o si el timbre queda demasiado lejos del pulgar. Es la validación del sentido común frente a la realidad humana.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE INTRO JEST (Clase 40): Jest Framework -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Stack de Testing: Jest (JavaScript / Frontend)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 18px 30px; height: calc(100% - 56px);">
+                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 2px;">🃏 Testing en Frontend con `Jest`</h2>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-                    <!-- Pirámide Visual -->
-                    <div style="background: #0f172a; border-radius: 10px; padding: 14px 16px; color: #ffffff; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: center; gap: 8px;">
-                        <div style="background: #f87171; color: #7f1d1d; padding: 6px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 0.80rem;">
-                            🔴 E2E (End-to-End) — Lentas & Costosas
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px;">
+                    <!-- Código Test -->
+                    <div class="editor-container" style="margin: 0;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">authService.test.js</span>
+                            <div class="editor-header-right"><span class="editor-lang">JavaScript</span></div>
                         </div>
-                        <div style="background: #fbbf24; color: #78350f; padding: 8px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 0.84rem;">
-                            🟡 Pruebas de Integración (API + DB)
-                        </div>
-                        <div style="background: #4ade80; color: #14532d; padding: 10px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 0.88rem;">
-                            🟢 Pruebas Unitarias (Rápidas & Aisladas)
-                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.73rem; color: #f8fafc; background: #0f172a; margin: 0;"><code><span class="syn-kw">import</span> &#123; loginUser &#125; <span class="syn-kw">from</span> <span class="syn-str">'./authService'</span>;
+
+describe(<span class="syn-str">'Authentication Suite'</span>, () =&gt; &#123;
+  test(<span class="syn-str">'login exitoso retorna token'</span>, <span class="syn-kw">async</span> () =&gt; &#123;
+    <span class="syn-kw">const</span> res = <span class="syn-kw">await</span> loginUser(<span class="syn-str">'user@example.com'</span>, <span class="syn-str">'123456'</span>);
+    expect(res.status).toBe(<span class="syn-num">200</span>);
+    expect(res.data).toHaveProperty(<span class="syn-str">'access_token'</span>);
+  &#125;);
+
+  test(<span class="syn-str">'password incorrecto retorna 401'</span>, <span class="syn-kw">async</span> () =&gt; &#123;
+    <span class="syn-kw">const</span> res = <span class="syn-kw">await</span> loginUser(<span class="syn-str">'user@example.com'</span>, <span class="syn-str">'wrong'</span>);
+    expect(res.status).toBe(<span class="syn-num">401</span>);
+  &#125;);
+&#125;);</code></pre>
                     </div>
 
                     <!-- Explicación -->
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                         <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px 12px; border-radius: 8px;">
-                            <strong style="color: #15803d; font-size: 0.88rem;">⚡ Pruebas Unitarias:</strong>
-                            <p style="font-size: 0.82rem; color: #14532d; margin-top: 2px;">Evalúan funciones individuales en milisegundos sin dependencias externas.</p>
+                            <strong style="color: #15803d; font-size: 0.88rem;">🃏 ¿Qué es Jest?:</strong>
+                            <p style="font-size: 0.82rem; color: #14532d; margin-top: 2px;">Es un poderoso framework de testing para JavaScript y TypeScript mantenido por Meta, optimizado para React, Node.js y aplicaciones web.</p>
                         </div>
                         <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 12px; border-radius: 8px;">
-                            <strong style="color: #1d4ed8; font-size: 0.88rem;">🔗 Pruebas de Integración:</strong>
-                            <p style="font-size: 0.82rem; color: #1e3a8a; margin-top: 2px;">Verifican que la ruta de FastAPI responda correctamente conectándose a la BD de pruebas.</p>
+                            <strong style="color: #1d4ed8; font-size: 0.88rem;">✅ Matchers y Aserciones `expect(...)`:</strong>
+                            <p style="font-size: 0.82rem; color: #1e3a8a; margin-top: 2px;">Ofrece funciones intuitivas como <code>expect().toBe()</code>, snapshots UI y runners integrados sin necesidad de configuraciones complejas.</p>
                         </div>
                     </div>
                 </div>
@@ -123,42 +314,267 @@ client = TestClient(app)
             </div>
         </div>
         
-        <!-- SLIDE INTRO 3 (Clase 40): Patrón Arrange-Act-Assert (AAA) -->
+        <!-- SLIDE INTRO AAA FEYNMAN (Clase 40): Aislamiento y Patrón AAA -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Estructura de Pruebas: El Patrón AAA</div>
+                <div class="slide-title-header">Clase 40 • Estructura & Aislamiento: El Patrón AAA</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 18px 30px; height: calc(100% - 56px);">
-                <h2 class="slide-section-title" style="font-size: 1.4rem; margin-bottom: 2px;">🧩 El Patrón Arrange - Act - Assert (AAA)</h2>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🛡️ Aislamiento y Patrón AAA (Arrange, Act, Assert)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Estándar de Oro • Pruebas Desacopladas</span>
+                </div>
 
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <!-- 1. Arrange -->
-                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 1.3rem;">1️⃣</span>
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <!-- Explicación Técnica -->
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <strong style="color: #1d4ed8; font-size: 0.88rem;">Arrange (Preparar):</strong>
-                            <p style="font-size: 0.80rem; color: #1e3a8a; margin: 0;">Configurar el estado inicial, crear datos de prueba o mockear dependencias externas.</p>
+                            <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 6px;">💻 Explicación Técnica:</strong>
+                            <div style="font-size: 0.76rem; color: #1e293b; line-height: 1.35; display: flex; flex-direction: column; gap: 5px;">
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #bfdbfe;">
+                                    <strong style="color: #1d4ed8;">🏝️ Aislamiento:</strong> Cada test es independiente y autosuficiente; no depende de otros tests ni altera el estado global. El resultado es idéntico corriendo 1 test o 100.
+                                </div>
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #bfdbfe;">
+                                    <strong style="color: #1d4ed8;">1️⃣ Arrange (Preparar):</strong> Configura el escenario, instancia variables, crea mocks e inserta registros necesarios en la base de datos de prueba.
+                                </div>
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #bfdbfe;">
+                                    <strong style="color: #1d4ed8;">2️⃣ Act (Actuar):</strong> Invoca la función o endpoint específico a evaluar (habitualmente una sola llamada).
+                                </div>
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #bfdbfe;">
+                                    <strong style="color: #1d4ed8;">3️⃣ Assert (Verificar):</strong> Comprueba que el resultado coincida con el esperado (HTTP status, payload JSON, DB).
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 2. Act -->
-                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 1.3rem;">2️⃣</span>
+                    <!-- Explicación Feynman (Ejemplo Carreras) -->
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <strong style="color: #7e22ce; font-size: 0.88rem;">Act (Ejecutar):</strong>
-                            <p style="font-size: 0.80rem; color: #581c87; margin: 0;">Invocar el método o endpoint a probar: <code>response = client.post(...)</code>.</p>
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                <span style="font-size: 1.1rem;">🏎️</span>
+                                <strong style="color: #b45309; font-size: 0.86rem;">Explicación con el Ejemplo de Carritos:</strong>
+                            </div>
+                            <div style="font-size: 0.76rem; color: #78350f; line-height: 1.35; display: flex; flex-direction: column; gap: 5px; font-weight: 500;">
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #fde68a;">
+                                    <strong style="color: #b45309;">🏎️ El Aislamiento:</strong> Cada carrera se corre en su propio turno y desde cero. Si un auto chocó o derramó aceite antes, no deja la pista sucia.
+                                </div>
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #fde68a;">
+                                    <strong style="color: #b45309;">1️⃣ Arrange (Preparar):</strong> Colocas el auto en la línea de salida, le das cuerda y acomodas la meta.
+                                </div>
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #fde68a;">
+                                    <strong style="color: #b45309;">2️⃣ Act (Actuar):</strong> Sueltas el auto para que corra por la pista.
+                                </div>
+                                <div style="background: #ffffff; padding: 6px 10px; border-radius: 6px; border: 1px solid #fde68a;">
+                                    <strong style="color: #b45309;">3️⃣ Assert (Verificar):</strong> Miras con tus ojos si el auto cruzó la meta ileso o si se cayó en la primera curva.
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE HERRAMIENTAS TESTING (1/6) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Herramientas y Patrones de Testing (1/6)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🟢 1. pytest (El Framework de Pruebas)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Árbitro & Reglamento • Framework Principal</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 4px;">💻 Explicación Técnica:</strong>
+                        <p style="font-size: 0.81rem; color: #1e293b; margin: 0; line-height: 1.4;">Es un framework de testing para Python que permite escribir pruebas simples, escalables y legibles mediante aserciones nativas (<code>assert</code>). Descubre y ejecuta automáticamente los tests, gestiona suites complejas y ofrece soporte modular a través de plugins.</p>
                     </div>
 
-                    <!-- 3. Assert -->
-                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 1.3rem;">3️⃣</span>
-                        <div>
-                            <strong style="color: #15803d; font-size: 0.88rem;">Assert (Verificar):</strong>
-                            <p style="font-size: 0.80rem; color: #14532d; margin: 0;">Verificar que la respuesta obtenida coincide exactamente con la respuesta esperada.</p>
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía de las Carreras de Carritos:</strong>
                         </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es el reglamento oficial y el árbitro de las carreras. Se asegura de que todos los carritos compitan bajo las mismas reglas, vigila la pista y te dice con un silbato quién ganó y quién chocó.</p>
                     </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">Archivos de configuración en la raíz del proyecto como <code>pytest.ini</code>, <code>pyproject.toml</code> o <code>setup.cfg</code>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE HERRAMIENTAS TESTING (2/6) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Herramientas y Patrones de Testing (2/6)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚙️ 2. Fixtures e Inyección de Dependencias</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Setup & Teardown • Estado Inicial Limpio</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 4px;">💻 Explicación Técnica:</strong>
+                        <p style="font-size: 0.81rem; color: #1e293b; margin: 0; line-height: 1.4;">Funciones auxiliares reutilizables (decoradas con <code>@pytest.fixture</code>) que preparan el estado inicial necesario antes de un test (clientes HTTP, bases de datos aisladas, tokens de usuario) y limpian los recursos al terminar mediante generadores (<code>yield</code>).</p>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía de las Carreras de Carritos:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es el duende mágico que te deja la pista armada, limpia y con carritos listos antes de jugar, y al terminar guarda todo para que la siguiente carrera empiece impecable.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">Comúnmente en <code>conftest.py</code> (para compartirlas globalmente entre varios tests) o directamente dentro del archivo de test específico (<code>test_*.py</code>).</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE HERRAMIENTAS TESTING (3/6) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Herramientas y Patrones de Testing (3/6)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔄 3. Dependency Overrides</h2>
+                    <span style="background: #0284c7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Sustitución de Entorno • FastAPI Overrides</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 4px;">💻 Explicación Técnica:</strong>
+                        <p style="font-size: 0.81rem; color: #1e293b; margin: 0; line-height: 1.4;">Mecanismo nativo de frameworks como FastAPI (<code>app.dependency_overrides</code>) que permite interceptar los proveedores de dependencias del sistema (como la conexión a la base de datos o servicios de autenticación) y sustituirlos en memoria por versiones controladas de prueba.</p>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía de las Carreras de Carritos:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es cambiar el auto real de mamá o papá por uno de plástico de juguete mientras juegas, para no correr el riesgo de rayar o romper el auto de verdad en el garaje.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">En <code>conftest.py</code> (dentro de la fixture del cliente de pruebas) o en el archivo de prueba puntual donde se requiera alterar una dependencia (<code>test_*.py</code>), operando sobre <code>app</code>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE HERRAMIENTAS TESTING (4/6) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Herramientas y Patrones de Testing (4/6)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎭 4. Mocks (y simulación del tiempo)</h2>
+                    <span style="background: #f59e0b; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Simulación Externa • Respuestas Deterministas</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 4px;">💻 Explicación Técnica:</strong>
+                        <p style="font-size: 0.81rem; color: #1e293b; margin: 0; line-height: 1.4;">Objetos simulados (<code>unittest.mock.patch</code>, <code>MagicMock</code>, <code>freezegun</code>) que reemplazan dependencias externas, no deterministas o costosas (APIs de terceros, pasarelas de pago, el reloj del sistema) para responder con datos fijos sin ejecutar llamadas de red ni esperar retrasos.</p>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía de las Carreras de Carritos:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es poner un peluche que contesta "¡Hola, todo bien!" fingiendo ser el astronauta por teléfono para no frenar la carrera, o adelantar las manecillas del reloj de juguete con el dedo en vez de esperar 3 horas reales a que se seque la pista.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">Directamente en los archivos de pruebas (<code>test_*.py</code>) usando decoradores <code>@patch</code> o gestores de contexto <code>with patch(...)</code>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE HERRAMIENTAS TESTING (5/6) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Herramientas y Patrones de Testing (5/6)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🕵️‍♂️ 5. Spies (Espías de Código)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Auditoría Silenciosa • Wrappers & Call Metrics</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 4px;">💻 Explicación Técnica:</strong>
+                        <p style="font-size: 0.81rem; color: #1e293b; margin: 0; line-height: 1.4;">Envoltorios (<em>wrappers</em>) aplicados sobre funciones reales o mocks (<code>spy</code> en Jest, <code>unittest.mock.Mock(wraps=...)</code> en Python) para auditar su ejecución sin interferir en su lógica interna, registrando parámetros de entrada, valores de retorno y cantidad de llamadas.</p>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía de las Carreras de Carritos:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es el amigo detective que se para al lado de la pista con una libreta para vigilar en secreto y anotar exactamente cuántas vueltas dio el carrito y si cruzó la meta.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">Dentro de las funciones de prueba en los archivos de test (<code>test_*.py</code>), o en <code>conftest.py</code> si se crea una fixture de espionaje recurrente.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE HERRAMIENTAS TESTING (6/6) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Herramientas y Patrones de Testing (6/6)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 6. Métricas de Cobertura (Line vs. Branch Coverage)</h2>
+                    <span style="background: #ec4899; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Calidad de Código • pytest-cov / coverage.py</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #0056FF; font-size: 0.86rem; display: block; margin-bottom: 4px;">💻 Explicación Técnica:</strong>
+                        <p style="font-size: 0.81rem; color: #1e293b; margin: 0; line-height: 1.4;">Herramientas de análisis dinámico (<code>pytest-cov</code> / <code>coverage.py</code>) que reportan qué proporción del código se transitó durante los tests. La cobertura de líneas mide sentencias ejecutadas; la de ramas (<em>branch coverage</em>) valida que se hayan evaluado todas las decisiones lógicas (<code>if/else</code>).</p>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía de las Carreras de Carritos:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es el mapa donde revisas qué tramos de la pista recorrieron los autos:<br>• <strong>Líneas:</strong> Probar solo la recta principal a toda velocidad y decir que la pista funciona al 100%.<br>• <strong>Ramas:</strong> Probar el cruce donde el camino se bifurca para ver qué pasa si el auto toma izquierda o derecha.<br>• <strong>70% vs 100%:</strong> Vale más probar a fondo las curvas difíciles y el puente peligroso (70%) que pasear el carrito solo por rectas fáciles para inflar el número.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;"><code>.coveragerc</code>, secciones en <code>pyproject.toml</code> / <code>pytest.ini</code>, y reportes en terminal o carpetas <code>htmlcov/</code>.</p>
                 </div>
             </div>
         </div>
@@ -191,7 +607,7 @@ client = TestClient(app)
                     <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 14px 10px;">
                         <div style="font-size: 1.8rem; margin-bottom: 4px;">🔵</div>
                         <strong style="color: #1d4ed8; font-size: 0.90rem; display: block; margin-bottom: 4px;">3. REFACTOR (Limpia)</strong>
-                        <p style="font-size: 0.78rem; color: #1e3a8a; line-height: 1.35; margin: 0;">Optimizar el código manteniendo la batería de pruebas en verde.</p>
+                        <p style="font-size: 0.78rem; color: #1e293b; line-height: 1.35; margin: 0;">Optimizar el código manteniendo la batería de pruebas en verde.</p>
                     </div>
                 </div>
             </div>
@@ -275,314 +691,179 @@ client = TestClient(app)
             </div>
         </div>
     
-        <!-- SLIDE CONCEPTO EXPLICACION (1/4) -->
+        <!-- SLIDE ESCENARIO 1: Happy Path -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Concepto 1/4</div>
+                <div class="slide-title-header">Clase 40 • Escenarios de Prueba (1/4)</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 1: Pirámide de Pruebas (Unit vs Integration)</h2>
-                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
-                </div>
-                
-        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; align-items: stretch; flex-grow: 1;">
-            <div style="display: flex; flex-direction: column; gap: 12px; justify-content: space-around;">
-                <div style="background: #eff6ff; border-left: 5px solid #0056FF; padding: 16px 20px; border-radius: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                    <strong style="color: #0056FF; font-size: 0.92rem; display: block; margin-bottom: 6px;">📌 Fundación del Concepto:</strong>
-                    <p style="font-size: 0.86rem; color: #1e293b; margin: 0; line-height: 1.45;">Construir una base sólida de pruebas unitarias rápidas y complementar con pruebas de integración HTTP mediante TestClient.</p>
-                </div>
-                
-                <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 16px 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                    <strong style="color: #334155; font-size: 0.90rem; display: block; margin-bottom: 6px;">🔍 Profundización Técnica & Aplicación:</strong>
-                    <p style="font-size: 0.84rem; color: #475569; margin: 0; line-height: 1.45;">Las pruebas unitarias verifican funciones de negocio aisladas en milisegundos, mientras que las pruebas de integración aseguran la comunicación de rutas HTTP.</p>
-                </div>
-            </div>
-            
-            <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
-                <span style="background: #10b981; color: #ffffff; padding: 4px 10px; border-radius: 4px; font-size: 0.74rem; font-weight: 700; width: fit-content; margin-bottom: 10px;">ESTRATEGIA SENIOR</span>
-                <strong style="color: #047857; font-size: 0.98rem; display: block; margin-bottom: 8px;">💡 ¿Por Qué Importa en Arquitectura?</strong>
-                <p style="font-size: 0.88rem; color: #064e3b; margin: 0; line-height: 1.5; font-weight: 500;">Asegura cobertura completa de código manteniendo una suite de pruebas veloz.</p>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-    
-        <!-- SLIDE CONCEPTO EJEMPLO (1/4) -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Ejemplo 1/4</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Pirámide de Pruebas (Unit vs Integration)</h2>
-                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🟢 1. Happy Path (Camino Feliz)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Recorrido Ideal • Cero Fricción</span>
                 </div>
-                
-        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
-            
-    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
-        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
-            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Antes de armar un robot de Lego gigante, primero pruebas si cada ruedita y brazo giran bien por separado (Unit Tests). Luego los conectas todos para ver si camina (Integration Tests).</p>
-        </div>
-        
-        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
-            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como la afinación en una orquesta: cada músico afina su propio instrumento por separado antes de reunirse a tocar la sinfonía completa.</p>
-        </div>
-    </div>
-    
-            <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0; min-width: 0;">
-                <div style="background: #1e293b; padding: 6px 12px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
-                    <span style="color: #38bdf8; font-family: 'Fira Code', monospace; font-size: 0.76rem; font-weight: 600;">💻 Ejemplo de Código / Contrato</span>
-                    <span style="color: #94a3b8; font-size: 0.70rem;">Python / FastAPI</span>
-                </div>
-                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #38bdf8; background: #0f172a; padding: 10px 12px; margin: 0; line-height: 1.35; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">def test_calculate_discount():
-    assert calculate_discount(100, 0.2) == 80.0</pre>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-    
-        <!-- SLIDE CONCEPTO EXPLICACION (2/4) -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Concepto 2/4</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 2: Pytest Fixtures & Dependency Injection Overrides</h2>
-                    <span style="background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
-                </div>
-                
-        <div style="display: flex; flex-direction: column; gap: 14px; flex-grow: 1; justify-content: center;">
-            <div style="background: #0f172a; border-radius: 12px; padding: 16px 20px; color: #f8fafc; border: 2px solid #0056FF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-                <strong style="color: #38bdf8; font-size: 0.94rem; display: block; margin-bottom: 6px;">⚡ Principio Fundamental:</strong>
-                <p style="font-size: 0.88rem; color: #e2e8f0; margin: 0; line-height: 1.45;">Utilizar fixtures reconfigurables en conftest.py para sobrescribir dependencias de base de datos y clientes en FastAPI.</p>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex-grow: 1;">
-                <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center;">
-                    <strong style="color: #6d28d9; font-size: 0.90rem; display: block; margin-bottom: 6px;">🔬 Detalle Técnico Interno:</strong>
-                    <p style="font-size: 0.84rem; color: #334155; margin: 0; line-height: 1.42;">Inyectar dependencias de prueba permite reemplazar la base de datos de desarrollo por una base de datos en memoria para los tests.</p>
-                </div>
-                
-                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center;">
-                    <strong style="color: #b45309; font-size: 0.90rem; display: block; margin-bottom: 6px;">🎯 Valor Directo en Producción:</strong>
-                    <p style="font-size: 0.84rem; color: #78350f; margin: 0; line-height: 1.42;">Garantiza que las pruebas se ejecuten sobre una BD aislada sin tocar datos reales.</p>
-                </div>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-    
-        <!-- SLIDE CONCEPTO EJEMPLO (2/4) -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Ejemplo 2/4</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Pytest Fixtures & Dependency Injection Overrides</h2>
-                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
-                </div>
-                
-        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
-            
-    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
-        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
-            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Para jugar al doctor no usas medicinas reales. Usas un estetoscopio de plástico y dulces como si fueran pastillas (Fixtures). Así juegas seguro sin ningún peligro.</p>
-        </div>
-        
-        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
-            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como un escenario de teatro de ensayo: usas espadas de madera e iluminación falsa antes del día de la función real frente al público.</p>
-        </div>
-    </div>
-    
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; flex-shrink: 0; width: 100%; box-sizing: border-box;">
-                <div style="background: #0f172a; border-radius: 10px; padding: 8px 10px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: center; min-width: 0; box-sizing: border-box; overflow: hidden;">
-                    <strong style="color: #34d399; font-size: 0.76rem; display: block; margin-bottom: 3px;">💻 Código Técnico del Contrato:</strong>
-                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #34d399; background: #1e293b; padding: 6px 8px; border-radius: 6px; margin: 0; line-height: 1.28; max-height: 120px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">@pytest.fixture
-def client(db_session):
-    app.dependency_overrides[get_db] = lambda: db_session
-    with TestClient(app) as c:
-        yield c</pre>
-                </div>
-                
-                <div style="display: flex; flex-direction: column; gap: 6px; justify-content: center; min-width: 0; box-sizing: border-box;">
-                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 8px; padding: 6px 10px; box-sizing: border-box;">
-                        <strong style="color: #0056FF; font-size: 0.76rem; display: block; margin-bottom: 2px;">🔍 Aplicación en el Código:</strong>
-                        <p style="font-size: 0.73rem; color: #334155; margin: 0; line-height: 1.28;">Inyectar dependencias de prueba permite reemplazar la base de datos de desarrollo por una base de datos en memoria para los tests.</p>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 ¿Qué es?</strong>
+                            <p style="font-size: 0.80rem; color: #064e3b; margin: 0; line-height: 1.38;">Es el recorrido ideal donde todo sale exactamente como se planeó. El usuario envía datos perfectos, el sistema cuenta con todos los recursos disponibles y no ocurre ninguna excepción.</p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">🎯 Objetivo:</strong>
+                            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">Verificar que la funcionalidad principal hace lo que promete el negocio cuando no hay fricción ni errores.</p>
+                        </div>
                     </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 8px; padding: 6px 10px; box-sizing: border-box;">
-                        <strong style="color: #047857; font-size: 0.76rem; display: block; margin-bottom: 2px;">✅ Criterio de Producción:</strong>
-                        <p style="font-size: 0.73rem; color: #064e3b; margin: 0; line-height: 1.28;">Garantiza que las pruebas se ejecuten sobre una BD aislada sin tocar datos reales.</p>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">☕</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía del Café:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.38; font-weight: 500;">Vas a comprar un café, pides el producto que sí está disponible, pagas con el importe exacto, la máquina funciona y te entregan el café sin demoras.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-    
-        <!-- SLIDE CONCEPTO EXPLICACION (3/4) -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Concepto 3/4</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 3: Aislamiento Total y Rollback de Transacciones</h2>
-                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Ejemplo Técnico & Resultado Esperado:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #34d399; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;"># Petición POST /users
+payload = {"email": "juan@example.com", "password": "Pass1234!"}
+# Resultado Esperado: HTTP 201 Created + Base de Datos actualizada + Token JWT</pre>
                 </div>
-                
-        <div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1; justify-content: space-around;">
-            <div style="background: #f8fafc; border-left: 6px solid #0284c7; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                <strong style="color: #0369a1; font-size: 0.90rem; display: block; margin-bottom: 4px;">📖 Definición Técnica:</strong>
-                <p style="font-size: 0.86rem; color: #1e293b; margin: 0; line-height: 1.45;">Ejecutar cada test dentro de una transacción que realiza rollback automático al finalizar.</p>
-            </div>
-            
-            <div style="background: #f8fafc; border-left: 6px solid #7c3aed; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                <strong style="color: #6d28d9; font-size: 0.90rem; display: block; margin-bottom: 4px;">⚙️ Mecanismo e Implementación:</strong>
-                <p style="font-size: 0.84rem; color: #334155; margin: 0; line-height: 1.45;">Previene que los datos creados o modificados por un test contaminen el estado inicial del siguiente test.</p>
-            </div>
-            
-            <div style="background: #f0fdf4; border-left: 6px solid #10b981; border-radius: 10px; padding: 14px 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🛡️ Criterio de Arquitectura Senior:</strong>
-                <p style="font-size: 0.84rem; color: #064e3b; margin: 0; line-height: 1.45;">Evita fallos intermitentes y dependencias ocultas del orden de ejecución en la suite de pruebas.</p>
-            </div>
-        </div>
-        
             </div>
         </div>
     
-        <!-- SLIDE CONCEPTO EJEMPLO (3/4) -->
+        <!-- SLIDE ESCENARIO 2: Edge Cases -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Ejemplo 3/4</div>
+                <div class="slide-title-header">Clase 40 • Escenarios de Prueba (2/4)</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Aislamiento Total y Rollback de Transacciones</h2>
-                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🟡 2. Edge Cases (Casos Límite o Borde)</h2>
+                    <span style="background: #f59e0b; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fronteras & Tolerancias • Escenarios Atípicos</span>
                 </div>
-                
-        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
-            
-    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
-        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
-            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">Antes de hacer una torre gigante de plastilina, le tomas una foto. Si la torre se cae, usas tu varita mágica (Rollback) para regresar la plastilina a su forma perfecta original.</p>
-        </div>
-        
-        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
-            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como un videojuego con puntos de guardado (Save Points): si cometes un error en el nivel, puedes reiniciar desde el último punto sin perder tu progreso previo.</p>
-        </div>
-    </div>
-    
-            <div style="background: #1e1e2e; border-radius: 10px; padding: 8px 10px; border: 2px solid #8b5cf6; box-shadow: 0 4px 14px rgba(139,92,246,0.15); flex-shrink: 0; min-width: 0;">
-                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56;"></div>
-                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e;"></div>
-                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f;"></div>
-                    <span style="color: #a6adc8; font-family: 'Fira Code', monospace; font-size: 0.72rem; margin-left: 8px;">ejemplo_practico.py</span>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fffbe6; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 ¿Qué es?</strong>
+                            <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.38;">Situaciones donde las entradas o condiciones son extremas, raras o poco frecuentes, pero técnicamente posibles o válidas según las reglas de negocio.</p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">🎯 Objetivo:</strong>
+                            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">Garantizar que el sistema no se rompa con datos atípicos y que respete las tolerancias máximas y mínimas definidas.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">☕</span>
+                            <strong style="color: #7e22ce; font-size: 0.86rem;">Analogía del Café:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.38; font-weight: 500;">Vas a comprar el café, pero pagas con 100 monedas de 1 centavo, o pides el vaso con exactamente el límite máximo de hielo permitido. Es inusual y molesto, pero legal y el sistema debe saber procesarlo.</p>
+                    </div>
                 </div>
-                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #cdd6f4; background: #181825; padding: 8px 10px; border-radius: 6px; margin: 0; line-height: 1.32; max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;">@pytest.fixture
-def db_session():
-    transaction = connection.begin()
-    yield session
-    transaction.rollback()</pre>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #f59e0b; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #fbbf24; font-size: 0.82rem; display: block; margin-bottom: 4px;">⚙️ Ejemplos Técnicos Comunes:</strong>
+                    <ul style="font-size: 0.77rem; color: #cbd5e1; margin: 0; padding-left: 18px; line-height: 1.35;">
+                        <li>Nombre de usuario con el límite máximo permitido (ej. exactamente 255 caracteres).</li>
+                        <li>Correo con formato válido pero inusual: <code>usuario+etiqueta@dominio.co.uk</code>.</li>
+                        <li>Enviar string vacío <code>""</code> o array con 0 elementos en campos opcionales.</li>
+                        <li>Intento de registrar un correo que ya existe (colisión con regla de unicidad).</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        
-            </div>
-        </div>
     
-        <!-- SLIDE CONCEPTO EXPLICACION (4/4) -->
+        <!-- SLIDE ESCENARIO 3: Failure Modes -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Concepto 4/4</div>
+                <div class="slide-title-header">Clase 40 • Escenarios de Prueba (3/4)</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                    <h2 class="slide-section-title" style="font-size: 1.3rem; margin: 0;">🧠 Concepto 4: Ciclo Red-Green-Refactor (TDD)</h2>
-                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Fundamento Teórico</span>
-                </div>
-                
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex-grow: 1; align-items: stretch;">
-            <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <strong style="color: #1d4ed8; font-size: 0.94rem; display: block; margin-bottom: 8px;">📌 ¿Qué es este concepto?</strong>
-                    <p style="font-size: 0.86rem; color: #1e3a8a; margin: 0; line-height: 1.45;">Escribir primero la prueba que falla (Red), implementar el código mínimo para hacerla pasar (Green) y refactorizar.</p>
-                </div>
-                <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #bfdbfe;">
-                    <strong style="color: #2563eb; font-size: 0.82rem;">🔍 Detalle Técnico:</strong>
-                    <p style="font-size: 0.80rem; color: #1e40af; margin: 4px 0 0 0; line-height: 1.4;">Obliga al desarrollador a pensar como consumidor de la API antes de escribir la implementación interna.</p>
-                </div>
-            </div>
-            
-            <div style="background: #0f172a; border: 2px solid #10b981; border-radius: 12px; padding: 18px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
-                <span style="color: #34d399; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px;">ESTRATEGIA ARQUITECTÓNICA</span>
-                <h4 style="color: #ffffff; font-size: 1.02rem; margin: 8px 0 10px 0;">💡 ¿Por Qué Importa?</h4>
-                <p style="font-size: 0.86rem; color: #cbd5e1; margin: 0; line-height: 1.5;">Produce código más modular, limpio y con especificación de requisitos 100% verifable.</p>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-    
-        <!-- SLIDE CONCEPTO EJEMPLO (4/4) -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 40 • Lead Architect (1/1) • Ejemplo 4/4</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 14px 24px; gap: 10px;">
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Ejemplo Práctico: Ciclo Red-Green-Refactor (TDD)</h2>
-                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Analogías & Código</span>
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔴 3. Failure Modes (Modos de Falla)</h2>
+                    <span style="background: #ef4444; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Resiliencia & Seguridad • Entradas Maliciosas / Rotas</span>
                 </div>
-                
-        <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; height: 100%; min-height: 0;">
-            
-    <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; justify-content: center; min-height: 0;">
-        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 1 (Caso Práctico):</strong>
-            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">1) Primero dibujas la silueta vacía de un dibujo (Red), 2) Luego pintas los colores principales para que se vea bien (Green), y 3) Al final le agregas brillitos y detalles (Refactor).</p>
-        </div>
-        
-        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">💡 Analogía 2 (Escenario Cotidiano):</strong>
-            <p style="font-size: 0.80rem; color: #3b0764; margin: 0; line-height: 1.35;">Como un escultor de arcilla: 1) Marca el bloque de piedra, 2) Esculpe la figura básica funcional, y 3) Pule los bordes finos hasta que quede perfecta.</p>
-        </div>
-    </div>
-    
-            <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0; min-width: 0;">
-                <div style="background: #1e293b; padding: 6px 12px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
-                    <span style="color: #38bdf8; font-family: 'Fira Code', monospace; font-size: 0.76rem; font-weight: 600;">💻 Ejemplo de Código / Contrato</span>
-                    <span style="color: #94a3b8; font-size: 0.70rem;">Python / FastAPI</span>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fff1f2; border-left: 5px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #9f1239; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 ¿Qué es?</strong>
+                            <p style="font-size: 0.80rem; color: #881337; margin: 0; line-height: 1.38;">Escenarios donde los datos son explícitamente incorrectos, corruptos o maliciosos. No se busca el éxito, sino que el sistema falle de forma controlada y segura.</p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">🎯 Objetivo:</strong>
+                            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">Prevenir errores 500, evitar fugas de información sensible y devolver errores 4xx estructurados.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="font-size: 1.1rem;">☕</span>
+                            <strong style="color: #b45309; font-size: 0.86rem;">Analogía del Café:</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.38; font-weight: 500;">Intentas pagar el café con un billete falso o una tarjeta vencida. La máquina no debe colapsar ni regalar el café; debe rechazar la transacción y mostrar "Pago declinado".</p>
+                    </div>
                 </div>
-                <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #38bdf8; background: #0f172a; padding: 10px 12px; margin: 0; line-height: 1.35; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;"># 1. Red: test_create_user_returns_201()
-# 2. Green: write endpoint POST /users
-# 3. Refactor: clean code & validate types</pre>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #ef4444; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #f87171; font-size: 0.82rem; display: block; margin-bottom: 4px;">🛡️ Respuestas HTTP Estructuradas Esperadas:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.73rem; color: #f87171; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;">• JSON Malformado o falta de llave ➔ HTTP 400 Bad Request
+• Token JWT alterado o expirado ➔ HTTP 401 Unauthorized
+• Omitir campo obligatorio / tipo incorrecto ➔ HTTP 422 Unprocessable Entity</pre>
+                </div>
             </div>
         </div>
-        
+    
+        <!-- SLIDE ESCENARIO 4: Resumen Comparativo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Escenarios de Prueba (4/4)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 4. Resumen Comparativo de Escenarios</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Matriz de Decisiones QA</span>
+                </div>
+
+                <div style="overflow-x: auto; background: #0f172a; border-radius: 12px; border: 2px solid #334155; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.80rem;">
+                        <thead>
+                            <tr style="background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155;">
+                                <th style="padding: 10px 14px; font-weight: 700;">Concepto</th>
+                                <th style="padding: 10px 14px; font-weight: 700;">Tipo de Entrada</th>
+                                <th style="padding: 10px 14px; font-weight: 700;">Intención</th>
+                                <th style="padding: 10px 14px; font-weight: 700;">Respuesta Esperada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(16, 185, 129, 0.08);">
+                                <td style="padding: 10px 14px; font-weight: 700; color: #34d399;">🟢 Happy Path</td>
+                                <td style="padding: 10px 14px; color: #e2e8f0;">Válida y típica</td>
+                                <td style="padding: 10px 14px; color: #cbd5e1;">Operación normal de negocio</td>
+                                <td style="padding: 10px 14px; font-weight: 700; color: #34d399;">Éxito (200 OK, 201 Created)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.08);">
+                                <td style="padding: 10px 14px; font-weight: 700; color: #fbbf24;">🟡 Edge Cases</td>
+                                <td style="padding: 10px 14px; color: #e2e8f0;">Extrema o inusual</td>
+                                <td style="padding: 10px 14px; color: #cbd5e1;">Probar límites de tolerancia</td>
+                                <td style="padding: 10px 14px; font-weight: 700; color: #fbbf24;">Éxito o validación esperada</td>
+                            </tr>
+                            <tr style="background: rgba(239, 68, 68, 0.08);">
+                                <td style="padding: 10px 14px; font-weight: 700; color: #f87171;">🔴 Failure Modes</td>
+                                <td style="padding: 10px 14px; color: #e2e8f0;">Inválida, rota o maliciosa</td>
+                                <td style="padding: 10px 14px; color: #cbd5e1;">Probar resiliencia y seguridad</td>
+                                <td style="padding: 10px 14px; font-weight: 700; color: #f87171;">Error controlado (4xx)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     
@@ -616,21 +897,34 @@ def db_session():
                 <div class="slide-title-header">Clase 40 • Lead Architect Guide (1/1) • Estructura de Archivos</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
-            <div class="slide-body">
-                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">📂 Estructura de Archivos Sugerida</h2>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0 0 10px 0;">📂 Estructura de Archivos Sugerida</h2>
                 
-                <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 14px 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 8px;">🌳 Árbol Limpio de Organización de Código del Proyecto:</strong>
-                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #0f172a; background: #f8fafc; padding: 12px 14px; border-radius: 8px; margin: 0; line-height: 1.3; border: 1px solid #cbd5e1; overflow: hidden;">tests/
-├── conftest.py          # Fixtures globales (client, test_db)
-├── unit/
-│   └── test_services.py # Pruebas unitarias puras
-└── integration/
-    ├── test_auth.py     # Pruebas de endpoints de auth
-    └── test_items.py    # Pruebas de endpoints CRUD
-app/
-├── main.py              # Aplicación FastAPI
-└── database.py          # Sesión de base de datos</pre>
+                <div style="background: #0f172a; border: 2px solid #0056FF; border-radius: 12px; padding: 12px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); flex-grow: 1; min-height: 0; display: flex; flex-direction: column;">
+                    <strong style="color: #38bdf8; font-size: 0.85rem; display: block; margin-bottom: 6px;">🌳 Árbol Limpio de Organización de Código del Proyecto (Monorepo):</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #cbd5e1; background: #1e293b; padding: 10px 14px; border-radius: 8px; margin: 0; line-height: 1.25; border: 1px solid #334155; overflow-y: auto; flex-grow: 1; white-space: pre-wrap;">monorepo/
+├── TESTING.md                     <-- Plan de pruebas, ejecución y registro de bugs/IA
+├── backend/                       <-- FastAPI app
+│   ├── pyproject.toml             <-- Dependencias gestionadas con uv (pytest, pytest-cov, httpx)
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── core/                  <-- Seguridad, hashing, jwt handlers
+│   │   ├── routers/
+│   │   │   └── auth.py            <-- Endpoints (/register, /login, /refresh, /me)
+│   │   └── schemas/
+│   └── tests/                     <-- Batería de pruebas con pytest
+│       ├── conftest.py            <-- Fixtures: TestClient, db_session simulada, tokens de prueba
+│       ├── test_auth_register.py  <-- Happy path, edge cases, failure modes
+│       ├── test_auth_login.py
+│       └── test_auth_token.py     <-- Expiración, firmas falsas, validación
+│
+└── frontend/                      <-- Next.js / TypeScript app
+    ├── jest.config.ts             <-- Configuración de Jest con ts-jest
+    ├── package.json
+    ├── src/
+    │   └── utils/                 <-- Funciones utilitarias (formatters, validators, jwt decode)
+    └── src/__tests__/             <-- Pruebas con Jest
+        └── auth_helpers.test.ts   <-- Happy path y failure modes de utilidades TS</pre>
                 </div>
             </div>
         </div>
@@ -658,6 +952,191 @@ app/
             </div>
         </div>
         
+        <!-- SLIDE E2E 1: Selenium -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pruebas End-to-End (1/4): Selenium</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🚗 Parte 1: Selenium</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">WebDriver Protocol • Automatización Externa</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 ¿Qué es?</strong>
+                            <p style="font-size: 0.80rem; color: #1e3a8a; margin: 0; line-height: 1.38;">Es una herramienta veterana de automatización que controla navegadores web desde afuera. Funciona enviándole comandos a un intermediario (un "driver") para que abra Chrome, Firefox o Safari y haga clics o escriba datos tal como lo haría un usuario.</p>
+                        </div>
+                        <div style="background: #f8fafc; border-left: 5px solid #64748b; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #334155; font-size: 0.85rem; display: block; margin-bottom: 3px;">⚙️ Qué hace:</strong>
+                            <p style="font-size: 0.80rem; color: #475569; margin: 0; line-height: 1.38;">Permite probar aplicaciones completas en prácticamente cualquier navegador y sistema operativo, y soporta múltiples lenguajes de programación (Python, Java, C#, JavaScript).</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">🏎️</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Imagina que tienes un autito a control remoto. Tú estás parado lejos en la sala con un control en las manos: cuando presionas un botón, la antena manda una señal por el aire al auto para que avance o gire. Selenium es ese control remoto: maneja el navegador desde afuera enviándole órdenes a distancia.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #3b82f6; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #60a5fa; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Ejemplo en Python:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #93c5fd; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;"><span style="color: #f472b6;">from</span> selenium <span style="color: #f472b6;">import</span> webdriver
+driver = webdriver.Chrome()
+driver.get(<span style="color: #a5f3fc;">"https://mi-app.com/login"</span>)
+driver.find_element(<span style="color: #a5f3fc;">"name"</span>, <span style="color: #a5f3fc;">"email"</span>).send_keys(<span style="color: #a5f3fc;">"user@example.com"</span>)</pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE E2E 2: Cypress -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pruebas End-to-End (2/4): Cypress</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚡ Parte 2: Cypress</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">In-Browser Execution • Time Travel Debugging</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 ¿Qué es?</strong>
+                            <p style="font-size: 0.80rem; color: #064e3b; margin: 0; line-height: 1.38;">Es una herramienta moderna de pruebas construida específicamente para la web actual. A diferencia de Selenium, Cypress no maneja el navegador desde afuera, sino que se ejecuta <strong>adentro del propio navegador</strong> (en el mismo ciclo de eventos que tu aplicación JavaScript).</p>
+                        </div>
+                        <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">⚙️ Qué hace:</strong>
+                            <p style="font-size: 0.80rem; color: #581c87; margin: 0; line-height: 1.38;">Permite hacer pruebas de punta a punta (E2E) e integración súper rápidas, ver exactamente qué pasaba en la pantalla en cada paso (Time Travel) y manipular el estado de la app en tiempo real.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">🏎️</span>
+                            <strong style="color: #15803d; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #14532d; margin: 0; line-height: 1.4; font-weight: 500;">Imagina que te encoges de tamaño y te sientas adentro del autito a control remoto, agarrando el volante directamente. En lugar de mandar señales por el aire que pueden tardar o perderse, estás ahí adentro: ves el camino en tiempo real, frenas al instante y si algo falla, sabes exactamente qué engranaje falló porque estás sentado al lado del motor.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Ejemplo en Cypress (JavaScript):</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #6ee7b7; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;">cy.visit(<span style="color: #a5f3fc;">'/login'</span>);
+cy.get(<span style="color: #a5f3fc;">'input[name="email"]'</span>).type(<span style="color: #a5f3fc;">'user@example.com'</span>);
+cy.get(<span style="color: #a5f3fc;">'button[type="submit"]'</span>).click();
+cy.url().should(<span style="color: #a5f3fc;">'include'</span>, <span style="color: #a5f3fc;">'/dashboard'</span>);</pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE E2E 3: Comparativa Selenium vs Cypress -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Pruebas End-to-End (3/4): Comparativa</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 Parte 3: Comparativa entre Selenium y Cypress</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Matriz de Arquitectura & Herramientas</span>
+                </div>
+
+                <div style="overflow-x: auto; background: #0f172a; border-radius: 12px; border: 2px solid #334155; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.78rem;">
+                        <thead>
+                            <tr style="background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155;">
+                                <th style="padding: 9px 12px; font-weight: 700; width: 22%;">Criterio</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 39%; color: #60a5fa;">🚗 Selenium (Control Remoto)</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 39%; color: #34d399;">⚡ Cypress (In-Browser)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(59, 130, 246, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #e2e8f0;">🏛️ Arquitectura</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Control remoto vía HTTP WebDriver (fuera)</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Ejecución directa en el Event Loop (dentro)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(16, 185, 129, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #e2e8f0;">💻 Lenguajes</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Python, Java, C#, JS, Ruby</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">JavaScript / TypeScript nativo</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(59, 130, 246, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #e2e8f0;">⚡ Velocidad & Debug</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Intermedia/Lenta, requiere logs externos</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Ultra rápida, Time Travel & DOM snapshots</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(16, 185, 129, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #e2e8f0;">🌐 Navegadores</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Todos (Chrome, Firefox, Safari, Edge, IE)</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Chromium, Firefox y Electron</td>
+                            </tr>
+                            <tr style="background: rgba(139, 92, 246, 0.08);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #c084fc;">💡 Analogía Feynman</td>
+                                <td style="padding: 9px 12px; color: #93c5fd; font-style: italic;">Manejar una grúa gigante desde una cabina a 50 metros.</td>
+                                <td style="padding: 9px 12px; color: #6ee7b7; font-style: italic;">Moldear la arcilla directamente con tus manos.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE E2E 4: Misión Proyecto Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 40 • Proyecto Práctico: Misión Final</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎯 Parte 4: Misión: Blindar la API de Autenticación con Pruebas</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Desafío Práctico • Coverage ≥ 70%</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Contexto de la Misión:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        En la clase de hoy aprendiste a probar tus endpoints con <code>pytest</code> y <code>TestClient</code>. Ahora es momento de poner a prueba la API de autenticación que construiste previamente.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px 16px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.88rem; display: block; margin-bottom: 6px;">🚀 Tu Objetivo (Checklist de Entregables):</strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.78rem;">
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #38bdf8;">
+                            <strong style="color: #38bdf8;">1. 📝 Documentación <code>TESTING.md</code>:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Crear <code>TESTING.md</code> en la raíz para definir estrategia, comandos y hallazgos.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a855f7;">
+                            <strong style="color: #c084fc;">2. 🧪 Batería Backend (FastAPI):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Escribir pruebas unitarias e integración con <code>pytest</code> para <code>/register</code>, <code>/login</code> y <code>/refresh</code>.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                            <strong style="color: #fbbf24;">3. 📊 Cobertura ≥ 70%:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Asegurar una cobertura de código $\ge 70\%$ en el backend (<code>pytest --cov=app</code>).</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ec4899;">
+                            <strong style="color: #f472b6;">4. 💻 Pruebas Frontend:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Probar los flujos en el frontend utilizando Jest/Vitest o la herramienta de tu stack.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 6px 12px; border-radius: 6px; text-align: center;">
+                        <strong style="color: #34d399; font-size: 0.80rem;">🟢 Criterio de Éxito: Garantizar que TODAS las pruebas pasen en verde antes de entregar.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
     </div>
 
     <!-- Controles de Navegación -->
@@ -666,7 +1145,7 @@ app/
             <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
             <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
         </div>
-        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 18</div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 30</div>
         <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
     </div>
 
