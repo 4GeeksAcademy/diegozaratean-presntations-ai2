@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 42: Relaciones entre Tablas y Llaves Foráneas en SQL - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Relaciones entre Tablas y Llaves Foráneas en SQL">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 42 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 42:<br><span>Relaciones entre Tablas y Llaves Foráneas en SQL</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>🦾 <strong>Práctica 1:</strong> Relational Database Schema & Foreign Keys</li>
+<li>💻 <strong>Proyecto Final:</strong> Relational Schemas & Foreign Keys</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 42 (1/10): Visión Macro Relaciones -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Esquemas Relacionales: 1:N, N:M & Foreign Keys</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔗 Relaciones entre Tablas: 1:N, N:M & Tablas Intermedias</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Normalización • Integridad Referencial</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.90rem; display: block; margin-bottom: 4px;">🔗 Relación 1:N (Uno a Muchos)</strong>
+                        <p style="font-size: 0.78rem; color: #1e3a8a; line-height: 1.35; margin: 0;">
+                            Un registro de la Tabla A se relaciona con múltiples registros de la Tabla B (ej. <em>Un Profesor imparte N Cursos</em>). La llave foránea se coloca en la tabla 'Muchos'.
+                        </p>
+                    </div>
+
+                    <div style="background: #fdf4ff; border: 2px solid #a855f7; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #7e22ce; font-size: 0.90rem; display: block; margin-bottom: 4px;">🌐 Relación N:M (Muchos a Muchos)</strong>
+                        <p style="font-size: 0.78rem; color: #581c87; line-height: 1.35; margin: 0;">
+                            Múltiples registros de A se relacionan con múltiples de B (ej. <em>N Estudiantes inscritos en M Cursos</em>). Se resuelve mediante una <strong>Tabla Intermedia (Pivot Table)</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 42 (2/10): Stack Técnico SQL FK -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Foreign Keys & Tablas Pivot en SQL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Definición de Foreign Keys & Tablas Intermedias</h2>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px;">
+                    <!-- Code Editor -->
+                    <div class="editor-container" style="margin: 0;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">relations.sql</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #0f172a; margin: 0;"><code><span style="color: #38bdf8;">-- 1. Relación 1:N con Foreign Key</span>
+<span style="color: #f472b6;">CREATE TABLE</span> courses (
+    id <span style="color: #fbbf24;">SERIAL PRIMARY KEY</span>,
+    title <span style="color: #34d399;">VARCHAR(150) NOT NULL</span>,
+    teacher_id <span style="color: #a78bfa;">INT REFERENCES teachers(id) ON DELETE CASCADE</span>
+);
+
+<span style="color: #38bdf8;">-- 2. Tabla Pivot (N:M): Estudiantes y Cursos</span>
+<span style="color: #f472b6;">CREATE TABLE</span> enrollments (
+    student_id <span style="color: #a78bfa;">INT REFERENCES students(id) ON DELETE CASCADE</span>,
+    course_id <span style="color: #a78bfa;">INT REFERENCES courses(id) ON DELETE CASCADE</span>,
+    <span style="color: #fbbf24;">PRIMARY KEY (student_id, course_id)</span>
+);</code></pre>
+                    </div>
+
+                    <!-- Explicación -->
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px 12px; border-radius: 8px;">
+                            <strong style="color: #15803d; font-size: 0.88rem;">🔗 `REFERENCES`:</strong>
+                            <p style="font-size: 0.80rem; color: #14532d; margin-top: 2px;">Establece el vínculo estricto contra la `PRIMARY KEY` de la tabla padre impidiendo datos huérfanos.</p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 12px; border-radius: 8px;">
+                            <strong style="color: #1d4ed8; font-size: 0.88rem;">⚡ Clave Primaria Compuesta:</strong>
+                            <p style="font-size: 0.80rem; color: #1e3a8a; margin-top: 2px;">En `enrollments`, la combinación `(student_id, course_id)` evita que un estudiante se inscriba dos veces en el mismo curso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 42 (3/10): FK Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Conceptos Clave: Foreign Keys e Integridad</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔗 Foreign Keys (FK) & Integridad Referencial</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Vinculación Estricta • Restricción Padre-Hijo</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #4c1d95; margin: 0; line-height: 1.38;">Una Foreign Key es una clave que apunta a la Primary Key de otra tabla. Garantiza que jamás existan registros "hijos" que hagan referencia a un registro "padre" inexistente o eliminado.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">🏷️</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es el ticket de equipaje del aeropuerto. La etiqueta de tu maleta en la bodega (FK) tiene impreso tu número de pasaje (PK). La maleta solo viaja en el avión si pertenece a un pasajero válido a bordo.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #8b5cf6; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #c084fc; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">Declaración DDL de tablas (<code>REFERENCES parent(id)</code>) y relaciones en modelos ORM (`relationship()`).</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 42 (4/10): N:M Pivot Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Relaciones N:M & Tablas Intermedias</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🌐 Relaciones N:M & Tablas Pivot / Intermedias</h2>
+                    <span style="background: #a855f7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Desacoplamiento • Normalización</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #581c87; margin: 0; line-height: 1.38;">Como SQL no permite listas de IDs dentro de una sola celda, una relación N:M se descompone en dos relaciones 1:N creando una tabla intermedia (ej. <code>enrollments</code>) que almacena pares de Foreign Keys (`student_id`, `course_id`).</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">📝</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">En la escuela, un alumno no se inscribe escribiendo su nombre en la pared del aula. Se crea una hoja de matrícula (ficha) donde se escribe: ID Alumno + ID Asignatura. Esa hoja es la tabla intermedia.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #a855f7; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #c084fc; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Consulta JOIN para Navegar Relaciones N:M:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #c084fc; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;"><span style="color: #f472b6;">SELECT</span> s.name, c.title <span style="color: #f472b6;">FROM</span> enrollments e
+<span style="color: #f472b6;">JOIN</span> students s <span style="color: #f472b6;">ON</span> e.student_id = s.id
+<span style="color: #f472b6;">JOIN</span> courses c <span style="color: #f472b6;">ON</span> e.course_id = c.id;</pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 42 (5/10): Matriz ON DELETE -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Reglas de Borrado: Comportamiento ON DELETE</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 Reglas de Borrado en Cascada (`ON DELETE`)</h2>
+                    <span style="background: #ec4899; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Estrategia de Dominio SQL</span>
+                </div>
+
+                <div style="overflow-x: auto; background: #0f172a; border-radius: 12px; border: 2px solid #334155; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.78rem;">
+                        <thead>
+                            <tr style="background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155;">
+                                <th style="padding: 9px 12px; font-weight: 700; width: 25%;">Cláusula SQL</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 35%;">Mecanismo de Borrado</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 25%;">Caso de Uso Típico</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 15%;">Riesgo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(16, 185, 129, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #34d399;">🟢 ON DELETE RESTRICT</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Bloquea el borrado del padre si tiene registros hijos vinculados.</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Clientes con facturas emitidas active.</td>
+                                <td style="padding: 9px 12px; color: #34d399; font-weight: 700;">Bajo (Seguro)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #fbbf24;">🟡 ON DELETE SET NULL</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Pone la Foreign Key en `NULL` al eliminar el registro padre.</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Tutor asignado a estudiante.</td>
+                                <td style="padding: 9px 12px; color: #fbbf24; font-weight: 700;">Medio (Hijos sin padre)</td>
+                            </tr>
+                            <tr style="background: rgba(239, 68, 68, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #f87171;">🔴 ON DELETE CASCADE</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Elimina automáticamente el padre y TODOS sus registros hijos asociados.</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Borrar curso borra sus matrículas.</td>
+                                <td style="padding: 9px 12px; color: #f87171; font-weight: 700;">⚠️ Alto (Borrado masivo)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">EduTrack Related Tables</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (1/3): ERD Diagrama -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Lead Architect: Diagrama Entidad-Relación (ERD)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📐 Esquema Relacional de la BD EduTrack</h2>
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #8b5cf6; padding: 16px; color: #ffffff; text-align: center;">
+                    <div style="font-family: 'Fira Code', monospace; font-size: 0.82rem; color: #c084fc; line-height: 1.6;">
+                        [teachers] (1) <─────── (N) [courses] (1) <─────── (N) [enrollments] (N) ───────> (1) [students] <br>
+                        ├── id (PK)                 ├── id (PK)                 ├── student_id (PK, FK)         ├── id (PK) <br>
+                        └── name                    ├── title                   ├── course_id (PK, FK)          └── email <br>
+                                                    └── teacher_id (FK)         └── enrolled_at
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (2/3): Estructura Monorepo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Lead Architect: Estructura de Proyecto</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📁 Estructura del Proyecto `edutrack-data-audit-sql-related-tables`</h2>
+                <div class="editor-container" style="margin: 0;">
+                    <div class="editor-header">
+                        <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                        <span class="editor-filename">Árbol del Proyecto</span>
+                        <div class="editor-header-right"><span class="editor-lang">Relaciones SQL</span></div>
+                    </div>
+                    <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #f8fafc; background: #0f172a; margin: 0;"><code>edutrack-data-audit-sql-related-tables/
+├── README.md                          <-- Guía del proyecto relacional
+├── db/
+│   ├── schema_v2.sql                  <-- Script DDL con FKs (teachers, courses, enrollments)
+│   ├── queries_joins.sql              <-- Consultas INNER JOIN, LEFT JOIN y agrupaciones
+│   └── migrations/
+└── reports/
+    └── relational_integrity_report.md  <-- Análisis de integridad referencial</code></pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (3/3): Gotchas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Lead Architect: Gotchas & Relaciones</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Gotchas Críticos en Esquemas Relacionales</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 2px;">❌ Producto Cartesiano:</strong>
+                        <p style="font-size: 0.76rem; color: #7f1d1d; margin: 0;">Ejecutar `SELECT * FROM A, B` sin cláusula `ON` o `WHERE` multiplica todas las filas creando millones de combinaciones falsas.</p>
+                    </div>
+                    <div style="background: #fff7ed; border: 2px solid #f97316; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #c2410c; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Bucles de Foreign Keys:</strong>
+                        <p style="font-size: 0.76rem; color: #7c2d12; margin: 0;">Evitar que dos tablas se apunten mutuamente con FKs directas, lo cual impide el borrado o creación de registros iniciales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 42 (10/10): Misión Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Proyecto Práctico: Misión Final</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎯 Misión: Diseñar el Esquema Relacional EduTrack</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Desafío Práctico • 1:N, N:M & JOINs</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Contexto de la Misión:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Construirás la estructura relacional multi-tabla de `EduTrack` uniendo profesores, cursos y estudiantes mediante Foreign Keys y tablas pivot.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px 16px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.88rem; display: block; margin-bottom: 6px;">🚀 Tu Objetivo (Checklist de Entregables):</strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.78rem;">
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #38bdf8;">
+                            <strong style="color: #38bdf8;">1. 🔗 Relaciones 1:N (`schema_v2.sql`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Vincular `courses` con `teachers` mediante `FOREIGN KEY`.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a855f7;">
+                            <strong style="color: #c084fc;">2. 🌐 Tabla Pivot N:M (`enrollments`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Crear tabla intermedia con clave primaria compuesta.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                            <strong style="color: #fbbf24;">3. ⚡ Reglas `ON DELETE`:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Configurar `CASCADE` y `RESTRICT` según el dominio de datos.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ec4899;">
+                            <strong style="color: #f472b6;">4. 📊 Consultas `JOIN` (`queries_joins.sql`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Escribir consultas avanzadas con `INNER JOIN` y `GROUP BY`.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 6px 12px; border-radius: 6px; text-align: center;">
+                        <strong style="color: #34d399; font-size: 0.80rem;">🟢 Criterio de Éxito: Cero registros huérfanos e integridad referencial 100% funcional.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 11</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>

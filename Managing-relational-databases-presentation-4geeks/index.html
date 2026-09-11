@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Clases de Managing Relational Databases with FastAPI - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=2">
+    <style>
+        body { background-color: #0b1120; color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        .hub-container { width: 100%; max-width: 1050px; display: flex; flex-direction: column; gap: 30px; }
+        .hub-header { background: linear-gradient(135deg, rgba(255, 184, 0, 0.1) 0%, rgba(0, 86, 255, 0.1) 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 35px 40px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
+        .hub-brand { font-weight: 800; font-size: 1.1rem; color: #FFB800; text-transform: uppercase; margin-bottom: 10px; }
+        .hub-title { font-size: 2.2rem; font-weight: 800; color: #ffffff; }
+        .hub-title span { color: #FFB800; }
+        .classes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .class-card { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease; }
+        .class-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .class-number-badge { background-color: #FFB800; color: #000; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+        .date-badge { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; font-weight: 700; font-size: 0.78rem; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .status-badge { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+        .status-ready { background-color: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-pending { background-color: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .class-card-title { font-size: 1.3rem; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .class-card-desc { font-size: 0.88rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5; }
+        .class-card-meta { display: flex; align-items: center; gap: 16px; font-size: 0.8rem; color: #64748b; margin-bottom: 20px; border-top: 1px solid #1e293b; padding-top: 14px; }
+        .class-btn { background-color: #0056FF; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .class-btn-secondary { background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+    </style>
+</head>
+<body>
+    <div class="hub-container">
+        <header class="hub-header">
+            <div>
+                <div class="hub-brand">&lt;/&gt; 4Geeks Academy</div>
+                <h1 class="hub-title">Módulo: <span>Managing Relational Databases with FastAPI</span></h1>
+                <p style="color: #94a3b8; margin-top: 6px;">Selecciona una clase para abrir sus diapositivas interactivas.</p>
+            </div>
+        </header>
+
+        <div class="classes-grid">
+            
+            <!-- CLASE 41 -->
+            <div class="class-card">
+                <div>
+                    <div class="class-card-top">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span class="class-number-badge">Clase 41</span>
+                            <span class="date-badge">📅 Viernes 11/09/2026</span>
+                        </div>
+                        <span class="status-badge status-ready">● Lista (42 Slides)</span>
+                    </div>
+                    <h2 class="class-card-title">EduTrack Data Audit & Relational SQL Fundamentals</h2>
+                    <p class="class-card-desc">Auditoría de datos en bases relacionales, esquemas DDL SQL, llaves primarias, foráneas e integridad referencial.</p>
+                </div>
+                <div>
+                    <div class="class-card-meta">
+                        <span>📊 42 Diapositivas</span>
+                        <span>💻 SQL Relacional</span>
+                    </div>
+                    <a href="clase41/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                </div>
+            </div>
+        
+            <!-- CLASE 42 -->
+            <div class="class-card">
+                <div>
+                    <div class="class-card-top">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span class="class-number-badge">Clase 42</span>
+                            <span class="date-badge">📅 Lunes 14/09/2026</span>
+                        </div>
+                        <span class="status-badge status-ready">● Lista (42 Slides)</span>
+                    </div>
+                    <h2 class="class-card-title">Relational Schemas & Foreign Keys</h2>
+                    <p class="class-card-desc">Diseño de esquemas relacionales avanzados, relaciones 1:N y N:M con llaves foráneas y constraints.</p>
+                </div>
+                <div>
+                    <div class="class-card-meta">
+                        <span>📊 42 Diapositivas</span>
+                        <span>💻 Esquemas SQL</span>
+                    </div>
+                    <a href="clase42/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                </div>
+            </div>
+        
+            <!-- CLASE 43 -->
+            <div class="class-card">
+                <div>
+                    <div class="class-card-top">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span class="class-number-badge">Clase 43</span>
+                            <span class="date-badge">📅 Miércoles 16/09/2026</span>
+                        </div>
+                        <span class="status-badge status-ready">● Lista (46 Slides)</span>
+                    </div>
+                    <h2 class="class-card-title">Backend Development ORM & Dual Database</h2>
+                    <p class="class-card-desc">Integración de ORM (SQLAlchemy/SQLModel) con FastAPI y administración dual de bases de datos.</p>
+                </div>
+                <div>
+                    <div class="class-card-meta">
+                        <span>📊 46 Diapositivas</span>
+                        <span>💻 ORM & FastAPI</span>
+                    </div>
+                    <a href="clase43/index.html" class="class-btn">Ver Diapositivas 🚀</a>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</body>
+</html>

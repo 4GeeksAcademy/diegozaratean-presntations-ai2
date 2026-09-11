@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 43: Backend Development ORM & Dual Database - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Backend Development ORM & Dual Database">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 43 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 43:<br><span>Backend Development ORM & Dual Database</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>🦾 <strong>Práctica 1:</strong> Backend ORM & Dual Database</li>
+<li>💻 <strong>Proyecto Final:</strong> Backend Development ORM & Dual Database</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (1/11): Visión Macro ORM -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Backend Development ORM & Dual Database Strategy</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚡ ORM (SQLModel/SQLAlchemy) & Estrategia Dual Database</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">FastAPI • SQLite vs PostgreSQL</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 ¿Qué es un ORM (Object-Relational Mapping)?</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Mapea clases de Python (Objetos) directamente a tablas relacionales de la BD. Permite consultar, insertar y actualizar datos mediante métodos orientados a objetos en lugar de cadenas SQL manuales.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🪶 SQLite (Desarrollo & Tests)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Base de datos ligera basada en un archivo local sin servidor daemon. Ideal para prototipado rápido y ejecuciones ultra rápidas de Pytest.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.90rem; display: block; margin-bottom: 4px;">🐘 PostgreSQL (Producción)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Motor relacional de alto rendimiento, concurrente y cliente-servidor para entornos de producción masivos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (2/11): Stack Técnico SQLModel -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Modelos SQLModel & Conexión Dual DB en FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Definición de Modelos & Conexión Engine</h2>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px;">
+                    <!-- Code Editor -->
+                    <div class="editor-container" style="margin: 0;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">models.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.71rem; color: #f8fafc; background: #0f172a; margin: 0;"><code><span style="color: #f472b6;">from</span> typing <span style="color: #f472b6;">import</span> Optional
+<span style="color: #f472b6;">from</span> sqlmodel <span style="color: #f472b6;">import</span> SQLModel, Field, create_engine, Session
+
+<span style="color: #38bdf8;"># Modelo ORM + Esquema Pydantic Unificado</span>
+<span style="color: #f472b6;">class</span> <span style="color: #fbbf24;">User</span>(SQLModel, table=<span style="color: #34d399;">True</span>):
+    id: Optional[int] = Field(default=<span style="color: #34d399;">None</span>, primary_key=<span style="color: #34d399;">True</span>)
+    email: str = Field(unique=<span style="color: #34d399;">True</span>, index=<span style="color: #34d399;">True</span>)
+    hashed_password: str
+
+<span style="color: #38bdf8;"># Conexión Dinámica Dual Database vía .env</span>
+DATABASE_URL = os.getenv(<span style="color: #a5f3fc;">"DATABASE_URL"</span>, <span style="color: #a5f3fc;">"sqlite:///./dev.db"</span>)
+engine = create_engine(DATABASE_URL, echo=<span style="color: #34d399;">True</span>)</code></pre>
+                    </div>
+
+                    <!-- Explicación -->
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px 12px; border-radius: 8px;">
+                            <strong style="color: #15803d; font-size: 0.88rem;">✨ SQLModel (Pydantic + SQLAlchemy):</strong>
+                            <p style="font-size: 0.80rem; color: #14532d; margin-top: 2px;">Una sola clase define la tabla SQL y valida los JSONs del contrato de la API FastAPI.</p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 12px; border-radius: 8px;">
+                            <strong style="color: #1d4ed8; font-size: 0.88rem;">🔌 Abstracción de Motor (`create_engine`):</strong>
+                            <p style="font-size: 0.80rem; color: #1e3a8a; margin-top: 2px;">El código Python del backend funciona identicamente en SQLite y PostgreSQL cambiando solo la cadena `DATABASE_URL`.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (3/11): Session & Engine Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Conceptos Clave: Engine, Session & Transacciones</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🏦 El Patrón Session, Engine & Commit/Rollback</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Gestor de Transacciones • Conexiones</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">El <code>Engine</code> administra el pool de conexiones físicas a la BD. La <code>Session</code> representa la transacción activa: acumula cambios (`session.add()`), los persiste en la BD (`session.commit()`) o revoca operaciones ante errores (`session.rollback()`).</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">🏦</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es la ventanilla del banco: abres la atención en ventanilla (Session). Le pones los billetes en la bandeja (session.add). El cajero sella el depósito (commit) y se guarda. Si algo falla, te devuelve los billetes y destruye el papel de depósito (rollback).</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #0056FF; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">`app/core/db.py`, dependencias `get_session()` en routers y fixtures de pruebas en `conftest.py`.</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (4/11): Alembic Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Migraciones de BD con Alembic</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📦 Migraciones de Base de Datos con Alembic</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Control de Versiones de BD • DDL Automático</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #4c1d95; margin: 0; line-height: 1.38;">Alembic rastrea los cambios en los modelos Python de SQLModel y genera versiones DDL automáticas (`alembic revision --autogenerate`), permitiendo actualizar (`alembic upgrade head`) o revertir el esquema de producción sin perder datos.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">🎮</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Son los puntos de guardado (savepoints) en un videojuego. Si modificas el mapa del nivel (agregas columnas a la BD), guardas la partida en una revisión. Si la actualización falla, haces `downgrade` al savepoint anterior sin perder tu personaje.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #8b5cf6; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #c084fc; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Comandos de Migración Alembic:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #c084fc; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;"># Generar script de migración automático
+alembic revision --autogenerate -m "add_users_table"
+# Aplicar cambios a la base de datos
+alembic upgrade head</pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (5/11): Dual Database Strategy Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Estrategia Dual Database (SQLite vs Postgres)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔄 Estrategia Dual Database: SQLite vs PostgreSQL</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Dev Fast • Prod Robust</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #064e3b; margin: 0; line-height: 1.38;">SQLite es ultra ligero e ideal para pruebas rápidas en local sin instalar servicios. PostgreSQL es el motor cliente-servidor para producción. La capa ORM abstrae el SQL para cambiar entre ambos mediante `DATABASE_URL` sin tocar el código.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">✈️</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es el simulador de vuelo en tu computadora (SQLite) versus volar el avión comercial real con 200 pasajeros (PostgreSQL). Practicas tus maniobras rápido en el simulador sin gastar combustible real.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">Variables de entorno (<code>.env</code>), <code>docker-compose.yml</code> y <code>app/core/config.py</code>.</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (6/11): Matriz CRUD & Exceptions -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Escenarios ORM: Operaciones CRUD & Excepciones</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 Matriz de Escenarios CRUD & Handling Exceptions</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Resiliencia Backend</span>
+                </div>
+
+                <div style="overflow-x: auto; background: #0f172a; border-radius: 12px; border: 2px solid #334155; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.78rem;">
+                        <thead>
+                            <tr style="background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155;">
+                                <th style="padding: 9px 12px; font-weight: 700; width: 22%;">Operación ORM</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 30%;">Comando SQLModel</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 25%;">Excepción Posible</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 23%;">Manejo HTTP Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(16, 185, 129, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #34d399;">🟢 Crear Registro</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>session.add(item) + commit()</code></td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>IntegrityError</code> (Unique Key)</td>
+                                <td style="padding: 9px 12px; color: #34d399; font-weight: 700;"><code>HTTP 400 Bad Request</code></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #fbbf24;">🟡 Buscar por ID</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>session.get(Model, id)</code></td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Retorna <code>None</code> si no existe</td>
+                                <td style="padding: 9px 12px; color: #fbbf24; font-weight: 700;"><code>HTTP 404 Not Found</code></td>
+                            </tr>
+                            <tr style="background: rgba(239, 68, 68, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #f87171;">🔴 Consulta Estricta</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>session.exec(query).one()</code></td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>NoResultFound</code></td>
+                                <td style="padding: 9px 12px; color: #f87171; font-weight: 700;">Capturar ➔ <code>HTTP 404</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">Backend Development ORM & Dual DB</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (1/3): Arquitectura Backend -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Lead Architect: Arquitectura Backend Dual DB</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📐 Flujo de Arquitectura Backend FastAPI + ORM</h2>
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 16px; color: #ffffff; text-align: center;">
+                    <div style="font-family: 'Fira Code', monospace; font-size: 0.82rem; color: #34d399; line-height: 1.6;">
+                        [HTTP Request / JSON Payload] <br>
+                        ⬇️ <br>
+                        [FastAPI Router / Dependency Injection: `get_session`] <br>
+                        ├── 1. Validar Pydantic Model Schemas <br>
+                        ├── 2. Iniciar Transacción ORM (`Session`) <br>
+                        └── 3. Ejecutar `session.exec(select(...))` o `session.add()` <br>
+                        ⬇️ (Engine Abstraction via `DATABASE_URL`) <br>
+                        [SQLite (Dev local) OR PostgreSQL (Prod Server)]
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (2/3): Estructura Monorepo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Lead Architect: Estructura de Proyecto ORM</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📁 Estructura del Proyecto `ai-eng-milestone-backend-development`</h2>
+                <div class="editor-container" style="margin: 0;">
+                    <div class="editor-header">
+                        <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                        <span class="editor-filename">Árbol Backend FastAPI + ORM</span>
+                        <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                    </div>
+                    <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.72rem; color: #f8fafc; background: #0f172a; margin: 0;"><code>ai-eng-milestone-backend-development/
+├── pyproject.toml                     <-- Dependencias (fastapi, sqlmodel, alembic, psycopg2)
+├── alembic.ini                        <-- Configuración de migraciones Alembic
+├── alembic/                           <-- Control de versiones de base de datos
+│   └── versions/
+└── app/
+    ├── main.py                        <-- Entrypoint FastAPI
+    ├── core/
+    │   └── db.py                      <-- Engine, Session y `get_session` dependency
+    ├── models/                        <-- Modelos SQLModel (table=True)
+    ├── schemas/                       <-- DTOs Pydantic para request/response
+    └── routers/                       <-- Endpoints CRUD (/users, /items)</code></pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (3/3): Gotchas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Lead Architect: Gotchas ORM & Producción</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Gotchas Críticos en FastAPI + ORM</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 2px;">❌ Problema N+1 Queries:</strong>
+                        <p style="font-size: 0.76rem; color: #7f1d1d; margin: 0;">Consultar una lista de N elementos e invocar su relación dentro de un bucle ejecuta N+1 consultas HTTP/BD. Usar <code>selectinload()</code>.</p>
+                    </div>
+                    <div style="background: #fff7ed; border: 2px solid #f97316; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #c2410c; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Sesiones No Cerradas:</strong>
+                        <p style="font-size: 0.76rem; color: #7c2d12; margin: 0;">No usar generadores <code>yield</code> en <code>get_session</code> puede agotar el pool de conexiones a la base de datos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 43 (11/11): Misión Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Proyecto Práctico: Misión Final</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎯 Misión: Construir el Backend ORM Milestone</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Milestone Project • FastAPI & Dual DB</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Contexto de la Misión:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Construirás la API REST completa integrada con un ORM (SQLModel), migraciones con Alembic y estrategia Dual DB en FastAPI.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px 16px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.88rem; display: block; margin-bottom: 6px;">🚀 Tu Objetivo (Checklist de Entregables):</strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.78rem;">
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #38bdf8;">
+                            <strong style="color: #38bdf8;">1. 🐍 Modelos SQLModel (`app/models/`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Definir clases de tabla relacionales con PK, campos indexados y relaciones.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a855f7;">
+                            <strong style="color: #c084fc;">2. 🔄 Dual DB & Session (`app/core/db.py`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Configurar `DATABASE_URL` dinámica e inyección de dependencia `get_session`.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                            <strong style="color: #fbbf24;">3. 📦 Migraciones Alembic:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Inicializar Alembic y generar revisiones automáticas de base de datos.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ec4899;">
+                            <strong style="color: #f472b6;">4. ⚡ Endpoints CRUD REST:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Implementar operaciones GET, POST, PUT, DELETE con manejo de excepciones.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 6px 12px; border-radius: 6px; text-align: center;">
+                        <strong style="color: #34d399; font-size: 0.80rem;">🟢 Criterio de Éxito: Backend 100% operativo con persistencia de datos y cero fugas de conexión.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 12</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>

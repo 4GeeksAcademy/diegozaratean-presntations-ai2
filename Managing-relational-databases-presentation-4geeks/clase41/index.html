@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 41: Bases de Datos Relacionales y SQL - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Bases de Datos Relacionales y SQL">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 41 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 41:<br><span>Bases de Datos Relacionales y SQL</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>🦾 <strong>Práctica 1:</strong> Relational Database Auditing & SQL Fundamentals</li>
+<li>💻 <strong>Proyecto Final:</strong> EduTrack Data Audit & Relational SQL Fundamentals</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 41 (1/10): Visión Macro SQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Fundamentos de BD Relacionales & Lenguaje SQL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🗄️ Fundamentos de Bases de Datos Relacionales & SQL</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Integridad ACID • DDL vs DML</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 ¿Por qué SQL y Bases Relacionales?</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Las bases de datos relacionales organizan la información en tablas compuestas por filas (registros) y columnas (atributos). SQL (Structured Query Language) es el estándar industrial para definir, consultar y auditar datos con consistencia atómica.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.90rem; display: block; margin-bottom: 4px;">🛠️ DDL (Data Definition Language)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Define la estructura de la base de datos: <code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>DROP TABLE</code>. Establece tipos de datos, llaves primarias y restricciones.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🔍 DML (Data Manipulation Language)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Manipula y consulta los datos almacenados: <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>. Permite filtrar y calcular métricas de auditoría.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 41 (2/10): Stack Técnico SQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Lenguaje SQL en Acción: DDL & DML</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 Creación de Tablas & Inserción en SQL</h2>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px;">
+                    <!-- Code Editor -->
+                    <div class="editor-container" style="margin: 0;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">schema.sql</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.73rem; color: #f8fafc; background: #0f172a; margin: 0;"><code><span style="color: #38bdf8;">-- 1. DDL: Estructura de la Tabla</span>
+<span style="color: #f472b6;">CREATE TABLE</span> students (
+    id <span style="color: #fbbf24;">SERIAL PRIMARY KEY</span>,
+    name <span style="color: #34d399;">VARCHAR(100) NOT NULL</span>,
+    email <span style="color: #34d399;">VARCHAR(120) UNIQUE NOT NULL</span>,
+    created_at <span style="color: #a78bfa;">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span style="color: #38bdf8;">-- 2. DML: Inserción y Consulta</span>
+<span style="color: #f472b6;">INSERT INTO</span> students (name, email)
+<span style="color: #f472b6;">VALUES</span> (<span style="color: #a5f3fc;">'Juan Pérez'</span>, <span style="color: #a5f3fc;">'juan@example.com'</span>);
+
+<span style="color: #f472b6;">SELECT</span> id, name, email <span style="color: #f472b6;">FROM</span> students;</code></pre>
+                    </div>
+
+                    <!-- Explicación -->
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px 12px; border-radius: 8px;">
+                            <strong style="color: #15803d; font-size: 0.88rem;">🥇 Primary Key (PK):</strong>
+                            <p style="font-size: 0.80rem; color: #14532d; margin-top: 2px;"><code>SERIAL PRIMARY KEY</code> asigna un entero autoincremental único por cada fila, garantizando la identidad inmutable del registro.</p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 12px; border-radius: 8px;">
+                            <strong style="color: #1d4ed8; font-size: 0.88rem;">🛡️ Constraints `NOT NULL` & `UNIQUE`:</strong>
+                            <p style="font-size: 0.80rem; color: #1e3a8a; margin-top: 2px;">La BD valida automáticamente a la entrada que el nombre no esté vacío y que el correo no se repita en la tabla.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 41 (3/10): PK & Constraints Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Conceptos Clave: Primary Keys & Constraints</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔑 Primary Keys (PK) & Restricciones de Integridad</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Identificador Único • Reglas de Motor</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #1e3a8a; margin: 0; line-height: 1.38;">La Primary Key es una columna que identifica de manera única e inconfundible cada fila en una tabla. Las restricciones (Constraints) como <code>NOT NULL</code>, <code>UNIQUE</code> y <code>CHECK</code> fuerzan la integridad de los datos directamente en el motor relacional.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">💳</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Imagina el número de DNI o Cédula en el Registro Civil. No pueden existir dos personas vivas con el mismo número de DNI, y tampoco puedes registrar a un bebé sin asignarle un número. La Primary Key es ese DNI que jamás cambia en tu vida.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #3b82f6; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #60a5fa; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">En scripts DDL (<code>db/schema.sql</code>), archivos de migración inicial y definiciones de modelos ORM.</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 41 (4/10): Audit Trail Feynman -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Auditoría de Datos: Audit Trail & Logs</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📜 Audit Trail & Registro Histórico de Cambios</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Trazabilidad • Tablas de Auditoría</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
+                            <p style="font-size: 0.80rem; color: #064e3b; margin: 0; line-height: 1.38;">Un Audit Trail en SQL consiste en almacenar en una tabla dedicada (<code>audit_logs</code>) cada modificación o inserción realizada en el sistema. Permite saber <strong>quién</strong> modificó qué dato, en <strong>qué fecha exacta</strong> (`timestamp`) y el estado previo/nuevo.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">✈️</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
+                        </div>
+                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es la caja negra de un avión o la libreta del portero del edificio: cada persona que entra o sale deja anotada su hora exacta y su nombre. Si algo se rompe o desaparece, no hay adivinanzas: abres la caja negra y ves exactamente qué pasó.</p>
+                    </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 10px 14px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Consulta SQL de Auditoría Típica:</strong>
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #34d399; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;"><span style="color: #f472b6;">SELECT</span> u.email, a.action, a.timestamp 
+<span style="color: #f472b6;">FROM</span> audit_logs a <span style="color: #f472b6;">JOIN</span> users u <span style="color: #f472b6;">ON</span> a.user_id = u.id 
+<span style="color: #f472b6;">ORDER BY</span> a.timestamp <span style="color: #f472b6;">DESC</span>;</pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 41 (5/10): Matriz de Escenarios SQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Escenarios de Auditoría & Consultas SQL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 Matriz de Escenarios: Consultas & Operaciones SQL</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">QA & Auditoría de Datos</span>
+                </div>
+
+                <div style="overflow-x: auto; background: #0f172a; border-radius: 12px; border: 2px solid #334155; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.78rem;">
+                        <thead>
+                            <tr style="background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155;">
+                                <th style="padding: 9px 12px; font-weight: 700; width: 22%;">Escenario</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 28%;">Tipo de Operación</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 25%;">Riesgo / Impacto</th>
+                                <th style="padding: 9px 12px; font-weight: 700; width: 25%;">Resultado Esperado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(16, 185, 129, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #34d399;">🟢 Consulta Normal</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>SELECT</code> indexado por Primary Key</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Cero riesgo de modificación</td>
+                                <td style="padding: 9px 12px; color: #34d399; font-weight: 700;">Respuesta rápida con el registro exacto</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #fbbf24;">🟡 UPDATE sin WHERE</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>UPDATE students SET status='inactive'</code></td>
+                                <td style="padding: 9px 12px; color: #f87171; font-weight: 700;">⚠️ Peligro: Modifica toda la tabla</td>
+                                <td style="padding: 9px 12px; color: #fbbf24; font-weight: 700;">ERROR GRAVE: Exigir cláusula <code>WHERE</code></td>
+                            </tr>
+                            <tr style="background: rgba(239, 68, 68, 0.05);">
+                                <td style="padding: 9px 12px; font-weight: 700; color: #f87171;">🔴 Duplicado / SQL Injection</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;"><code>INSERT</code> con email que ya existe</td>
+                                <td style="padding: 9px 12px; color: #cbd5e1;">Violación de <code>UNIQUE constraint</code></td>
+                                <td style="padding: 9px 12px; color: #f87171; font-weight: 700;">Rechazo inmediato de la BD (<code>UniqueViolation</code>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE FINAL: Práctica en Clase -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body">
+                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                    </p>
+
+                    
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
+                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
+                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">EduTrack Data Audit SQL</p>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (1/3): Diagrama -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Lead Architect: Flujo de Auditoría SQL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📐 Flujo de Ejecución & Auditoría de Datos</h2>
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #3b82f6; padding: 16px; color: #ffffff; text-align: center;">
+                    <div style="font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #38bdf8; line-height: 1.6;">
+                        [Cliente / Frontend] <br>
+                        ⬇️ (Petición HTTP / SQL Query) <br>
+                        [Motor de Base de Datos Relacional] <br>
+                        ├── 1. Validar Constraints (PK, UNIQUE, NOT NULL) <br>
+                        ├── 2. Ejecutar Operación DML (INSERT / UPDATE / DELETE) <br>
+                        └── 3. Registrar Transacción en Tabla `audit_logs` <br>
+                        ⬇️ <br>
+                        [Resultado Estructurado / Audit Trail Generado]
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (2/3): Estructura Monorepo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Lead Architect: Estructura de Proyecto SQL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📁 Estructura del Proyecto `edutrack-data-audit-sql`</h2>
+                <div class="editor-container" style="margin: 0;">
+                    <div class="editor-header">
+                        <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                        <span class="editor-filename">Árbol del Proyecto</span>
+                        <div class="editor-header-right"><span class="editor-lang">Estructura SQL</span></div>
+                    </div>
+                    <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #f8fafc; background: #0f172a; margin: 0;"><code>edutrack-data-audit-sql/
+├── README.md                  <-- Especificaciones y guía del ejercicio
+├── db/
+│   ├── schema.sql             <-- Scripts DDL (CREATE TABLE students, courses, audit_logs)
+│   ├── queries.sql            <-- Consultas DML (INSERT, SELECT con JOIN, UPDATE)
+│   └── audit.sql              <-- Triggers y consultas de auditoría de datos
+└── reports/
+    └── data_audit_report.md   <-- Hallazgos de auditoría e integridad de datos</code></pre>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE LEAD ARCHITECT (3/3): Gotchas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Lead Architect: Gotchas & Producción</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Gotchas Críticos & Buenas Prácticas SQL</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 2px;">❌ Inyección SQL:</strong>
+                        <p style="font-size: 0.76rem; color: #7f1d1d; margin: 0;">NUNCA concatenar variables de usuario directo en strings SQL. Usar siempre consultas parametrizadas.</p>
+                    </div>
+                    <div style="background: #fff7ed; border: 2px solid #f97316; border-radius: 10px; padding: 10px 12px;">
+                        <strong style="color: #c2410c; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Consultas Destructivas:</strong>
+                        <p style="font-size: 0.76rem; color: #7c2d12; margin: 0;">Ejecutar <code>UPDATE</code> o <code>DELETE</code> sin verificar antes con un <code>SELECT</code> con el mismo <code>WHERE</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 41 (10/10): Misión Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 41 • Proyecto Práctico: Misión Final</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎯 Misión: Auditoría de Datos EduTrack SQL</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Proyecto Práctico • SQL DDL & DML</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Contexto de la Misión:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Crearás y auditarás el esquema relacional de la plataforma educativa <code>EduTrack</code>, garantizando restricciones de integridad y trazabilidad completa de cambios.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px 16px; color: #ffffff;">
+                    <strong style="color: #34d399; font-size: 0.88rem; display: block; margin-bottom: 6px;">🚀 Tu Objetivo (Checklist de Entregables):</strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.78rem;">
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #38bdf8;">
+                            <strong style="color: #38bdf8;">1. 🛠️ Script DDL (`schema.sql`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Crear tablas con `PRIMARY KEY`, `NOT NULL` y `UNIQUE`.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a855f7;">
+                            <strong style="color: #c084fc;">2. 🔍 Consultas DML (`queries.sql`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Escribir peticiones `INSERT`, `SELECT` filtrados y `UPDATE` seguros.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                            <strong style="color: #fbbf24;">3. 📜 Audit Trail (`audit.sql`):</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Crear la tabla `audit_logs` para registrar cambios históricos.</p>
+                        </div>
+                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ec4899;">
+                            <strong style="color: #f472b6;">4. 📊 Reporte de Auditoría:</strong>
+                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Documentar los hallazgos de integridad de datos en el reporte final.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 6px 12px; border-radius: 6px; text-align: center;">
+                        <strong style="color: #34d399; font-size: 0.80rem;">🟢 Criterio de Éxito: Todas las consultas ejecutadas sin errores y con integridad total.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 11</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>
