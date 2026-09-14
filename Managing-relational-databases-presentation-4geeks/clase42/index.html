@@ -35,6 +35,536 @@
             </div>
         </div>
     
+        <!-- SLIDE CLASE 42: Módulo 1: Modelado Relacional y Normalización -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 1: Modelado Relacional y Normalización</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📐 Módulo 1: Modelado Relacional y Normalización</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Entidades • PK/FK • Tablas Pivote</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 10px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Pasar de una tabla plana a un esquema relacional consiste en dividir datos caóticos en entidades atómicas interconectadas mediante llaves primarias (PK, identificador único) y foráneas (FK, apuntadores a otras tablas). En relaciones muchos a muchos (N:M), se requiere una tabla pivote intermedia para evitar duplicaciones masivas e inconsistencias.
+                            </p>
+                        </div>
+
+                        <div style="background: #0f172a; border-radius: 8px; border: 2px solid #38bdf8; padding: 10px 14px; color: #ffffff;">
+                            <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">🎵 Ejemplo Práctico (Spotify DB):</strong>
+                            <ul style="font-size: 0.76rem; color: #cbd5e1; margin: 0; padding-left: 16px; line-height: 1.35;">
+                                <li><strong>Entidades:</strong> <code>users</code> (PK <code>user_id</code>), <code>songs</code> (PK <code>song_id</code>), <code>playlists</code> (PK <code>playlist_id</code>).</li>
+                                <li><strong>Relación N:M:</strong> Una canción está en muchas playlists y una playlist tiene muchas canciones.</li>
+                                <li><strong>Tabla intermedia:</strong> <code>playlist_songs</code> contiene las llaves foráneas (<code>playlist_id</code> FK, <code>song_id</code> FK).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">💡</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Explicación Feynman:</strong>
+                        </div>
+                        <p style="font-size: 0.78rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">
+                            Imagina guardar tu música escribiendo en una sola libreta el nombre de la canción, el artista, su biografía, el álbum y el año en cada renglón. Si la banda cambia de nombre, tendrías que borrar y reescribir mil páginas. Es mejor tener una cajita para <em>Artistas</em>, una cajita para <em>Canciones</em> con una etiqueta adhesiva (ID), y una hoja de <em>Playlists</em> donde solo anotas los códigos de las canciones.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Diagrama Visual de SQL JOINs -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Guía Visual: Mapa Completo de SQL JOINs</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 12px 24px; gap: 8px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📊 Mapa Visual Completo de SQL JOINs (Diagramas de Venn)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Guía Gráfica • Referencia Rápida</span>
+                </div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; background: #0b1120; border-radius: 12px; border: 2px solid #1e293b; padding: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
+                    <img src="images/sql_joins_diagram.png" alt="Mapa de SQL JOINs" style="max-height: 420px; max-width: 100%; object-fit: contain; border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 2A: INNER JOIN -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 2A: Cruces de Tablas — INNER JOIN</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">⚡ Módulo 2A: INNER JOIN (Coincidencias Exactas)</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">INNER JOIN • Intersección Exacta</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                <code>INNER JOIN</code> combina únicamente las filas de dos o más tablas que cumplen la condición de cruce en ambas partes (intersección exacta). Los registros de cualquiera de las tablas que no tengan coincidencia correspondiente son completamente excluidos del resultado.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🎟️</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Piensa en dos filas de personas: los que tienen una entrada de concierto y los que tienen un asiento numerado reservado. El <strong>INNER JOIN</strong> actúa como el guardia del portón VIP: solo deja pasar a quienes tienen <strong>tanto la entrada como su asiento reservado asignado</strong>. Si falta alguno de los dos, se queda fuera.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - INNER JOIN Artistas y Canciones</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.70rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #38bdf8;">-- Obtener artistas y sus canciones (coincidencias en ambas tablas)</span>
+<span style="color: #f472b6;">SELECT</span> 
+    a.name <span style="color: #f472b6;">AS</span> artist_name,
+    s.title <span style="color: #f472b6;">AS</span> song_title,
+    s.genre,
+    s.release_year
+<span style="color: #f472b6;">FROM</span> artists a
+<span style="color: #f472b6;">INNER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> a.id = ta.artist_id
+<span style="color: #f472b6;">INNER JOIN</span> songs s <span style="color: #f472b6;">ON</span> ta.song_id = s.id
+<span style="color: #f472b6;">ORDER BY</span> a.name, s.title;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 2B: LEFT JOIN -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 2B: Cruces de Tablas — LEFT JOIN</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔗 Módulo 2B: LEFT JOIN (Preservar Tabla Izquierda)</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">LEFT JOIN • Filas Izquierdas + NULL</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #581c87; margin: 0; line-height: 1.38;">
+                                <code>LEFT JOIN</code> mantiene <strong>todas las filas de la tabla izquierda</strong>, independientemente de si tienen o no coincidencia en la tabla derecha. Si no hay coincidencia en la tabla derecha, las columnas de la derecha se completan con <code>NULL</code>.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">📋</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Imagina un pase de lista escolar donde la tabla izquierda es la lista oficial de todos los alumnos y la derecha es la asistencia del día. Con un <strong>LEFT JOIN</strong>, nombras a <strong>todos los alumnos de la lista oficial sin excepción</strong>; si alguien no asistió, junto a su nombre la maestra simplemente anota un espacio en blanco (<code>NULL</code>).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - TODAS las canciones y sus artistas</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.70rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #38bdf8;">-- Listar TODAS las canciones y sus artistas (con NULL si no tienen)</span>
+<span style="color: #f472b6;">SELECT</span> 
+    s.id <span style="color: #f472b6;">AS</span> song_id,
+    s.title <span style="color: #f472b6;">AS</span> song_title,
+    a.name <span style="color: #f472b6;">AS</span> artist_name
+<span style="color: #f472b6;">FROM</span> songs s
+<span style="color: #f472b6;">LEFT JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> s.id = ta.song_id
+<span style="color: #f472b6;">LEFT JOIN</span> artists a <span style="color: #f472b6;">ON</span> ta.artist_id = a.id
+<span style="color: #f472b6;">ORDER BY</span> s.id;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 2C: LEFT OUTER JOIN & IS NULL -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 2C: Cruces de Tablas — LEFT OUTER JOIN & IS NULL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔍 Módulo 2C: LEFT OUTER JOIN & Detección de Ausencias (`IS NULL`)</h2>
+                    <span style="background: #ec4899; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">LEFT OUTER JOIN • Detección de Huérfanos</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf2f8; border-left: 5px solid #ec4899; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #be185d; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #831843; margin: 0; line-height: 1.38;">
+                                <code>LEFT OUTER JOIN</code> combinado con <code>WHERE ... IS NULL</code> filtra únicamente los registros de la tabla izquierda que <strong>NO tienen ninguna coincidencia en la tabla derecha</strong>. Es la técnica clave en SQL para encontrar registros huérfanos, ausencias o elementos incompletos.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🕵️</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Le pides al guardia del concierto: <em>"Muéstrame únicamente a las personas que entraron pero NUNCA recibieron un asiento asignado"</em>. El guardia busca entre todas las entradas de la izquierda y descarta a los que sí se sentaron, quedándose <strong>solo con quienes quedaron flotando sin asiento (<code>IS NULL</code>)</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - Canciones sin artista</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.70rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #38bdf8;">-- Identificar canciones que NO tienen artistas asignados (LEFT OUTER JOIN)</span>
+<span style="color: #f472b6;">SELECT</span> 
+    s.id <span style="color: #f472b6;">AS</span> song_id, 
+    s.title, 
+    s.genre, 
+    s.release_year
+<span style="color: #f472b6;">FROM</span> songs s
+<span style="color: #f472b6;">LEFT OUTER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> s.id = ta.song_id
+<span style="color: #f472b6;">WHERE</span> ta.song_id <span style="color: #fbbf24;">IS NULL</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 3A: GROUP BY & HAVING -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 3A: Agrupaciones — GROUP BY & HAVING</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📊 Módulo 3A: Agrupación <code>GROUP BY</code> & Filtrado <code>HAVING</code></h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">GROUP BY • HAVING • Categorización</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #ecfdf5; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #064e3b; margin: 0; line-height: 1.38;">
+                                <code>GROUP BY</code> condensa múltiples filas que comparten valores en una sola fila resumen por categoría. <code>HAVING</code> filtra esos grupos calculados (a diferencia de <code>WHERE</code>, que filtra filas individuales antes de agrupar).
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🍬</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Tienes una bolsa llena de caramelos de distintos colores. <code>GROUP BY sabor</code> los separa en montoncitos por color. <code>HAVING COUNT(*) > 10</code> le dice a tu amigo: <em>"Solo muéstrame los montones gigantes que tengan más de 10 caramelos"</em>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - GROUP BY & HAVING</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #38bdf8;">-- Artistas con más de 1 participación en canciones desde 2020</span>
+<span style="color: #f472b6;">SELECT</span> 
+    a.id <span style="color: #f472b6;">AS</span> artist_id,
+    a.name <span style="color: #f472b6;">AS</span> artist_name,
+    <span style="color: #38bdf8;">COUNT</span>(s.id) <span style="color: #f472b6;">AS</span> total_tracks
+<span style="color: #f472b6;">FROM</span> artists a
+<span style="color: #f472b6;">INNER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> a.id = ta.artist_id
+<span style="color: #f472b6;">INNER JOIN</span> songs s <span style="color: #f472b6;">ON</span> ta.song_id = s.id
+<span style="color: #f472b6;">WHERE</span> s.release_year >= 2020
+<span style="color: #f472b6;">GROUP BY</span> a.id, a.name
+<span style="color: #f472b6;">HAVING</span> <span style="color: #38bdf8;">COUNT</span>(s.id) > 1
+<span style="color: #f472b6;">ORDER BY</span> total_tracks <span style="color: #f472b6;">DESC</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 3B: COUNT() -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 3B: Función de Agregación — COUNT()</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔢 Módulo 3B: Conteo de Registros (<code>COUNT()</code>)</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">COUNT(*) • COUNT(columna) • COUNT(DISTINCT)</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                <code>COUNT()</code> cuenta el número total de filas o valores no nulos en un grupo. <code>COUNT(*)</code> cuenta todas las filas del grupo, mientras que <code>COUNT(columna)</code> ignora valores <code>NULL</code>.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🎫</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Es como pasar lista en la entrada del concierto presionando un contador manual cada vez que entra alguien. No importa el precio de su entrada ni su canción favorita; cada persona que cruza suma +1.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - Conteo con COUNT()</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #38bdf8;">-- Contar total de canciones y roles distintos por artista</span>
+<span style="color: #f472b6;">SELECT</span> 
+    a.name <span style="color: #f472b6;">AS</span> artist_name,
+    <span style="color: #38bdf8;">COUNT</span>(s.id) <span style="color: #f472b6;">AS</span> total_songs,
+    <span style="color: #38bdf8;">COUNT</span>(<span style="color: #fbbf24;">DISTINCT</span> ta.role) <span style="color: #f472b6;">AS</span> unique_roles
+<span style="color: #f472b6;">FROM</span> artists a
+<span style="color: #f472b6;">INNER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> a.id = ta.artist_id
+<span style="color: #f472b6;">INNER JOIN</span> songs s <span style="color: #f472b6;">ON</span> ta.song_id = s.id
+<span style="color: #f472b6;">GROUP BY</span> a.id, a.name
+<span style="color: #f472b6;">ORDER BY</span> total_songs <span style="color: #f472b6;">DESC</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 3C: SUM() -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 3C: Función de Agregación — SUM()</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">💰 Módulo 3C: Acumulación Total (<code>SUM()</code>)</h2>
+                    <span style="background: #f59e0b; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">SUM() • Acumulación • Totales Financieros</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fffbe6; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                <code>SUM()</code> calcula la suma total de los valores de una columna numérica dentro de un grupo de filas. Los valores <code>NULL</code> son ignorados automáticamente en la suma.
+                            </p>
+                        </div>
+
+                        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🪙</span>
+                                <strong style="color: #1d4ed8; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Es como meter las monedas de la alcancía en una máquina contadora. La máquina no cuenta cuántas monedas hay, sino que <strong>suma el valor en dinero de cada una</strong> para decirte el total acumulado.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - Acumulación con SUM()</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #38bdf8;">-- Sumar reproducciones e ingresos estimados acumulados</span>
+<span style="color: #f472b6;">SELECT</span> 
+    a.name <span style="color: #f472b6;">AS</span> artist_name,
+    <span style="color: #38bdf8;">SUM</span>(s.plays) <span style="color: #f472b6;">AS</span> total_plays,
+    <span style="color: #38bdf8;">ROUND</span>(<span style="color: #38bdf8;">SUM</span>(s.price * ta.royalty_split), 2) <span style="color: #f472b6;">AS</span> total_royalties
+<span style="color: #f472b6;">FROM</span> artists a
+<span style="color: #f472b6;">INNER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> a.id = ta.artist_id
+<span style="color: #f472b6;">INNER JOIN</span> songs s <span style="color: #f472b6;">ON</span> ta.song_id = s.id
+<span style="color: #f472b6;">GROUP BY</span> a.id, a.name
+<span style="color: #f472b6;">ORDER BY</span> total_royalties <span style="color: #f472b6;">DESC</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 3D: AVG() -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 3D: Función de Agregación — AVG()</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📈 Módulo 3D: Promedio Ponderado (<code>AVG()</code>)</h2>
+                    <span style="background: #a855f7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">AVG() • Promedio • Media Aritmética</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #581c87; margin: 0; line-height: 1.38;">
+                                <code>AVG()</code> calcula el valor promedio aritmético de una columna numérica en un grupo (Suma / Cantidad). Omite automáticamente los valores <code>NULL</code> en el denominador.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">📊</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Imagina calcular el promedio de notas de la clase. Sumas todos los exámenes entregados y lo divides entre la cantidad de alumnos que rindieron la prueba. Si alguien no se presentó (<code>NULL</code>), no entra en la división para no bajar la media de forma errónea.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - Promedio con AVG()</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #38bdf8;">-- Precio y duración promedio por canción de cada artista</span>
+<span style="color: #f472b6;">SELECT</span> 
+    a.name <span style="color: #f472b6;">AS</span> artist_name,
+    <span style="color: #38bdf8;">ROUND</span>(<span style="color: #38bdf8;">AVG</span>(s.price), 2) <span style="color: #f472b6;">AS</span> avg_track_price,
+    <span style="color: #38bdf8;">ROUND</span>(<span style="color: #38bdf8;">AVG</span>(s.duration_seconds), 0) <span style="color: #f472b6;">AS</span> avg_duration_sec
+<span style="color: #f472b6;">FROM</span> artists a
+<span style="color: #f472b6;">INNER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> a.id = ta.artist_id
+<span style="color: #f472b6;">INNER JOIN</span> songs s <span style="color: #f472b6;">ON</span> ta.song_id = s.id
+<span style="color: #f472b6;">GROUP BY</span> a.id, a.name
+<span style="color: #f472b6;">ORDER BY</span> avg_track_price <span style="color: #f472b6;">DESC</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 4: Lógica de Negocio y Métricas en SQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 4: Lógica de Negocio y Métricas en SQL</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">💰 Módulo 4: Lógica de Negocio y Métricas en SQL</h2>
+                    <span style="background: #f59e0b; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">KPIs • Filtros Booleanos • Payout Calculado</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fffbe6; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Extracción de KPIs y reglas de negocio combinando datos entre tablas mediante multiplicaciones, sumas ponderadas, filtros booleanos compuestos (<code>AND</code>, <code>OR</code>) y ordenamientos (<code>ORDER BY ... DESC</code>).
+                            </p>
+                        </div>
+
+                        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🧾</span>
+                                <strong style="color: #1d4ed8; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Es como la caja registradora de una tienda al final del día. No solo miras la lista de compras, sino que calculas: <em>cantidad de reproducciones por tarifa por segundo</em>, filtras solo a los usuarios con suscripción activa y ordenas la lista para que el gerente vea arriba al artista que generó más dinero.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Spotify DB - Calculation Regalías</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #38bdf8;">-- Ingresos estimados por artista como 'Main Artist' según split</span>
+<span style="color: #f472b6;">SELECT</span> 
+    a.name <span style="color: #f472b6;">AS</span> artist_name,
+    a.country,
+    <span style="color: #38bdf8;">COUNT</span>(s.id) <span style="color: #f472b6;">AS</span> total_main_tracks,
+    <span style="color: #38bdf8;">ROUND</span>(<span style="color: #38bdf8;">SUM</span>(s.price * ta.royalty_split), 2) <span style="color: #f472b6;">AS</span> estimated_earnings
+<span style="color: #f472b6;">FROM</span> artists a
+<span style="color: #f472b6;">INNER JOIN</span> track_artists ta <span style="color: #f472b6;">ON</span> a.id = ta.artist_id
+<span style="color: #f472b6;">INNER JOIN</span> songs s <span style="color: #f472b6;">ON</span> ta.song_id = s.id
+<span style="color: #f472b6;">WHERE</span> ta.role = <span style="color: #a78bfa;">'Main Artist'</span>
+<span style="color: #f472b6;">GROUP BY</span> a.id, a.name, a.country
+<span style="color: #f472b6;">ORDER BY</span> estimated_earnings <span style="color: #f472b6;">DESC</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 42: Módulo 5: Herramientas y Entorno de Trabajo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 42 • Módulo 5: Herramientas y Entorno de Trabajo</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🛠️ Módulo 5: Herramientas y Entorno de Trabajo</h2>
+                    <span style="background: #ec4899; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">PostgreSQL • Supabase • DDL/DML • Reportes MD</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 10px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf2f8; border-left: 5px solid #ec4899; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #be185d; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <ul style="font-size: 0.76rem; color: #831843; margin: 0; padding-left: 14px; line-height: 1.35;">
+                                <li><strong>PostgreSQL / Supabase:</strong> Motor relacional y panel interactivo para ejecutar scripts DDL (creación de tablas/esquemas) y DML (consultas y manipulación), interpretando errores de tipos o FK.</li>
+                                <li><strong>Documentación en Markdown (.md):</strong> Exportar resultados tabulares y diagnósticos a reportes estructurados legibles para el equipo.</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: #0f172a; border-radius: 8px; border: 2px solid #ec4899; padding: 8px 12px; color: #ffffff;">
+                            <strong style="color: #f472b6; font-size: 0.80rem; display: block; margin-bottom: 3px;">📝 Ejemplo Práctico (Reporte Markdown):</strong>
+                            <pre style="font-family: 'Fira Code', monospace; font-size: 0.70rem; color: #cbd5e1; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3;">| Artista | Total Reproducciones | Ingresos ($) |
+|---|---|---|
+| Daft Punk | 1,500,000 | 4,500.00 |</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="font-size: 1.2rem;">🍳</span>
+                            <strong style="color: #b45309; font-size: 0.88rem;">Explicación Feynman:</strong>
+                        </div>
+                        <p style="font-size: 0.78rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">
+                            Supabase es como el laboratorio de cocina con hornos de precisión (PostgreSQL) donde mezclas los ingredientes según la receta (.sql) y la consola te grita exactamente qué ingrediente faltó si te equivocas. El archivo Markdown es la carta del menú final donde presentas los platos limpios y explicados para que los comensales entiendan el resultado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SLIDE CLASE 42 (1/10): Visión Macro Relaciones -->
         <div class="slide">
             <div class="slide-header">
@@ -311,14 +841,21 @@
             </div>
             <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
                 <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Gotchas Críticos en Esquemas Relacionales</h2>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 10px 12px;">
-                        <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 2px;">❌ Producto Cartesiano:</strong>
-                        <p style="font-size: 0.76rem; color: #7f1d1d; margin: 0;">Ejecutar `SELECT * FROM A, B` sin cláusula `ON` o `WHERE` multiplica todas las filas creando millones de combinaciones falsas.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                            <strong style="color: #b91c1c; font-size: 0.88rem; display: block; margin-bottom: 4px;">❌ Producto Cartesiano:</strong>
+                            <p style="font-size: 0.78rem; color: #7f1d1d; margin: 0; line-height: 1.4;">Ejecutar <code>SELECT * FROM A, B</code> sin cláusula <code>ON</code> o <code>WHERE</code> multiplica todas las filas creando millones de combinaciones falsas e inundando la memoria.</p>
+                        </div>
                     </div>
-                    <div style="background: #fff7ed; border: 2px solid #f97316; border-radius: 10px; padding: 10px 12px;">
-                        <strong style="color: #c2410c; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Bucles de Foreign Keys:</strong>
-                        <p style="font-size: 0.76rem; color: #7c2d12; margin: 0;">Evitar que dos tablas se apunten mutuamente con FKs directas, lo cual impide el borrado o creación de registros iniciales.</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fff7ed; border: 2px solid #f97316; border-radius: 10px; padding: 10px 12px;">
+                            <strong style="color: #c2410c; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Bucles de Foreign Keys:</strong>
+                            <p style="font-size: 0.76rem; color: #7c2d12; margin: 0; line-height: 1.38;">Evitar que dos o más tablas se apunten mutuamente con FKs directas (como los 3 Spider-Man apuntándose), lo cual impide la inserción inicial o el borrado de registros.</p>
+                        </div>
+                        <div style="text-align: center; border-radius: 10px; overflow: hidden; border: 2px solid #f97316; background: #0f172a; padding: 6px; display: flex; align-items: center; justify-content: center;">
+                            <img src="images/spiderman_meme.png" alt="Spider-Man pointing meme" style="max-height: 185px; width: auto; border-radius: 6px; object-fit: contain;">
+                        </div>
                     </div>
                 </div>
             </div>
