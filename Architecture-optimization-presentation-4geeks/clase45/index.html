@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 45: Medición de Desempeño y Serialización - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Medición de Desempeño y Serialización">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 45 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 45:<br><span>Medición de Desempeño y Serialización</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>Auditoría de desempeño backend</li>
+<li>serialización eficiente con Pydantic/orjson y Core Web Vitals en frontend.</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (2/11): Visión Macro Performance Web -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Arquitectura &amp; Performance Web</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚡ Latencia, Throughput y Percepción del Usuario</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Performance Audit • Web Vitals</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto Fundamental:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        La optimización de arquitectura abarca dos mundos interconectados: el <strong>Backend</strong> (tiempo de respuesta del servidor, costo de serialización y accesos a la BD) y el <strong>Frontend</strong> (métricas Core Web Vitals, velocidad de renderizado y fluidez de interacción).
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.90rem; display: block; margin-bottom: 4px;">⚙️ Performance Backend</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Mide la latencia de respuesta (TTFB - Time to First Byte) y el consumo de CPU/Memoria al procesar y convertir objetos de base de datos a cadenas JSON.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🎨 Core Web Vitals (Frontend)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Mapea la experiencia real del usuario: qué tan rápido se muestra el contenido principal (LCP), la estabilidad visual (CLS) y la velocidad de respuesta táctil (INP).
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Analogía Feynman: El Restaurante Gourmet</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        El chef puede preparar la comida en 2 minutos (Backend rápido), pero si el mesero tarda 10 minutos en empacar el plato en 5 cajas concéntricas (Serialización pesada) o el plato es tan pesado que rompe la mesa al servirlo (Frontend inestable CLS), la experiencia del comensal será arruinada.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (3/11): Costo de Serialización -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • El Costo Oculto de la Serialización</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📦 ¿Qué es la Serialización y Por Qué consume CPU?</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 El Ciclo de Transformación de Datos:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">
+                        La base de datos retorna filas de tabla -> SQLAlchemy las convierte en objetos Python -> Pydantic valida y proyecta los campos -> El encoder convierte los objetos a texto `JSON` en bytes. En respuestas grandes (ej. 5,000 registros), ¡el 70% del tiempo de CPU se gasta en la serialización JSON!
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.88rem; display: block; margin-bottom: 4px;">🐢 Serializador Estándar Python (`json`)</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Escrito puramente en Python. Lento al formatear tipos complejos como <code>datetime</code>, <code>UUID</code> o decimales. Genera cuellos de botella severos.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem; display: block; margin-bottom: 4px;">🚀 Serializadores Ultra-Rápidos (`orjson` / Pydantic v2)</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Escritos en <strong>Rust/C</strong>. `orjson` es hasta 10 veces más rápido serializando objetos y maneja bytes de forma nativa sin copias adicionales en memoria.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (4/11): Optimización de DTOs y Over-fetching -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Evitando el Over-fetching con DTOs</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">✂️ Proyección de Campos DTO: Menos Payload, Más Velocidad</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                        <span style="color: #ef4444;"># ❌ Over-fetching (Payload gigante)</span><br>
+                        @app.get("/items")<br>
+                        def get_items(db: Session = Depends(get_db)):<br>
+                        &nbsp;&nbsp;<span style="color: #64748b;"># Devuelve todas las columnas y relaciones de BD</span><br>
+                        &nbsp;&nbsp;return db.query(ItemModel).all()
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                        <span style="color: #10b981;"># ✅ Proyección DTO Optimizada</span><br>
+                        class ItemSummaryDTO(BaseModel):<br>
+                        &nbsp;&nbsp;id: int<br>
+                        &nbsp;&nbsp;name: str<br>
+                        &nbsp;&nbsp;price: float<br><br>
+                        @app.get("/items", response_model=list[ItemSummaryDTO])<br>
+                        def get_items(db: Session = Depends(get_db)):<br>
+                        &nbsp;&nbsp;return db.query(ItemModel.id, ItemModel.name, ItemModel.price).all()
+                    </div>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Reducción de Red:</strong>
+                    <p style="font-size: 0.78rem; color: #1e293b; margin: 0;">
+                        Filtrar los campos necesarios en la consulta SQL reduce el tamaño de la respuesta JSON de 4.5 MB a 180 KB, disminuyendo el tiempo de transferencia en redes móviles drásticamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (5/11): Core Web Vitals en Frontend -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Métricas Core Web Vitals en Frontend</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎯 Las 3 Métricas Cruciales de Google UX</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 10px 12px; text-align: center;">
+                        <span style="font-size: 1.5rem;">🖼️</span>
+                        <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin: 4px 0;">LCP</strong>
+                        <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Largest Contentful Paint</span>
+                        <p style="font-size: 0.74rem; color: #334155; margin-top: 6px;">Tiempo en cargar el elemento visual más grande de la pantalla.<br><strong style="color: #10b981;">Meta: &lt; 2.5 seg</strong></p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 10px 12px; text-align: center;">
+                        <span style="font-size: 1.5rem;">⚡</span>
+                        <strong style="color: #047857; font-size: 0.85rem; display: block; margin: 4px 0;">INP</strong>
+                        <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Interaction to Next Paint</span>
+                        <p style="font-size: 0.74rem; color: #334155; margin-top: 6px;">Velocidad de respuesta visual tras la interacción del usuario.<br><strong style="color: #10b981;">Meta: &lt; 200 ms</strong></p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 10px; padding: 10px 12px; text-align: center;">
+                        <span style="font-size: 1.5rem;">📐</span>
+                        <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin: 4px 0;">CLS</strong>
+                        <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Cumulative Layout Shift</span>
+                        <p style="font-size: 0.74rem; color: #334155; margin-top: 6px;">Medida de deslazamiento o brinco inesperado de elementos.<br><strong style="color: #10b981;">Meta: &lt; 0.1</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (6/11): Diagnóstico y Profiling -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Herramientas de Medición &amp; Profiling</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔍 Medición Basada en Evidencia Empírica</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">🛠️ Herramientas Backend</strong>
+                        <ul style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li><code>Server-Timing</code> Headers: Retorna el desglose de tiempo SQL/Python en los DevTools de Chrome.</li>
+                            <li><code>cProfile</code> y <code>py-spy</code>: Identifica la línea exacta de código que congela la CPU.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem; display: block; margin-bottom: 4px;">🌐 Herramientas Frontend</strong>
+                        <ul style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li>Google Lighthouse: Simula dispositivos móviles de gama baja y conexiones 3G/4G.</li>
+                            <li>Chrome DevTools Network &amp; Performance Tab: Mide el waterfall de peticiones.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (7/11): Optimización de Assets -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Optimización de Bundles &amp; Assets</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🖼️ Code-Splitting y Formatos de Imagen Modernos</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 10px 14px; border-radius: 6px;">
+                        <strong style="color: #0056FF; font-size: 0.84rem;">1. Compresión de Imágenes (WebP / AVIF)</strong>
+                        <p style="font-size: 0.76rem; color: #334155; margin-top: 4px;">
+                            Reemplazar PNGs/JPEGs pesados de 3 MB por formatos modernos <code>WebP</code> o <code>AVIF</code> reduce el tamaño un 80% manteniendo la misma calidad visual.
+                        </p>
+                    </div>
+
+                    <div style="background: #f0fdf4; border-left: 4px solid #10B981; padding: 10px 14px; border-radius: 6px;">
+                        <strong style="color: #047857; font-size: 0.84rem;">2. Code Splitting &amp; Lazy Loading</strong>
+                        <p style="font-size: 0.76rem; color: #334155; margin-top: 4px;">
+                            Usa <code>React.lazy()</code> o <code>next/dynamic</code> para cargar librerías pesadas (ej. gráficos o mapas) solo cuando el usuario navegue a esa pantalla.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (8/11): Antipatrones de Desempeño -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Antipatrones Graves de Rendimiento</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Los 3 Antipatrones Que Destruyen la Velocidad Web</h2>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: #ffffff; border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">1. Bloqueo de la Línea Principal (Main Thread Blocking)</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Ejecutar cálculos pesados o bucles de CPU síncronos en el hilo de FastAPI congela el servidor para todas las demás peticiones concurrentes.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">2. Fuga de Datos por Falta de Paginación</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Retornar 50,000 filas de base de datos en un solo endpoint sin <code>limit</code> ni <code>offset</code> provocará errores Out-Of-Memory (OOM).</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">3. Imágenes Sin Dimensiones Reservadas (CLS Chaos)</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Cargar imágenes sin especificar <code>width</code> y <code>height</code> explícitos hace que la página brinque bruscamente al cargar, arruinando el CLS.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (9/11): Misión Práctica I -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Misión Práctica I: Auditoría de Serialización</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🛠️ Reto Práctico 1: Aceleración de Backend con ORJSON</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 10px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📋 Tareas del Reto</strong>
+                        <ol style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li>Medir la respuesta del endpoint actual utilizando <code>time.perf_counter()</code>.</li>
+                            <li>Instalar <code>orjson</code> e integrar <code>ORJSONResponse</code> en FastAPI.</li>
+                            <li>Definir esquemas DTO reducidos con <code>BaseModel</code> de Pydantic v2.</li>
+                            <li>Verificar la aceleración en el panel de Network de Chrome.</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                        <span style="color: #f43f5e;">from</span> fastapi.responses <span style="color: #f43f5e;">import</span> ORJSONResponse<br><br>
+                        @app.get(<br>
+                        &nbsp;&nbsp;<span style="color: #38bdf8;">"/fast-items"</span>,<br>
+                        &nbsp;&nbsp;<span style="color: #38bdf8;">response_class=ORJSONResponse</span><br>
+                        )<br>
+                        def get_fast_items():<br>
+                        &nbsp;&nbsp;return {"status": "success", "data": items}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (10/11): Misión Práctica II -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Misión Práctica II: Auditoría Web Vitals</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🌐 Reto Práctico 2: Optimización Lighthouse &amp; Web Vitals</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 10px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem; display: block; margin-bottom: 4px;">🎯 Auditoría Lighthouse paso a paso</strong>
+                        <ol style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li>Abrir una ventana de Incógnito en Chrome.</li>
+                            <li>Correr Lighthouse Audit en modo Móvil.</li>
+                            <li>Identificar imágenes que penalizan el LCP.</li>
+                            <li>Aplicar `fetchpriority="high"` al elemento LCP principal.</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📈 Resultado Esperado:</strong>
+                        <p style="font-size: 0.78rem; color: #1e293b; margin: 0;">
+                            Elevar el score de Performance en Lighthouse de 45/100 a &gt;90/100 reduciendo el LCP por debajo de los 2.0 segundos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 45 (11/11): Resumen Ejecutivo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 45 • Resumen Ejecutivo de Desempeño</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📌 Checklist de Optimización de Desempeño</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.88rem;">✅ Checklist Backend</strong>
+                        <ul style="font-size: 0.76rem; color: #334155; margin-top: 4px; padding-left: 16px; line-height: 1.35;">
+                            <li>Usar DTOs proyectados en lugar de ORM models enteros.</li>
+                            <li>Utilizar <code>ORJSONResponse</code> para JSONs voluminosos.</li>
+                            <li>Paginar todos los endpoints de listas.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem;">✅ Checklist Frontend</strong>
+                        <ul style="font-size: 0.76rem; color: #334155; margin-top: 4px; padding-left: 16px; line-height: 1.35;">
+                            <li>Comprimir imágenes a formato WebP/AVIF.</li>
+                            <li>Definir dimensiones explícitas para evitar CLS.</li>
+                            <li>Verificar LCP &lt; 2.5s y INP &lt; 200ms.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 11</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>

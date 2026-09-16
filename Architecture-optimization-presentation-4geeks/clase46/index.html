@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 46: Optimización de Respuestas Backend y Caching - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Optimización de Respuestas Backend y Caching">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 46 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 46:<br><span>Optimización de Respuestas Backend y Caching</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>Estrategias de caching in</li>
+<li>memory y con Redis</li>
+<li>cabeceras HTTP Cache</li>
+<li>Control</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (2/11): Visión Macro Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Estrategias de Caching &amp; Optimización de Respuestas</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚡ Principios de Caching: De 350ms a 3ms</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Redis • HTTP Cache-Control</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 ¿Qué es Caching?</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Es la técnica de almacenar copias temporales de resultados computados o datos leídos de disco en un medio de almacenamiento ultrarrápido en memoria RAM. Evita volver a ejecutar consultas SQL repetitivas o cálculos pesados.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.90rem; display: block; margin-bottom: 4px;">🐢 Sin Caché (Petición Directa a BD)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Cliente -> FastAPI -> SQL Query -> Disco BD -> Formatear JSON -> Cliente.<br>
+                            <strong style="color: #ef4444;">Tiempo: ~350 ms por petición.</strong>
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🚀 Con Caché en Memoria (Redis)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Cliente -> FastAPI -> Redis RAM -> Cliente.<br>
+                            <strong style="color: #10b981;">Tiempo: ~3 ms (100x más rápido).</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Analogía Feynman: El Chef y las Salsas Pre-cocinadas</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Imagina que cada vez que alguien pide espaguetis, el chef tuviera que picar los tomates, cosechar el orégano y cocinar la salsa desde cero (Base de datos sin caché). Caching es mantener un tazón de salsa lista en la barra (Redis): simplemente sirves la porción de inmediato en 3 segundos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (3/11): Tipos de Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Tipos de Caching: In-Memory vs Redis</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💾 In-Memory (`lru_cache`) vs Caching Distribuido (Redis)</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.90rem; display: block; margin-bottom: 4px;">🧠 In-Memory (`functools.lru_cache`)</strong>
+                        <p style="font-size: 0.77rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Guarda los datos en la memoria RAM del propio proceso Python.<br>
+                            • <strong>Ventajas:</strong> Ultra simple, 0 dependencias externas.<br>
+                            • <strong>Limitación:</strong> No se comparte entre múltiples réplicas o trabajadores (workers) de FastAPI.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🔴 Redis (Caché Distribuido Key-Value)</strong>
+                        <p style="font-size: 0.77rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Servicio independiente en memoria con soporte para estructuras complejas (Hash, Sets, Lists) y TTL.<br>
+                            • <strong>Ventajas:</strong> Compartido por todas las instancias de servidores, persiste tras reinicios y soporta alta disponibilidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (4/11): HTTP Cache-Control -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Cabeceras HTTP Cache-Control &amp; ETag</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🌐 HTTP Caching en el Navegador y CDNs</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                        <span style="color: #38bdf8;">HTTP/1.1 200 OK</span><br>
+                        <span style="color: #f43f5e;">Cache-Control:</span> public, max-age=3600, s-maxage=86400<br>
+                        <span style="color: #f43f5e;">ETag:</span> "w/686897696a7c"<br><br>
+                        <span style="color: #64748b;"># Petición subsecuente del cliente:</span><br>
+                        <span style="color: #f43f5e;">If-None-Match:</span> "w/686897696a7c"<br><br>
+                        <span style="color: #10b981;"># Respuesta del servidor (0 bytes de payload):</span><br>
+                        <span style="color: #38bdf8;">HTTP/1.1 304 Not Modified</span>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 6px;">
+                            <strong style="color: #0056FF; font-size: 0.82rem;">1. `max-age` vs `s-maxage`</strong>
+                            <p style="font-size: 0.75rem; color: #334155; margin-top: 2px;"><code>max-age</code> le indica al navegador cuántos segundos guardar el recurso. <code>s-maxage</code> aplica para proxies y CDNs intermedios.</p>
+                        </div>
+                        <div style="background: #f0fdf4; border-left: 4px solid #10B981; padding: 8px 12px; border-radius: 6px;">
+                            <strong style="color: #047857; font-size: 0.82rem;">2. Validación con ETag (304 Not Modified)</strong>
+                            <p style="font-size: 0.75rem; color: #334155; margin-top: 2px;">Si el contenido no ha cambiado, el servidor responde con status <code>304</code> sin enviar el cuerpo de la respuesta, ahorrando ancho de banda.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (5/11): Patrones Cache-Aside & TTL -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Patrón Cache-Aside &amp; Time-To-Live (TTL)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔄 El Flujo del Patrón Cache-Aside</h2>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 12px 16px; color: #f8fafc; font-family: monospace; font-size: 0.75rem; line-height: 1.4;">
+                    1. Cliente solicita GET /inventario/123<br>
+                    2. Backend consulta a Redis: <span style="color: #38bdf8;">GET item:123</span><br>
+                    &nbsp;&nbsp;├─ <span style="color: #10b981;">Si existe (CACHE HIT):</span> Retorna JSON directo de Redis (3 ms).<br>
+                    &nbsp;&nbsp;└─ <span style="color: #ef4444;">Si NO existe (CACHE MISS):</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a) Backend lee de PostgreSQL.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b) Guarda en Redis: <span style="color: #38bdf8;">SETEX item:123 60 "&lt;json&gt;"</span> (TTL = 60 seg).<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c) Retorna respuesta al cliente.
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 La Importancia del TTL (Time-To-Live):</strong>
+                    <p style="font-size: 0.78rem; color: #1e293b; margin: 0;">
+                        Asignar un TTL garantiza que las claves expiren automáticamente en Redis, evitando que la memoria RAM se llene indefinidamente y asegurando la eventual consistencia de los datos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (6/11): Invalidación de Caché -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Invalidación de Caché &amp; Evicción</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ "Hay solo 2 problemas difíciles en CS: Invalidación de Caché y poner nombres"</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.88rem; display: block; margin-bottom: 4px;">🚨 El Riesgo de Caché Obsoleto (Stale Cache)</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Un usuario actualiza el precio de un producto (`PUT /items/123`). Si no borras la clave `item:123` en Redis, los demás usuarios seguirán viendo el precio viejo hasta que expire el TTL.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem; display: block; margin-bottom: 4px;">✅ Invalidación Basada en Eventos</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            En operaciones de escritura (`POST`, `PUT`, `DELETE`), ejecuta explícitamente `redis.delete("item:123")` para purgar de inmediato la entrada obsoleta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (7/11): Integración Redis en FastAPI -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Integración Práctica de Redis en FastAPI</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🐍 Código Python: Conexión Asíncrona a Redis</h2>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                    <span style="color: #f43f5e;">import</span> redis.asyncio <span style="color: #f43f5e;">as</span> aioredis<br>
+                    <span style="color: #f43f5e;">import</span> json<br><br>
+                    redis_client = aioredis.from_url(<span style="color: #38bdf8;">"redis://redis_db:6379"</span>, decode_responses=True)<br><br>
+                    @app.get(<span style="color: #38bdf8;">"/products/{product_id}"</span>)<br>
+                    <span style="color: #f43f5e;">async def</span> get_product(product_id: int, db: Session = Depends(get_db)):<br>
+                    &nbsp;&nbsp;cache_key = f<span style="color: #38bdf8;">"product:{product_id}"</span><br>
+                    &nbsp;&nbsp;cached_data = <span style="color: #f43f5e;">await</span> redis_client.get(cache_key)<br>
+                    &nbsp;&nbsp;<span style="color: #f43f5e;">if</span> cached_data:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #10b981;">return json.loads(cached_data)</span> <span style="color: #64748b;"># Cache Hit</span><br><br>
+                    &nbsp;&nbsp;product = db.query(Product).get(product_id)<br>
+                    &nbsp;&nbsp;<span style="color: #f43f5e;">await</span> redis_client.setex(cache_key, 60, json.dumps(product))<br>
+                    &nbsp;&nbsp;<span style="color: #10b981;">return product</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (8/11): Antipatrones y Riesgos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Antipatrones &amp; Riesgos de Caching</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Los 3 Peligros de Implementar Caché Incorrecamente</h2>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: #ffffff; border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">1. Cache Stampede (Thundering Herd)</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Cuando expira la clave de una consulta muy popular, miles de peticiones simultáneas van directo a la base de datos a la misma fracción de segundo, colapsando el servidor SQL.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">2. Cachear Datos Privados o Sensibles en Cachés Públicas</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Enviar cabeceras `Cache-Control: public` en endpoints autenticados provocará que proxies intermedios muestren la información privada de un usuario a otros comensales.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">3. Olvidar Política de Evicción en Redis</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Si no configuras <code>maxmemory-policy allkeys-lru</code> en Redis, el servidor se quedará sin memoria RAM (OOM) y rechazará escrituras.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (9/11): Misión Práctica -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Misión Práctica: Implementación de Redis Caching</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🛠️ Reto Práctico: Integración de Redis en Docker Compose</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 10px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📋 Pasos del Reto Práctico</strong>
+                        <ol style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li>Agregar el servicio <code>redis:7-alpine</code> al <code>docker-compose.yml</code>.</li>
+                            <li>Instalar <code>redis</code> en <code>requirements.txt</code>.</li>
+                            <li>Implementar la lectura en caché con TTL de 60 segundos en los endpoints <code>GET /products/</code>.</li>
+                            <li>Implementar la invalidación automática en el endpoint <code>POST /products/</code>.</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                        <span style="color: #38bdf8;">services:</span><br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">redis_db:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;image: redis:7-alpine<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ports: ["6379:6379"]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (10/11): Comparativa de Rendimiento -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Comparativa de Rendimiento (Benchmark)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📊 Impacto Medido: Antes vs Después de Caching</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px; text-align: center;">
+                        <strong style="color: #b91c1c; font-size: 0.90rem;">🐢 Sin Redis Caché</strong>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #ef4444; margin: 8px 0;">345 ms</div>
+                        <p style="font-size: 0.76rem; color: #475569; margin: 0;">Capacidad Máxima: 85 peticiones/seg.<br>Carga de CPU en BD: 88%.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px; text-align: center;">
+                        <strong style="color: #047857; font-size: 0.90rem;">🚀 Con Redis Caché</strong>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 8px 0;">3.8 ms</div>
+                        <p style="font-size: 0.76rem; color: #475569; margin: 0;">Capacidad Máxima: 3,200 peticiones/seg.<br>Carga de CPU en BD: 4%.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 46 (11/11): Resumen Ejecutivo Módulo 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 46 • Resumen Ejecutivo &amp; Cierre de Módulo 6</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📌 Resumen de Arquitectura de Alto Rendimiento</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">🎉 Trilogía de Optimización Completada:</strong>
+                    <ol style="font-size: 0.78rem; color: #1e293b; margin: 0; padding-left: 16px; line-height: 1.4;">
+                        <li><strong>Medir primero:</strong> Profiling y métricas basadas en evidencia antes de optimizar a ciegas.</li>
+                        <li><strong>Serialización eficiente:</strong> Uso de DTOs proyectados y serializadores binarios (ORJSON).</li>
+                        <li><strong>Caché inteligente:</strong> Redis en memoria con TTL e invalidación por eventos en mutaciones.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 11</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>

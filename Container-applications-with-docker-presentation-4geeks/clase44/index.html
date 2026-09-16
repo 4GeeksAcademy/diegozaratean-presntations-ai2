@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 44: Desarrollo de Aplicaciones en Contenedores con Docker - 4Geeks Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3">
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="cover-image-side">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Desarrollo de Aplicaciones en Contenedores con Docker">
+            </div>
+            <div class="cover-text-side">
+                <span class="badge-tag">Clase 44 • 4Geeks Academy</span>
+                <h1 class="cover-title">Clase 44:<br><span>Desarrollo de Aplicaciones en Contenedores con Docker</span></h1>
+                
+        <div class="cover-summary-box">
+            <p class="summary-box-title">🎯 Estructura y Prácticas de esta Clase:</p>
+            <ul class="summary-box-list">
+                <li>Contenerización con Docker</li>
+<li>Dockerfile</li>
+<li>Stage Builds</li>
+<li>Docker Compose</li>
+            </ul>
+        </div>
+    
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (2/12): Visión Macro Contenerización vs VMs -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Contenerización vs Máquinas Virtuales</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🐳 ¿Por qué Contenedores? El Problema de "En mi máquina sí funciona"</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Aislamiento de Kernel • Namespaces &amp; Cgroups</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto Fundamental:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Un <strong>Contenedor Docker</strong> es un proceso aislado que empaqueta la aplicación con todas sus dependencias (binarios, librerías, runtime). A diferencia de una Máquina Virtual (VM) que emula un sistema operativo completo con Hypervisor, los contenedores comparten el mismo Kernel del SO host, siendo infinitamente más ligeros y rápidos.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.90rem; display: block; margin-bottom: 4px;">🖥️ Máquinas Virtuales (VMs)</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Incluyen SO Guest completo + Kernel + App. Consumen Gigabytes de RAM, tardan minutos en arrancar y requieren virtualización de hardware pesada.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">⚡ Contenedores Docker</strong>
+                        <p style="font-size: 0.78rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Aíslan procesos usando Linux Namespaces y Cgroups sobre el Kernel host. Pesan pocos Megabytes y arrancan en milisegundos.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Analogía Feynman: Barcos Cargueros Intermodales</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Imagina transportar frutas, autos y químicos. Antes de los contenedores, necesitabas un barco diseñado especialmente para cada tipo de carga. Docker creó el <strong>Contenedor Estándar de Carga</strong>: no importa lo que haya adentro (Python, Node, Go, Postgres), cualquier barco (servidor Linux, Mac, Windows, AWS) puede transportarlo y ejecutarlo sin cambiar de barco.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (3/12): Anatomía de un Dockerfile -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Blueprint de la Imagen: El Dockerfile</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📜 Anatomía de un Dockerfile Optimizado</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div style="background: #0f172a; border-radius: 10px; padding: 12px 16px; color: #f8fafc; font-family: monospace; font-size: 0.78rem; line-height: 1.4;">
+                        <span style="color: #64748b;"># 1. Imagen base minimalista</span><br>
+                        <span style="color: #f43f5e;">FROM</span> python:3.11-slim<br><br>
+                        <span style="color: #64748b;"># 2. Directorio de trabajo</span><br>
+                        <span style="color: #f43f5e;">WORKDIR</span> /app<br><br>
+                        <span style="color: #64748b;"># 3. Copiar dependencias (Caché de Capas)</span><br>
+                        <span style="color: #f43f5e;">COPY</span> requirements.txt .<br>
+                        <span style="color: #f43f5e;">RUN</span> pip install --no-cache-dir -r requirements.txt<br><br>
+                        <span style="color: #64748b;"># 4. Copiar código fuente</span><br>
+                        <span style="color: #f43f5e;">COPY</span> . .<br><br>
+                        <span style="color: #64748b;"># 5. Puerto expuesto y comando de inicio</span><br>
+                        <span style="color: #f43f5e;">EXPOSE</span> 8000<br>
+                        <span style="color: #f43f5e;">CMD</span> ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #0056FF; font-size: 0.82rem;">1. Layer Caching (Caché de Capas)</strong>
+                            <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Docker ejecuta cada línea como una capa inmutable. Si no cambias <code>requirements.txt</code>, el paso de <code>RUN pip install</code> se reutiliza instantáneamente del caché.</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #10B981; font-size: 0.82rem;">2. Selección de Base Image</strong>
+                            <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Prefiere <code>python:3.11-slim</code> sobre <code>python:3.11</code>. Reduce vulnerabilidades de seguridad y tamaño de descarga de 1 GB a 150 MB.</p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                            <strong style="color: #f59e0b; font-size: 0.82rem;">3. CMD vs ENTRYPOINT</strong>
+                            <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;"><code>CMD</code> define los argumentos por defecto modificables al hacer <code>docker run</code>. <code>ENTRYPOINT</code> fija el binario ejecutable principal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (4/12): Multi-Stage Builds -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Multi-Stage Builds: Imágenes Ultraligeras de Producción</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">✂️ Multi-Stage Builds: De 1.2 GB a 140 MB</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 El Desafío de Producción:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">
+                        Para compilar o instalar ciertas librerías necesitas herramientas pesadas (compiladores C, cabeceras gcc, SDKs). Pero para ejecutar la app en producción solo necesitas los artefactos finales. Multi-Stage usa múltiples instrucciones <code>FROM</code> en un solo Dockerfile.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.74rem;">
+                        <span style="color: #64748b;"># Etapa 1: Builder (Compiladores y Wheels)</span><br>
+                        <span style="color: #f43f5e;">FROM</span> python:3.11 <span style="color: #38bdf8;">AS builder</span><br>
+                        <span style="color: #f43f5e;">WORKDIR</span> /build<br>
+                        <span style="color: #f43f5e;">COPY</span> requirements.txt .<br>
+                        <span style="color: #f43f5e;">RUN</span> pip wheel --no-cache-dir -w /wheels -r requirements.txt<br><br>
+                        <span style="color: #64748b;"># Etapa 2: Runtime Minimalista</span><br>
+                        <span style="color: #f43f5e;">FROM</span> python:3.11-slim <span style="color: #38bdf8;">AS final</span><br>
+                        <span style="color: #f43f5e;">WORKDIR</span> /app<br>
+                        <span style="color: #f43f5e;">COPY --from=builder</span> /wheels /wheels<br>
+                        <span style="color: #f43f5e;">RUN</span> pip install /wheels/* &amp;&amp; rm -rf /wheels
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+                        <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.88rem;">🎯 Beneficio 1: Seguridad Aumentada</strong>
+                            <p style="font-size: 0.77rem; color: #334155; margin-top: 2px;">Elimina herramientas de compilación e instructivos de desarrollo que los atacantes podrían usar para vulnerar el contenedor.</p>
+                        </div>
+                        <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                            <strong style="color: #047857; font-size: 0.88rem;">🚀 Beneficio 2: Despliegues Ultrarápidos</strong>
+                            <p style="font-size: 0.77rem; color: #334155; margin-top: 2px;">Una imagen reducida de 140 MB se descarga e inicia en clusters de producción en segundos en lugar de minutos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (5/12): Persistencia y Redes -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Persistencia de Datos y Redes Docker</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🌐 Volúmenes de Almacenamiento y Docker Networks</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #1d4ed8; font-size: 0.90rem; display: block; margin-bottom: 4px;">💾 Volúmenes (`volumes:`) vs Bind Mounts</strong>
+                        <p style="font-size: 0.77rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Los contenedores son efímeros (al destruirlos, se pierden sus archivos).<br>
+                            • <strong>Named Volumes:</strong> Gestionados completamente por Docker. Ideal para datos de producción de PostgreSQL/SQLite.<br>
+                            • <strong>Bind Mounts:</strong> Mapean carpetas locales directamente (ej. <code>./src:/app/src</code>). Ideal para desarrollo con Hot Reload.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🔗 Redes Aisladas (`networks:`)</strong>
+                        <p style="font-size: 0.77rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Docker crea una red interna virtual (puente <code>bridge</code>) donde cada contenedor tiene su propio nombre de Host DNS interno.<br>
+                            • Tu backend FastAPI puede conectarse a PostgreSQL usando la URL <code>postgresql://db:5432/inventario</code> sin exponer el puerto de Postgres a internet.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Regla de Oro de Almacenamiento:</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Nunca guardes bases de datos dentro de la capa escribible del contenedor. Si el contenedor se reinicia o actualiza, la base de datos se destruirá a menos que esté montada sobre un <strong>Named Volume</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (6/12): Docker Compose -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Orquestación de Servicios con Docker Compose</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🐙 Orquestación Multi-Contenedor: `docker-compose.yml`</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem; line-height: 1.35;">
+                        <span style="color: #38bdf8;">services:</span><br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">web:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;build: .<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ports: ["8000:8000"]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;env_file: .env<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;depends_on:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db: { condition: service_healthy }<br><br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">db:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15-alpine<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;environment:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;POSTGRES_DB: inventario_db<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;volumes: [postgres_data:/var/lib/postgresql/data]<br><br>
+                        <span style="color: #38bdf8;">volumes:</span><br>
+                        &nbsp;&nbsp;postgres_data:
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 4px solid #0056FF; padding: 8px 12px; border-radius: 6px;">
+                            <strong style="color: #0056FF; font-size: 0.82rem;">1. Un Solo Comando (`docker compose up`)</strong>
+                            <p style="font-size: 0.75rem; color: #334155; margin-top: 2px;">Levanta toda tu infraestructura (Backend, Frontend, DB, Redis) en una sola red aislada sin instalar nada en tu laptop.</p>
+                        </div>
+                        <div style="background: #f0fdf4; border-left: 4px solid #10B981; padding: 8px 12px; border-radius: 6px;">
+                            <strong style="color: #047857; font-size: 0.82rem;">2. DNS Integrado Automático</strong>
+                            <p style="font-size: 0.75rem; color: #334155; margin-top: 2px;">El servicio <code>web</code> puede resolver el host <code>db</code> automáticamente sin requerir direcciones IP estáticas.</p>
+                        </div>
+                        <div style="background: #fffbe0; border-left: 4px solid #f59e0b; padding: 8px 12px; border-radius: 6px;">
+                            <strong style="color: #b45309; font-size: 0.82rem;">3. Control de Ciclo de Vida</strong>
+                            <p style="font-size: 0.75rem; color: #334155; margin-top: 2px;">Usa <code>docker compose down</code> para apagar limpiamente todos los procesos o <code>docker compose logs -f</code> para depurar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (7/12): Secretos y Variables de Entorno -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Manejo Seguro de Secretos &amp; Variables de Entorno</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔑 Inyección de Secretos y `.env` en Docker</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 La Regla de 12-Factor App:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">
+                        Las credenciales (contraseñas de BD, JWT Keys, API Keys de Gemini) NUNCA se escriben dentro del Dockerfile ni se compilan en la imagen. Se inyectan en tiempo de ejecución desde el entorno del host.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #ef4444; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #b91c1c; font-size: 0.88rem; display: block; margin-bottom: 4px;">❌ Mala Práctica (Fuga de Seguridad)</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Escribir <code>ENV DATABASE_URL="postgres://admin:secret123@..."</code> en el Dockerfile.<br>
+                            Cualquiera con acceso al registro o ejecutando <code>docker history &lt;image&gt;</code> leerá tus claves secretas.
+                        </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem; display: block; margin-bottom: 4px;">✅ Buena Práctica (`.env` local)</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Incluir <code>.env</code> en tu <code>.gitignore</code> y <code>.dockerignore</code>.<br>
+                            Cargar el archivo en Docker Compose mediante <code>env_file: .env</code> o pasar variables en la nube (AWS Parameter Store/K8s Secrets).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (8/12): Healthchecks y Resiliencia -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Healthchecks &amp; Orquestación Resiliente</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🩺 Healthchecks y Orden de Inicio Dependiente</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.73rem;">
+                        <span style="color: #38bdf8;">services:</span><br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">db:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15-alpine<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #38bdf8;">healthcheck:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test: ["CMD-SHELL", "pg_isready -U user"]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interval: 5s<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retries: 5<br><br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">api:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;build: .<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #38bdf8;">depends_on:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #10b981;">condition: service_healthy</span>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 12px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.88rem;">📌 El Problema de la Carrera de Inicio</strong>
+                            <p style="font-size: 0.77rem; color: #334155; margin-top: 2px;">
+                                El contenedor de la base de datos puede arrancar en 1 segundo, pero su puerto interno tarda 5 segundos en aceptar conexiones. Si tu API arranca de inmediato, fallará la primera conexión.
+                            </p>
+                        </div>
+                        <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                            <strong style="color: #047857; font-size: 0.88rem;">🛡️ La Solución: `service_healthy`</strong>
+                            <p style="font-size: 0.77rem; color: #334155; margin-top: 2px;">
+                                `depends_on: condition: service_healthy` detiene el arranque de la API hasta que la prueba de salud (`pg_isready`) de Postgres responda con éxito.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (9/12): Antipatrones y Seguridad -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Antipatrones &amp; Buenas Prácticas de Seguridad</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚠️ Los 4 Antipatrones Más Comunes en Docker</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">1. Usar `:latest` como Tag</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Fija siempre la versión (ej. <code>python:3.11-slim-bookworm</code>). La etiqueta <code>latest</code> puede romper tu compilación en cualquier momento si la versión upstream cambia.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">2. Ejecutar como Usuario `root`</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Crea un usuario sin privilegios en el Dockerfile (<code>RUN adduser appuser &amp;&amp; USER appuser</code>) para evitar escapes de contenedor con permisos de root.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">3. Olvidar el `.dockerignore`</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Sin <code>.dockerignore</code>, estarás copiando megabytes de <code>.git</code>, <code>venv</code>, <code>node_modules</code> y archivos <code>.env</code> a la imagen.</p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px;">
+                        <strong style="color: #ef4444; font-size: 0.82rem;">4. Contenedores "Monolíticos"</strong>
+                        <p style="font-size: 0.75rem; color: #475569; margin-top: 2px;">Un contenedor debe ejecutar un solo proceso principal. Separa tu Backend FastAPI, tu Frontend Next.js y tu DB Postgres en contenedores independientes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (10/12): Misión Práctica I -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Misión Práctica I: Proyecto Monorepo Contenerizado</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🛠️ Reto Práctico 1: Contenerizar la Aplicación de Empresa</h2>
+                    <span style="background: #10B981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Hito Monorepo • Hands-On</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">🎯 Objetivo del Proyecto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.35;">
+                        Construir la infraestructura de contenedores para la empresa con un <code>Dockerfile</code> optimizado para el backend FastAPI y un <code>docker-compose.yml</code> que enlace la base de datos PostgreSQL con volumen persistente.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 10px; padding: 10px 14px;">
+                        <strong style="color: #0056FF; font-size: 0.88rem; display: block; margin-bottom: 4px;">📋 Entregables de la Misión</strong>
+                        <ul style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li>Escribir un <code>Dockerfile</code> usando <code>python:3.11-slim</code> y <code>.dockerignore</code>.</li>
+                            <li>Definir <code>docker-compose.yml</code> con servicios <code>web</code> y <code>db</code>.</li>
+                            <li>Configurar <code>healthcheck</code> en Postgres para esperar el arranque limpio.</li>
+                            <li>Persistir la información de la DB usando un Named Volume.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.74rem;">
+                        <span style="color: #64748b;"># Comandos de Ejecución de la Misión</span><br><br>
+                        <span style="color: #38bdf8;"># 1. Compilar y levantar servicios en background</span><br>
+                        $ docker compose up --build -d<br><br>
+                        <span style="color: #38bdf8;"># 2. Verificar estado de contenedores</span><br>
+                        $ docker compose ps<br><br>
+                        <span style="color: #38bdf8;"># 3. Ver logs en tiempo real</span><br>
+                        $ docker compose logs -f web
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (11/12): Misión Práctica II -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Misión Práctica II: Launch-Ready MVP</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🚀 Reto Práctico 2: Verificación y Persistencia en Producción Local</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #ffffff; border: 2px solid #10B981; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #047857; font-size: 0.88rem; display: block; margin-bottom: 4px;">🧪 Prueba de Fuego: Persistencia de Datos</strong>
+                        <ol style="font-size: 0.76rem; color: #334155; margin: 0; padding-left: 16px; line-height: 1.4;">
+                            <li>Crear varios registros a través del endpoint <code>POST /products/</code>.</li>
+                            <li>Ejecutar <code>docker compose down</code> para destruir todos los contenedores activos.</li>
+                            <li>Volver a levantar con <code>docker compose up -d</code>.</li>
+                            <li>Verificar con <code>GET /products/</code> que la información permanezca intacta gracias al Volumen nombrado.</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #ffffff; border: 2px solid #8b5cf6; border-radius: 10px; padding: 12px 14px;">
+                        <strong style="color: #6d28d9; font-size: 0.88rem; display: block; margin-bottom: 4px;">🌐 Prueba de Red Interna</strong>
+                        <p style="font-size: 0.76rem; color: #334155; line-height: 1.35; margin: 0;">
+                            Ejecutar una terminal interactiva dentro del contenedor del backend:<br>
+                            <code>docker compose exec web bash</code><br>
+                            Verificar la resolución de DNS interna ejecutando <code>ping db</code> o <code>curl -v http://web:8000/docs</code>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44 (12/12): Resumen Ejecutivo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Resumen Ejecutivo &amp; Cheatsheet Docker</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📌 Cheatsheet de Comandos Indispensables de Docker</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #0f172a; border-radius: 8px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.74rem;">
+                        <strong style="color: #38bdf8; display: block; margin-bottom: 4px;">🛠️ Docker CLI Básico</strong>
+                        <code>docker build -t mi-app:v1 .</code><br>
+                        <code>docker run -p 8000:8000 --env-file .env mi-app:v1</code><br>
+                        <code>docker ps -a</code><br>
+                        <code>docker exec -it &lt;container_id&gt; bash</code>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 8px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.74rem;">
+                        <strong style="color: #10b981; display: block; margin-bottom: 4px;">🐙 Docker Compose CLI</strong>
+                        <code>docker compose up --build -d</code><br>
+                        <code>docker compose down -v</code> <span style="color: #94a3b8;">(# incluye volúmenes)</span><br>
+                        <code>docker compose logs -f &lt;service&gt;</code><br>
+                        <code>docker compose restart web</code>
+                    </div>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">🎉 ¡Felicidades! Has Dominado la Contenerización</strong>
+                    <p style="font-size: 0.78rem; color: #1e293b; margin: 0;">
+                        Tu proyecto backend y bases de datos ahora son 100% reproducibles, aislados y listos para desplegarse en cualquier entorno de nube (AWS ECS, Google Cloud Run, Kubernetes).
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="nav-controls">
+        <div class="nav-btn-group">
+            <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 12</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        💡 Usa las teclas <kbd>←</kbd> <kbd>→</kbd> o la barra <kbd>Espacio</kbd> para navegar
+    </div>
+
+    <script src="assets/js/presentation.js?v=3"></script>
+    <script src="../assets/js/presentation.js?v=3"></script>
+</body>
+</html>

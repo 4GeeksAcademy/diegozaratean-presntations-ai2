@@ -1,0 +1,770 @@
+:root {
+    --4geeks-yellow: #FFB800;
+    --4geeks-blue: #0056FF;
+    --4geeks-dark: #0A0F1D;
+    --4geeks-gray: #F4F6F8;
+    --4geeks-card-border: #E5E7EB;
+    
+    /* Colores de pasos */
+    --step-blue: #0056FF;
+    --step-green: #10B981;
+    --step-purple: #8B5CF6;
+    --step-orange: #F97316;
+    --step-cyan: #06B6D4;
+    --step-red: #EF4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background-color: #0b1120;
+    color: #1f2937;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Barra de progreso superior */
+.progress-bar-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 8.33%;
+    background: linear-gradient(90deg, var(--4geeks-yellow), var(--4geeks-blue));
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Contenedor principal de la diapositiva */
+.presentation-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 562.5px; /* Aspect Ratio 16:9 */
+    background-color: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.slide.active {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Header Corporativo 4Geeks */
+.slide-header {
+    background-color: var(--4geeks-yellow);
+    height: 56px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.slide-title-header {
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: #000000;
+    letter-spacing: -0.2px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #000000;
+    letter-spacing: 0.5px;
+}
+
+/* Contenido de Diapositiva Estándar */
+.slide-body {
+    padding: 22px 35px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Slide 1: Portada con imagen a la izquierda */
+.slide.slide-cover,
+.slide.slide-cover.active {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.cover-image-side {
+    width: 45%;
+    height: 100%;
+    background-color: var(--4geeks-blue);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cover-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.cover-text-side {
+    width: 55%;
+    padding: 50px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.badge-tag {
+    background-color: var(--4geeks-yellow);
+    color: #000;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    width: fit-content;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cover-title {
+    font-size: 2.45rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #0f172a;
+    margin-bottom: 14px;
+}
+
+.cover-title span {
+    color: var(--4geeks-blue);
+}
+
+.cover-subtitle {
+    font-size: 1.12rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* Estilos para el resumen de portada (Slide 1) */
+.cover-summary-box {
+    margin-top: 14px;
+    background: #f8fafc;
+    border-left: 4px solid var(--4geeks-blue);
+    padding: 14px 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.summary-box-title {
+    font-size: 1.10rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.summary-box-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.98rem;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.summary-box-list li {
+    margin-bottom: 5px;
+}
+
+.summary-box-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Diseño de Diapositiva 2 Columnas (Slide 2) */
+.slide-two-cols {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 36px;
+    align-items: center;
+    padding: 32px 40px;
+    height: 100%;
+}
+
+.slide-col-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.slide-section-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.4px;
+}
+
+.slide-main-desc {
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.55;
+    margin-bottom: 20px;
+}
+
+.callout-card {
+    background-color: #f0f7ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0, 86, 255, 0.04);
+}
+
+.callout-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0056FF;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.callout-text {
+    font-size: 0.84rem;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.callout-text strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.slide-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+}
+
+.icon-card {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.icon-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.icon-badge {
+    width: 56px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.icon-badge svg {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-card-content {
+    padding: 10px 16px;
+}
+
+.icon-card-title {
+    font-weight: 800;
+    font-size: 0.93rem;
+    color: #0f172a;
+    letter-spacing: -0.2px;
+}
+
+.icon-card-desc {
+    font-size: 0.81rem;
+    color: #64748b;
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* Tarjetas de Lista Estilo 4Geeks (Paso a Paso) */
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.step-item {
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    border: 1px solid var(--4geeks-card-border);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+}
+
+.step-number {
+    min-width: 76px;
+    width: auto;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 800;
+    font-family: 'Fira Code', 'Inter', monospace;
+    letter-spacing: -0.2px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.step-content {
+    padding: 10px 18px;
+}
+
+.step-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+.step-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-top: 2px;
+    line-height: 1.4;
+}
+
+/* Tablas */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.88rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.custom-table th {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.custom-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--4geeks-card-border);
+}
+
+.custom-table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.custom-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Etiquetas de Empresas Líderes con Logos */
+.company-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.company-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: #ffffff;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+    padding: 5px 11px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.81rem;
+    letter-spacing: -0.1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.company-badge:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.company-badge svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Bloques de Código Estilo Editor IDE */
+.editor-container {
+    background-color: #0b0f19;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    border: 1px solid #1e293b;
+    margin-top: 14px;
+}
+
+.editor-header {
+    background-color: #151d30;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.editor-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.editor-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot-red { background-color: #ef4444; }
+.dot-yellow { background-color: #eab308; }
+.dot-green { background-color: #22c55e; }
+
+.editor-filename {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.editor-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.editor-lang {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    background: rgba(255, 184, 0, 0.15);
+    color: var(--4geeks-yellow);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.copy-code-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    user-select: none;
+    margin-left: auto;
+}
+
+.copy-code-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.copy-code-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.copy-code-btn:hover svg {
+    transform: scale(1.1);
+}
+
+.copy-code-btn:active {
+    transform: translateY(0);
+}
+
+.copy-code-btn.copied {
+    background: rgba(34, 197, 94, 0.22);
+    color: #4ade80;
+    border-color: #22c55e;
+}
+
+.copy-code-btn.copied svg {
+    stroke: #4ade80;
+}
+
+.code-block {
+    background-color: #0b0f19;
+    color: #f8fafc;
+    padding: 12px 16px;
+    font-family: 'Fira Code', Consolas, Monaco, monospace;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 230px;
+    white-space: pre;
+    tab-size: 4;
+}
+
+/* En diapositivas de dos columnas o dedicadas de código */
+.two-columns .code-block {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    padding: 10px 14px;
+    max-height: 260px;
+}
+
+.slide-two-cols .code-block {
+    font-size: 0.82rem;
+    line-height: 1.48;
+    max-height: 280px;
+}
+
+/* Scrollbar Personalizada y Elegante para el Editor */
+.code-block::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.code-block::-webkit-scrollbar-track {
+    background: #0b0f19;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+    background: var(--4geeks-yellow);
+}
+
+/* Scrollbar para el contenido de la diapositiva si desborda */
+.slide-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.slide-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.slide-body::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.slide-body::-webkit-scrollbar-thumb:hover {
+    background: var(--4geeks-blue);
+}
+
+.code-keyword { color: #38bdf8; font-weight: 700; }
+.code-function { color: #facc15; font-weight: 600; }
+.code-string { color: #4ade80; }
+.code-number { color: #fb923c; }
+.code-boolean { color: #c084fc; font-weight: 700; }
+.code-comment { color: #64748b; font-style: italic; }
+.code-builtin { color: #a78bfa; }
+
+/* Dos Columnas */
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/* Navegación Inferior */
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 15px;
+    color: #ffffff;
+}
+
+.nav-btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    background-color: var(--4geeks-blue);
+    color: #ffffff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+    background-color: #0043cb;
+    transform: translateY(-1px);
+}
+
+.nav-btn:active {
+    transform: translateY(0);
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-btn-outline {
+    background-color: transparent;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+}
+
+.nav-btn-outline:hover {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+
+.slide-counter {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.keyboard-hint {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.keyboard-hint kbd {
+    background: #1e293b;
+    color: #cbd5e1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    border: 1px solid #334155;
+}
+
+/* Custom Syntax Highlighting for Code Blocks (VS Code Dark Palette) */
+.editor-container pre {
+    border-left: 3px solid #0284c7 !important;
+    background-color: #121824 !important;
+}
+
+.syn-kw { color: #60a5fa !important; font-weight: 600; }     /* Keywords: from, import, def, return, class -> Blue */
+.syn-fn { color: #facc15 !important; font-weight: 600; }     /* Functions: read_root, calculate_total -> Yellow */
+.syn-str { color: #4ade80 !important; }                     /* Strings: "Hello, FastAPI!", "message" -> Green */
+.syn-class { color: #ffffff !important; font-weight: 700; }   /* Classes: FastAPI, UserProfile, BaseModel -> White */
+.syn-num { color: #f97316 !important; font-weight: 600; }   /* Numbers: 100, 42, 201 -> Orange */
+.syn-dec { color: #e2e8f0 !important; font-weight: 600; }   /* Decorators: @app.get, @app.post -> Slate White */
+.syn-comment { color: #94a3b8 !important; font-style: italic; } /* Comments: # ... -> Slate Gray */
+.syn-type { color: #38bdf8 !important; font-weight: 600; }  /* Types: int, str, float, bool -> Sky Blue */
+.syn-bad { color: #f87171 !important; font-weight: 700; }   /* Anti-Pattern bad indicators -> Red */
+.syn-good { color: #4ade80 !important; font-weight: 700; }  /* Correct solution indicators -> Green */
+
+

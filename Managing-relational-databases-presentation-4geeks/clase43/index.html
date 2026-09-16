@@ -71,7 +71,507 @@
                 </div>
             </div>
         </div>
-    
+
+        <!-- SLIDE CLASE 43: Módulo 1: Fundamentos del Puente ORM y Modelado -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 1: Fundamentos del Puente ORM y Modelado</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🌉 Módulo 1: Fundamentos del Puente ORM y Modelado</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">ORM • Mapeo Objeto-Relacional • SoundWave DB</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Un ORM (<em>Object-Relational Mapping</em>) actúa como un traductor entre el código orientado a objetos y las tablas SQL. En lugar de escribir SQL manual, se definen <strong>clases (modelos)</strong> donde cada clase representa una tabla, cada atributo una columna, y cada instancia un registro.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🗣️</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Imagina que hablas español (código) y tu amigo solo habla japonés (base de datos SQL). Un ORM es un intérprete bilingüe: cuando le dices <em>"crea una canción llamada 'Get Lucky' a 2 dólares"</em>, el intérprete traduce eso a orden en japonés (<code>INSERT INTO songs...</code>) sin que tengas que aprenderte todos los kanjis.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">SoundWave DB - Modelo Song</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.68rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #f472b6;">class</span> <span style="color: #fbbf24;">Song</span>(Base):
+    __tablename__ = <span style="color: #a5f3fc;">"songs"</span>
+    id = Column(Integer, primary_key=<span style="color: #34d399;">True</span>)
+    title = Column(String(150), nullable=<span style="color: #34d399;">False</span>)
+    price = Column(Numeric(5, 2), nullable=<span style="color: #34d399;">False</span>)
+    release_year = Column(Integer, nullable=<span style="color: #34d399;">False</span>)
+
+<span style="color: #38bdf8;"># Instanciar un nuevo registro como objeto</span>
+nueva_cancion = Song(
+    title=<span style="color: #a5f3fc;">"Monotonía"</span>, 
+    price=1.20, 
+    release_year=2022
+)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 2: Relaciones entre Modelos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 2: Relaciones entre Modelos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔗 Módulo 2: Relaciones entre Modelos (`relationship`)</h2>
+                    <span style="background: #a855f7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">1:1 • 1:N • N:M Pivot Tables</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #581c87; margin: 0; line-height: 1.38;">
+                                Abstracción de llaves foráneas mediante <code>relationship</code>. Permite navegar entidades asociadas sin escribir <code>JOINs</code> manuales: 1:1, 1:N (Artista-Álbumes) y N:M (Colaboraciones vía tabla pivote <code>track_artists</code>).
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🔘</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                En lugar de buscar en un archivador gigante el carné de cada músico y cruzarlo con el código de la canción, el ORM te da un botón mágico en cada canción llamado <code>.artists</code>. Al presionarlo, busca a los músicos vinculados y te los entrega en una lista.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">SoundWave DB - Tabla Pivote TrackArtist</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #f472b6;">class</span> <span style="color: #fbbf24;">TrackArtist</span>(Base):
+    __tablename__ = <span style="color: #a5f3fc;">"track_artists"</span>
+    id = Column(Integer, primary_key=<span style="color: #34d399;">True</span>)
+    artist_id = Column(Integer, ForeignKey(<span style="color: #a5f3fc;">"artists.id"</span>))
+    song_id = Column(Integer, ForeignKey(<span style="color: #a5f3fc;">"songs.id"</span>))
+    royalty_split = Column(Numeric(4, 2), default=1.00)
+
+    artist = relationship(<span style="color: #a5f3fc;">"Artist"</span>, back_populates=<span style="color: #a5f3fc;">"tracks"</span>)
+    song = relationship(<span style="color: #a5f3fc;">"Song"</span>, back_populates=<span style="color: #a5f3fc;">"artists"</span>)
+
+<span style="color: #38bdf8;"># Acceso directo en código Python:</span>
+shakira_songs = [t.song.title <span style="color: #f472b6;">for</span> t <span style="color: #f472b6;">in</span> artista_shakira.tracks]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 3: Sesiones, Transacciones y Manipulación de Registros -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 3: Sesiones, Transacciones y Persistencia</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🛒 Módulo 3: Sesiones (`Session`), Transacciones, Commit & Rollback</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Unit of Work • Atomacidad • Commit / Rollback</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #ecfdf5; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #064e3b; margin: 0; line-height: 1.38;">
+                                La <code>Session</code> actúa como espacio de trabajo en memoria (<em>Unit of Work</em>). Prepara cambios con <code>session.add()</code> y los impacta en la BD de forma atómica con <code>session.commit()</code>. Si ocurre un error, <code>session.rollback()</code> revierte todo.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🛒</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Es como el carrito de supermercado. Metes productos (<code>session.add()</code>) pero aún no se paga ni se mueve dinero. En la caja registradora pagas todo junto (<code>session.commit()</code>). Si olvidaste la billetera, vacías el carrito completo sin alterar la tienda (<code>session.rollback()</code>).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">SoundWave DB - Flujo de Transacción</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #f472b6;">with</span> Session(engine) <span style="color: #f472b6;">as</span> session:
+    <span style="color: #38bdf8;"># 1. Consultar registro</span>
+    cancion = session.query(Song).filter_by(id=101).first()
+
+    <span style="color: #38bdf8;"># 2. Modificar en memoria</span>
+    cancion.price = 1.99
+
+    <span style="color: #38bdf8;"># 3. Insertar nuevo objeto</span>
+    nuevo_artista = Artist(name=<span style="color: #a5f3fc;">"Feid"</span>, country=<span style="color: #a5f3fc;">"Colombia"</span>)
+    session.add(nuevo_artista)
+
+    <span style="color: #38bdf8;"># 4. Confirmar transacción atómica</span>
+    session.commit()</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Ciclo de Vida de los Datos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Ciclo de Vida de los Datos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <div>
+                        <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔄 Ciclo de Vida de los Datos: Del Código a la Base de Datos</h2>
+                        <p style="font-size: 0.78rem; color: #64748b; margin: 2px 0 0 0;">Cómo el ORM gestiona y asegura los cambios en memoria y en disco</p>
+                    </div>
+                    <span style="background: #0284c7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Session • Transaction • Commit • Rollback</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <!-- Elemento 1: Sesión -->
+                    <div style="background: #f0f9ff; border: 2px solid #0284c7; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">📝</span>
+                                <strong style="color: #0369a1; font-size: 0.88rem;">Sesión (Session)</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #0c4a6e; margin: 0; line-height: 1.35;">
+                                Tu mesa de trabajo en Python. Rastrea qué objetos creas, modificas o eliminas antes de tocar la base de datos.
+                            </p>
+                        </div>
+                        <div style="margin-top: 6px; background: #e0f2fe; padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: #0284c7; font-weight: 600;">
+                            🛒 Analogía: El carrito de compras
+                        </div>
+                    </div>
+
+                    <!-- Elemento 2: Transacción -->
+                    <div style="background: #f5f3ff; border: 2px solid #7c3aed; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🛡️</span>
+                                <strong style="color: #6d28d9; font-size: 0.88rem;">Transacción</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #4c1d95; margin: 0; line-height: 1.35;">
+                                La barrera de seguridad de la base de datos. Agrupa todas las operaciones bajo la regla de "todo o nada".
+                            </p>
+                        </div>
+                        <div style="margin-top: 6px; background: #ede9fe; padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: #7c3aed; font-weight: 600;">
+                            💳 Analogía: Pasar por la caja registradora
+                        </div>
+                    </div>
+
+                    <!-- Elemento 3: Commit -->
+                    <div style="background: #ecfdf5; border: 2px solid #059669; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">✅</span>
+                                <strong style="color: #047857; font-size: 0.88rem;">Commit</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #064e3b; margin: 0; line-height: 1.35;">
+                                La orden de confirmación. Guarda los cambios de forma permanente y los hace visibles para los demás.
+                            </p>
+                        </div>
+                        <div style="margin-top: 6px; background: #d1fae5; padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: #059669; font-weight: 600;">
+                            🧾 Analogía: Pagar y recibir el ticket
+                        </div>
+                    </div>
+
+                    <!-- Elemento 4: Rollback -->
+                    <div style="background: #fff1f2; border: 2px solid #e11d48; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🚨</span>
+                                <strong style="color: #be123c; font-size: 0.88rem;">Rollback</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #881337; margin: 0; line-height: 1.35;">
+                                El botón de pánico. Si ocurre un error, cancela todo y devuelve la base de datos a su estado original sin dejar datos corruptos.
+                            </p>
+                        </div>
+                        <div style="margin-top: 6px; background: #ffe4e6; padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: #e11d48; font-weight: 600;">
+                            🎒 Analogía: Vaciar el carrito si olvidaste la billetera
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regla de Oro -->
+                <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 14px; text-align: center;">
+                    <strong style="color: #b45309; font-size: 0.84rem; display: inline-flex; align-items: center; gap: 6px;">
+                        👑 Regla de Oro:
+                    </strong>
+                    <span style="font-size: 0.80rem; color: #78350f; font-weight: 600; margin-left: 4px;">
+                        La Sesión prepara la jugada, la Transacción la protege, el Commit la firma y el Rollback la borra si algo sale mal.
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 4: Evaluación y Buenas Prácticas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 4: Evaluación y Buenas Prácticas ORM</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🍽️ Módulo 4: Evaluación, Optimización & Problema N+1</h2>
+                    <span style="background: #ef4444; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">N+1 Query Avoidance • Best Practices • Performance</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fef2f2; border-left: 5px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #7f1d1d; margin: 0; line-height: 1.38;">
+                                Evaluación integral del ciclo de vida del ORM, identificando trampas de rendimiento como el <strong>Problema N+1 Queries</strong> (disparar N consultas secundarias dentro de un bucle en vez de un <code>JOIN</code> único) y validación estricta de tipos.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🍱</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Imagina pedirle a un mesero 10 platos de comida, pero en vez de traerlos en una sola bandeja grande, hace 10 viajes individuales a la cocina trayendo un plato cada vez. Usar bien el ORM es enseñarle al mesero a traer la bandeja completa de una sola vez.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #ef4444; padding: 12px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #f87171; font-size: 0.85rem; display: block; margin-bottom: 6px;">⚡ Reglas de Oro de Rendimiento ORM:</strong>
+                        <ul style="font-size: 0.75rem; color: #cbd5e1; margin: 0; padding-left: 14px; line-height: 1.4;">
+                            <li style="margin-bottom: 4px;"><strong>Carga Ansiosa (Eager Loading):</strong> Usar <code>joinedload()</code> o <code>selectinload()</code> para traer relaciones en una sola consulta SQL.</li>
+                            <li style="margin-bottom: 4px;"><strong>Gestión de Sesión:</strong> Encapsular con <code>with Session(engine) as session:</code> para evitar fugas de conexiones.</li>
+                            <li><strong>Filtrado en BD:</strong> Usar <code>session.query().filter()</code> en lugar de traer miles de registros a Python para filtrarlos con <code>if</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Alembic Módulo 1: Evolución de BD y Migraciones -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 1: Evolución de BD y Migraciones</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📦 Módulo 1: Evolución de BD y Migraciones (`1`, `1.1`)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Schema Version Control • ALTER TABLE • Data Safety</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #ecfdf5; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #064e3b; margin: 0; line-height: 1.38;">
+                                Control de versiones para la base de datos (equivalente a Git). Aplica cambios incrementales, rastreables y reversibles (añadir columnas, tablas o restricciones) sin borrar la BD ni perder datos de producción.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🧱</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Como construir una casa de Lego. En el Día 10 agregas un garaje. Sin instructivo, tendrías que desarmar toda la casa y reconstruirla perdiendo lo de adentro. Una migración es una página numerada nueva en el manual: solo dice <em>"encaja dos piezas a la derecha"</em> manteniendo la casa intacta.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">SoundWave DB - Agregar duration_seconds</span>
+                            <div class="editor-header-right"><span class="editor-lang">SQL vs Migración</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f87171;">-- ❌ SIN MIGRACIÓN (Peligroso):</span>
+<span style="color: #f87171;">DROP TABLE songs;</span> <span style="color: #94a3b8;">-- Pierde registros de Shakira y Feid</span>
+
+<span style="color: #34d399;">-- ✅ CON MIGRACIÓN INCREMENTAL (Seguro):</span>
+<span style="color: #f472b6;">ALTER TABLE</span> songs 
+<span style="color: #f472b6;">ADD COLUMN</span> duration_seconds <span style="color: #38bdf8;">INTEGER</span> <span style="color: #f472b6;">DEFAULT</span> <span style="color: #fbbf24;">0</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Alembic Módulo 2: Introducción a Alembic y Configuración -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 2: Introducción a Alembic y Configuración</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">⚙️ Módulo 2: Introducción a Alembic y Configuración con FastAPI (`2`, `2.1`)</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">alembic init • env.py • target_metadata</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Alembic es la herramienta estándar de migraciones para SQLAlchemy en Python. Se inicializa con <code>alembic init alembic</code> y se conecta a FastAPI importando <code>Base.metadata</code> y la URL de la base de datos en <code>env.py</code>.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🔍</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Alembic es un auditor con lupa. Compara el plano arquitectónico en tu código Python (modelos SQLAlchemy) con el edificio de ladrillos real (tu BD PostgreSQL). Si en el plano dibujas una ventana nueva que la pared real no tiene, Alembic prepara la orden para abrir esa ventana exacta.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">alembic/env.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">from</span> app.database <span style="color: #f472b6;">import</span> Base
+<span style="color: #f472b6;">from</span> app.models <span style="color: #f472b6;">import</span> Artist, Song, TrackArtist
+
+<span style="color: #38bdf8;"># Conectar los modelos de la app a Alembic:</span>
+target_metadata = Base.metadata
+
+<span style="color: #94a3b8;"># Alembic ahora compara target_metadata con la BD real</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Alembic Módulo 3: Creación, Ejecución y Reversión -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 3: Creación, Ejecución y Reversión</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔄 Módulo 3: Creación, Ejecución y Reversión de Migraciones (`2.2`, `2.3`)</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Autogenerate • Upgrade Head • Downgrade -1</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f5f3ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Ciclo de Vida de una Revisión:</strong>
+                            <p style="font-size: 0.76rem; color: #4c1d95; margin: 0; line-height: 1.35;">
+                                • <strong>Autogeneración:</strong> <code>alembic revision --autogenerate -m "msg"</code> detecta cambios y crea las funciones <code>upgrade()</code> y <code>downgrade()</code>.<br>
+                                • <strong>Aplicación:</strong> <code>alembic upgrade head</code> ejecuta los cambios pendientes.<br>
+                                • <strong>Rollback:</strong> <code>alembic downgrade -1</code> deshace la última migración.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">⏪</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Cada migración tiene un botón de <em>"Adelantar"</em> (<code>upgrade</code>) y uno de <em>"Rebobinar"</em> (<code>downgrade</code>). Si instalas un mueble nuevo y no cabe en la sala, presionas rebobinar y el sistema desatornilla ese mueble exacto dejando la sala como estaba.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">alembic/versions/a1b2c3_add_duration.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python & CLI</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">def</span> <span style="color: #38bdf8;">upgrade</span>():
+    op.add_column(<span style="color: #a5f3fc;">'songs'</span>, sa.Column(<span style="color: #a5f3fc;">'duration_seconds'</span>, sa.Integer(), nullable=<span style="color: #34d399;">True</span>))
+
+<span style="color: #f472b6;">def</span> <span style="color: #38bdf8;">downgrade</span>():
+    op.drop_column(<span style="color: #a5f3fc;">'songs'</span>, <span style="color: #a5f3fc;">'duration_seconds'</span>)
+
+<span style="color: #38bdf8;"># Comando para aplicar en terminal:</span>
+<span style="color: #a5f3fc;">$ uv run alembic upgrade head</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Alembic Módulo 4: Evaluación Basada en Escenarios y Buenas Prácticas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 4: Evaluación Basada en Escenarios y Buenas Prácticas</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🛡️ Módulo 4: Evaluación Basada en Escenarios & Buenas Prácticas (`3`, `4`)</h2>
+                    <span style="background: #ef4444; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Merge Heads • NOT NULL Migration • Team Sync</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fef2f2; border-left: 5px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.78rem; color: #7f1d1d; margin: 0; line-height: 1.38;">
+                                Resolución de problemas reales en equipo: ramas conflictivas en migraciones (<em>merge heads</em>), migraciones de datos con restricciones <code>NOT NULL</code> en tablas pobladas y sincronización estricta entre Dev, Staging y Producción.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">👷</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Si dos constructores agregan una pared al mismo tiempo sin hablarse, los planos chocan. Esta etapa enseña a coordinar a los dos constructores para que decidan qué ladrillo va primero, evitando que la base de datos se confunda y se detenga la obra.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #ef4444; padding: 12px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #f87171; font-size: 0.85rem; display: block; margin-bottom: 6px;">📋 Guía de Escenarios Reales:</strong>
+                        <ul style="font-size: 0.74rem; color: #cbd5e1; margin: 0; padding-left: 14px; line-height: 1.45;">
+                            <li style="margin-bottom: 5px;"><strong>Conflictos de Ramas (Multiple Heads):</strong> Resolver ejecutando <code>alembic merge heads -m "merge branches"</code>.</li>
+                            <li style="margin-bottom: 5px;"><strong>Columna NOT NULL en Tabla Poblada:</strong> 1) Crear como <code>nullable=True</code>, 2) Poblar valores por defecto, 3) Alterar a <code>NOT NULL</code>.</li>
+                            <li><strong>Pipeline CI/CD:</strong> Ejecutar <code>alembic upgrade head</code> automáticamente en despliegue antes de iniciar el servidor web.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SLIDE CLASE 43 (2/11): Stack Técnico SQLModel -->
         <div class="slide">
             <div class="slide-header">
@@ -114,81 +614,6 @@ engine = create_engine(DATABASE_URL, echo=<span style="color: #34d399;">True</sp
                             <p style="font-size: 0.80rem; color: #1e3a8a; margin-top: 2px;">El código Python del backend funciona identicamente en SQLite y PostgreSQL cambiando solo la cadena `DATABASE_URL`.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- SLIDE CLASE 43 (3/11): Session & Engine Feynman -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 43 • Conceptos Clave: Engine, Session & Transacciones</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🏦 El Patrón Session, Engine & Commit/Rollback</h2>
-                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Gestor de Transacciones • Conexiones</span>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
-                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
-                            <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">El <code>Engine</code> administra el pool de conexiones físicas a la BD. La <code>Session</code> representa la transacción activa: acumula cambios (`session.add()`), los persiste en la BD (`session.commit()`) o revoca operaciones ante errores (`session.rollback()`).</p>
-                        </div>
-                    </div>
-
-                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
-                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                            <span style="font-size: 1.2rem;">🏦</span>
-                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
-                        </div>
-                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Es la ventanilla del banco: abres la atención en ventanilla (Session). Le pones los billetes en la bandeja (session.add). El cajero sella el depósito (commit) y se guarda. Si algo falla, te devuelve los billetes y destruye el papel de depósito (rollback).</p>
-                    </div>
-                </div>
-
-                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #0056FF; padding: 10px 14px; color: #ffffff;">
-                    <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 4px;">📁 Archivos donde interviene / se configura:</strong>
-                    <p style="font-family: 'Fira Code', monospace; font-size: 0.78rem; color: #cbd5e1; margin: 0; line-height: 1.35;">`app/core/db.py`, dependencias `get_session()` en routers y fixtures de pruebas en `conftest.py`.</p>
-                </div>
-            </div>
-        </div>
-    
-        <!-- SLIDE CLASE 43 (4/11): Alembic Feynman -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 43 • Migraciones de BD con Alembic</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📦 Migraciones de Base de Datos con Alembic</h2>
-                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Control de Versiones de BD • DDL Automático</span>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div style="background: #fdf4ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
-                            <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Explicación Técnica:</strong>
-                            <p style="font-size: 0.80rem; color: #4c1d95; margin: 0; line-height: 1.38;">Alembic rastrea los cambios en los modelos Python de SQLModel y genera versiones DDL automáticas (`alembic revision --autogenerate`), permitiendo actualizar (`alembic upgrade head`) o revertir el esquema de producción sin perder datos.</p>
-                        </div>
-                    </div>
-
-                    <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center;">
-                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                            <span style="font-size: 1.2rem;">🎮</span>
-                            <strong style="color: #b45309; font-size: 0.88rem;">Ejemplo Feynman (para 5 años):</strong>
-                        </div>
-                        <p style="font-size: 0.80rem; color: #78350f; margin: 0; line-height: 1.4; font-weight: 500;">Son los puntos de guardado (savepoints) en un videojuego. Si modificas el mapa del nivel (agregas columnas a la BD), guardas la partida en una revisión. Si la actualización falla, haces `downgrade` al savepoint anterior sin perder tu personaje.</p>
-                    </div>
-                </div>
-
-                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #8b5cf6; padding: 10px 14px; color: #ffffff;">
-                    <strong style="color: #c084fc; font-size: 0.82rem; display: block; margin-bottom: 4px;">💻 Comandos de Migración Alembic:</strong>
-                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #c084fc; background: #1e293b; padding: 6px 10px; border-radius: 6px; margin: 0; line-height: 1.3; white-space: pre-wrap;"># Generar script de migración automático
-alembic revision --autogenerate -m "add_users_table"
-# Aplicar cambios a la base de datos
-alembic upgrade head</pre>
                 </div>
             </div>
         </div>
@@ -279,24 +704,41 @@ alembic upgrade head</pre>
         <!-- SLIDE FINAL: Práctica en Clase -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 43 • Cierre de Teoría: Ahora a la Parte Práctica</div>
+                <div class="slide-title-header">Clase 43 • Cierre de Teoría: Proyectos Prácticos</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
             <div class="slide-body">
-                <h2 class="slide-section-title" style="font-size: 1.3rem; margin-bottom: 12px;">💻 ¡Ahora a la Parte Práctica!</h2>
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin-bottom: 8px;">💻 ¡Ahora a la Parte Práctica!</h2>
                 
-                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
-                    <div style="font-size: 1.4rem; font-weight: 800; color: #0056FF; margin-bottom: 10px;">🚀 ¡Hora de Codificar en Vivo!</div>
-                    <p style="font-size: 0.98rem; color: #1e293b; line-height: 1.55; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
-                        Demuestra lo aprendido aplicando los conceptos de esta clase en el proyecto práctico. Abre tu entorno de desarrollo y resolvamos los ejercicios interactivos.
+                <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 2px solid #0056FF; border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #0056FF; margin-bottom: 6px;">🚀 ¡Hora de Codificar en Vivo!</div>
+                    <p style="font-size: 0.90rem; color: #1e293b; line-height: 1.45; margin-bottom: 14px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        Demuestra lo aprendido aplicando los conceptos de esta clase en los 2 proyectos prácticos entregables del Milestone 5:
                     </p>
 
-                    
-                    <div style="background: #ffffff; border: 2px solid #0056FF; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.1);">
-                        <strong style="color: #0056FF; font-size: 0.95rem; display: block; margin-bottom: 6px;">📌 Proyecto Práctico Entregable:</strong>
-                        <p style="font-size: 1.15rem; color: #0f172a; font-weight: 800; margin: 0;">Backend Development ORM & Dual DB</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;">
+                        <!-- Proyecto 3 (Backend) -->
+                        <div style="background: #0f172a; border: 2px solid #0056FF; border-radius: 10px; padding: 14px 16px; color: #ffffff; box-shadow: 0 4px 12px rgba(0, 86, 255, 0.15);">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                <span style="background: #0056FF; color: #ffffff; padding: 2px 8px; border-radius: 4px; font-family: 'Fira Code', monospace; font-weight: 700; font-size: 0.8rem;">3 &lt;/&gt; Project</span>
+                                <span style="color: #38bdf8; font-size: 0.75rem; font-weight: 600;">Backend & ORM</span>
+                            </div>
+                            <strong style="color: #f8fafc; font-size: 0.92rem; display: block; line-height: 1.35;">
+                                Milestone 5 — Backend: Inventory Management with ORM & Dual Database
+                            </strong>
+                        </div>
+
+                        <!-- Proyecto 4 (Backoffice) -->
+                        <div style="background: #0f172a; border: 2px solid #10b981; border-radius: 10px; padding: 14px 16px; color: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                <span style="background: #10b981; color: #ffffff; padding: 2px 8px; border-radius: 4px; font-family: 'Fira Code', monospace; font-weight: 700; font-size: 0.8rem;">4 &lt;/&gt; Project</span>
+                                <span style="color: #34d399; font-size: 0.75rem; font-weight: 600;">Backoffice Interface</span>
+                            </div>
+                            <strong style="color: #f8fafc; font-size: 0.92rem; display: block; line-height: 1.35;">
+                                Milestone 5 — Backoffice: Inventory Management Interface
+                            </strong>
+                        </div>
                     </div>
-        
                 </div>
             </div>
         </div>
@@ -353,6 +795,546 @@ alembic upgrade head</pre>
                 </div>
             </div>
         </div>
+
+        <!-- SLIDE CLASE 43: Consumo de APIs y Capa de Abstracción HTTP -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Consumo de APIs & Capa de Abstracción HTTP</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🌐 Consumo de APIs & Capa de Abstracción HTTP</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">API Client • Bearer Token • Error Handling</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Patrón API Service / Client:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Encapsular todas las llamadas HTTP dentro de un cliente centralizado (ej. <code>lib/inventory.ts</code>). Evita desparramar llamadas <code>fetch</code> crudas en <code>useEffect</code> o componentes.
+                            </p>
+                        </div>
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">🔑 Tokens Bearer & Errores (4xx/5xx):</strong>
+                            <p style="font-size: 0.78rem; color: #064e3b; margin: 0; line-height: 1.38;">
+                                Inyecta automáticamente <code>Authorization: Bearer &lt;token&gt;</code>. Si <code>!response.ok</code>, parsea el campo <code>detail</code> de FastAPI y propaga un mensaje amigable para la UI.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">lib/inventory.ts</span>
+                            <div class="editor-header-right"><span class="editor-lang">TypeScript</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.66rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">export async function</span> <span style="color: #38bdf8;">fetchInventory</span>(token: <span style="color: #fbbf24;">string</span>) {
+  <span style="color: #f472b6;">const</span> res = <span style="color: #f472b6;">await</span> fetch(<span style="color: #a5f3fc;">"/api/v1/inventory"</span>, {
+    headers: {
+      <span style="color: #a5f3fc;">"Authorization"</span>: <span style="color: #a5f3fc;">`Bearer ${token}`</span>,
+      <span style="color: #a5f3fc;">"Content-Type"</span>: <span style="color: #a5f3fc;">"application/json"</span>
+    }
+  });
+  <span style="color: #f472b6;">if</span> (!res.ok) {
+    <span style="color: #f472b6;">const</span> err = <span style="color: #f472b6;">await</span> res.json();
+    <span style="color: #f472b6;">throw new</span> Error(err.detail || <span style="color: #a5f3fc;">"Error HTTP"</span>);
+  }
+  <span style="color: #f472b6;">return</span> res.json();
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 1: Arquitectura de Doble Base de Datos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 1: Arquitectura de Doble Base de Datos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🏛️ Módulo 1: Arquitectura de Doble Base de Datos (Dual-Database Pattern)</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">TinyDB (Auth) • Supabase (PostgreSQL) • Depends(get_db)</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #ecfdf5; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.76rem; color: #064e3b; margin: 0; line-height: 1.35;">
+                                FastAPI conecta dos motores: <strong>TinyDB</strong> (NoSQL liviano en archivo local para auth de usuarios) y <strong>Supabase (PostgreSQL)</strong> (relacional para inventario y órdenes). El ciclo de sesión se administra con el generador <code>get_db</code> inyectado mediante <code>Depends()</code>.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">📖</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.35;">
+                                Libreta pequeña en el bolsillo para usuarios y passwords (TinyDB: rápido para la puerta). Libro contable blindado en bodega para el inventario (PostgreSQL/Supabase). El portero revisa la libreta y el bodeguero anota las cajas en el libro mayor.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">database.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">from</span> sqlmodel <span style="color: #f472b6;">import</span> Session, create_engine
+<span style="color: #f472b6;">from</span> tinydb <span style="color: #f472b6;">import</span> TinyDB
+
+auth_db = TinyDB(<span style="color: #a5f3fc;">"auth.json"</span>) <span style="color: #94a3b8;"># Conexión NoSQL</span>
+engine = create_engine(DATABASE_URL, pool_pre_ping=<span style="color: #34d399;">True</span>) <span style="color: #94a3b8;"># Conexión SQL</span>
+
+<span style="color: #f472b6;">def</span> <span style="color: #38bdf8;">get_db</span>():
+    <span style="color: #f472b6;">with</span> Session(engine) <span style="color: #f472b6;">as</span> session:
+        <span style="color: #f472b6;">yield</span> session <span style="color: #94a3b8;"># Sesión controlada por request</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 2: Modelado SQLModel y Desacoplamiento -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 2: Modelado SQLModel y Desacoplamiento</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📐 Módulo 2: Modelado con SQLModel y Desacoplamiento de Schemas</h2>
+                    <span style="background: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">SQLModel • models.py vs schemas.py • Foreign Keys Lógicas</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.76rem; color: #1e3a8a; margin: 0; line-height: 1.35;">
+                                Separación entre modelos ORM (<code>models.py</code>, <code>table=True</code>) y DTOs (<code>schemas.py</code>). El campo <code>user_uuid</code> en las órdenes almacena el identificador del usuario de TinyDB como un <code>str</code> plano sin usar restricciones <code>REFERENCES</code> entre BDs distintas.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🛂</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.35;">
+                                Pasaporte en el archivo nacional vs. fotocopia en el aeropuerto. En la base de datos guardas el objeto crudo con sus engranajes (<code>models.py</code>), pero al cliente le entregas una ficha limpia y calculada (<code>schemas.py</code>).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">models.py & schemas.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.3;"><code><span style="color: #38bdf8;"># models.py (ORM)</span>
+<span style="color: #f472b6;">class</span> <span style="color: #fbbf24;">StockEntry</span>(SQLModel, table=<span style="color: #34d399;">True</span>):
+    id: Optional[int] = Field(default=<span style="color: #34d399;">None</span>, primary_key=<span style="color: #34d399;">True</span>)
+    product_id: int = Field(foreign_key=<span style="color: #a5f3fc;">"product.id"</span>)
+    quantity: int
+    user_uuid: str <span style="color: #94a3b8;"># UUID plano traído de TinyDB</span>
+
+<span style="color: #38bdf8;"># schemas.py (Pydantic DTOs)</span>
+<span style="color: #f472b6;">class</span> <span style="color: #fbbf24;">ProductRead</span>(BaseModel):
+    id: int
+    sku: str
+    current_stock: int <span style="color: #94a3b8;"># Campo computado NO físico</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 3: Inmutabilidad de Stock -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 3: Inmutabilidad de Stock y Registro Contable</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📊 Módulo 3: Inmutabilidad de Stock y Registro Contable (Ledger Pattern)</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Ledger Pattern • Inbound vs Outbound • Double Entry</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f5f3ff; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Principio Contable (No UPDATE directo):</strong>
+                            <p style="font-size: 0.76rem; color: #4c1d95; margin: 0; line-height: 1.35;">
+                                El stock <strong>nunca</strong> se edita directamente (<code>UPDATE products SET stock = X</code> está prohibido).
+                                <br>
+                                $$\text{Stock Actual} = \sum(\text{Inbound}) - \sum(\text{Outbound})$$
+                                Todo movimiento es un registro histórico inmutable asociado al <code>user_uuid</code>.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🐖</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.35;">
+                                La alcancía del banco. No hay perilla mágica para cambiar el saldo. Para tener más dinero metes monedas (Inbound). Para usar dinero anotas el retiro (Outbound). El total es la cuenta real de entradas menos salidas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">routers/inventory.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #38bdf8;"># Lógica de cálculo en GET /inventory/products/{id}</span>
+total_in = session.exec(
+    select(func.sum(StockEntry.quantity))
+    .where(StockEntry.product_id == prod_id)
+).one() <span style="color: #f472b6;">or</span> <span style="color: #fbbf24;">0</span>
+
+total_out = session.exec(
+    select(func.sum(StockExit.quantity))
+    .where(StockExit.product_id == prod_id)
+).one() <span style="color: #f472b6;">or</span> <span style="color: #fbbf24;">0</span>
+
+current_stock = total_in - total_out</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 4: Prevención de Stock Negativo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 4: Prevención de Stock Negativo</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🛑 Módulo 4: Prevención de Stock Negativo y Errores de Negocio (HTTP 400)</h2>
+                    <span style="background: #ef4444; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">HTTP 400 Bad Request • Stock Check • Transaction Safety</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fef2f2; border-left: 5px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Concepto:</strong>
+                            <p style="font-size: 0.76rem; color: #7f1d1d; margin: 0; line-height: 1.35;">
+                                Validación previa transaccional. Antes de guardar una orden <em>Outbound</em>, el sistema calcula el stock disponible. Si <code>salida > disponible</code>, frena la transacción con <strong>HTTP 400 Bad Request</strong> e impide saldos negativos.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🍪</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.35;">
+                                Tienes una caja con 3 galletas. Si te piden 5, no puedes quedar con "menos 2 galletas". Cuentas antes de entregar: si no alcanzan, respondes <em>"No las puedo dar, solo quedan 3"</em> (HTTP 400) y dejas la caja intacta.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">routers/orders.py</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.62rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">@router.post</span>(<span style="color: #a5f3fc;">"/orders/outbound"</span>)
+<span style="color: #f472b6;">def</span> <span style="color: #38bdf8;">create_outbound</span>(data: OutboundCreate, db: Session = Depends(get_db)):
+    stock = calculate_stock(data.product_id, db)
+    <span style="color: #f472b6;">if</span> data.quantity &gt; stock:
+        <span style="color: #f472b6;">raise</span> HTTPException(
+            status_code=<span style="color: #fbbf24;">400</span>,
+            detail=<span style="color: #a5f3fc;">f"Stock insuficiente. Disponible: &#123;stock&#125;"</span>
+        )
+    order = StockExit(**data.dict())
+    db.add(order)
+    db.commit()</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Módulo 5: Rendimiento y Problema N+1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Módulo 5: Rendimiento y Problema N+1</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">⚡ Módulo 5: Rendimiento de Consultas y Mitigación del Problema N+1</h2>
+                    <span style="background: #0284c7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">func.sum() • GROUP BY • Query Aggregation</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0f9ff; border-left: 5px solid #0284c7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0369a1; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Agregación Eficiente en SQL:</strong>
+                            <p style="font-size: 0.76rem; color: #0c4a6e; margin: 0; line-height: 1.35;">
+                                En lugar de consultar productos ($1$) y disparar una consulta secundaria por producto en un bucle for ($N$), agrupar datos con <code>func.sum()</code> y <code>GROUP BY</code> en una única consulta ORM optimizada.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">✏️</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.35;">
+                                Pedir los útiles escolares de 30 niños. El error $N+1$ es pedir el cuaderno del primer niño, esperar el viaje a bodega, pedir el del segundo, y así 30 veces. La forma correcta es entregar la lista completa con los 30 nombres para traer todo en un solo viaje.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">Consulta Agregada Única</span>
+                            <div class="editor-header-right"><span class="editor-lang">Python SQLModel</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.63rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #38bdf8;"># ❌ Evitar bucle for N+1</span>
+
+<span style="color: #34d399;"># ✅ Consulta única con GROUP BY:</span>
+statement = (
+    select(
+        Product.id, 
+        Product.name, 
+        func.sum(StockEntry.quantity).label(<span style="color: #a5f3fc;">"total_in"</span>)
+    )
+    .join(StockEntry, isouter=<span style="color: #34d399;">True</span>)
+    .group_by(Product.id)
+)
+results = session.exec(statement).all()</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Estado Reactivo y Formularios Complejos -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Estado Reactivo & Formularios Complejos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">⚡ Estado Reactivo & Validaciones en Tiempo Real</h2>
+                    <span style="background: #a855f7; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">React Form State • Real-time UX • UI Warnings</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fdf4ff; border-left: 5px solid #a855f7; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #7e22ce; font-size: 0.85rem; display: block; margin-bottom: 3px;">🔄 Sincronización & Comparación en Cliente:</strong>
+                            <p style="font-size: 0.78rem; color: #581c87; margin: 0; line-height: 1.38;">
+                                Escuchar eventos <code>onChange</code> para refrescar stock en pantalla. Comparar <code>cantidad_ingresada &gt; stock_disponible</code> instantáneamente para mostrar advertencias antes del envío.
+                            </p>
+                        </div>
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 3px;">🛑 Ciclos de Envío & Desacople:</strong>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Controlar <code>isLoading</code> para deshabilitar el submit y evitar doble clic. Desacoplar el label mostrado (Nombre de Producto) del payload enviado (UUID / ID).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">components/OutboundForm.tsx</span>
+                            <div class="editor-header-right"><span class="editor-lang">TSX</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #38bdf8;">const</span> isOverStock = qty &gt; product.available_stock;
+
+<span style="color: #f472b6;">return</span> (
+  &lt;<span style="color: #f472b6;">form</span> onSubmit={handleSubmit}&gt;
+    {isOverStock &amp;&amp; (
+      &lt;<span style="color: #f472b6;">div</span> className=<span style="color: #a5f3fc;">"alert-danger"</span>&gt;⚠️ Excede stock disponible!&lt;/<span style="color: #f472b6;">div</span>&gt;
+    )}
+    &lt;<span style="color: #f472b6;">button</span> disabled={isLoading || isOverStock}&gt;
+      {isLoading ? <span style="color: #a5f3fc;">"Procesando..."</span> : <span style="color: #a5f3fc;">"Despachar"</span>}
+    &lt;/<span style="color: #f472b6;">button</span>&gt;
+  &lt;/<span style="color: #f472b6;">form</span>&gt;
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Protección de Rutas y Sesión en Next.js -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Protección de Rutas & Sesión en Next.js</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🛡️ Guardias de Autenticación & Next.js Middleware</h2>
+                    <span style="background: #ef4444; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Middleware • Session Guard • User Context</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fef2f2; border-left: 5px solid #ef4444; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #b91c1c; font-size: 0.85rem; display: block; margin-bottom: 3px;">🔒 Intercepción de Rutas (`/backoffice/*`):</strong>
+                            <p style="font-size: 0.78rem; color: #7f1d1d; margin: 0; line-height: 1.38;">
+                                Redirigir a <code>/login</code> inmediatamente si el usuario intenta acceder a la consola sin un JWT válido en cookies o almacenamiento.
+                            </p>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">👤 Contexto de Usuario & `user_uuid`:</strong>
+                            <p style="font-size: 0.78rem; color: #1e3a8a; margin: 0; line-height: 1.38;">
+                                Leer la sesión activa desde un <code>AuthContext</code> para validar roles de acceso e inyectar el <code>user_uuid</code> en las transacciones registradas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">middleware.ts</span>
+                            <div class="editor-header-right"><span class="editor-lang">TypeScript</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">import</span> { NextResponse } <span style="color: #f472b6;">from</span> <span style="color: #a5f3fc;">"next/server"</span>;
+<span style="color: #f472b6;">import type</span> { NextRequest } <span style="color: #f472b6;">from</span> <span style="color: #a5f3fc;">"next/server"</span>;
+
+<span style="color: #f472b6;">export function</span> <span style="color: #38bdf8;">middleware</span>(req: NextRequest) {
+  <span style="color: #f472b6;">const</span> token = req.cookies.get(<span style="color: #a5f3fc;">"auth_token"</span>)?.value;
+  <span style="color: #f472b6;">if</span> (!token &amp;&amp; req.nextUrl.pathname.startsWith(<span style="color: #a5f3fc;">"/backoffice"</span>)) {
+    <span style="color: #f472b6;">return</span> NextResponse.redirect(<span style="color: #f472b6;">new</span> URL(<span style="color: #a5f3fc;">"/login"</span>, req.url));
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: Visualización de Datos y UX para Herramientas Internas -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Backoffice UX: Visualización de Datos & Indicadores</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">📊 Renderizado Condicional, Badges & Formateo ISO</h2>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Tailwind Badges • Stock Alerts • Date Formatting</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">🟢 Umbrales Numéricos & Categorías:</strong>
+                            <ul style="font-size: 0.76rem; color: #064e3b; margin: 0; padding-left: 14px; line-height: 1.35;">
+                                <li><code>stock &lt;= 5</code> ➔ Badge Rojo (Alerta Crítica)</li>
+                                <li><code>stock &lt;= 15</code> ➔ Badge Amarillo (Advertencia)</li>
+                                <li><code>Inbound</code> (🟢 Flecha Verde) vs <code>Outbound</code> (🔴 Flecha Roja)</li>
+                            </ul>
+                        </div>
+                        <div style="background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #1d4ed8; font-size: 0.85rem; display: block; margin-bottom: 3px;">📅 Formateo de Fechas ISO:</strong>
+                            <p style="font-size: 0.76rem; color: #1e3a8a; margin: 0; line-height: 1.35;">
+                                Usar <code>Intl.DateTimeFormat("es-ES")</code> para convertir cadenas ISO de la API (<code>2026-09-16T14:30:00Z</code>) en fechas legibles.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #38bdf8; padding: 12px; color: #ffffff; display: flex; flex-direction: column; justify-content: center;">
+                        <strong style="color: #38bdf8; font-size: 0.82rem; display: block; margin-bottom: 8px;">🖥️ Vista Previa Tabla Backoffice:</strong>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;">
+                                <thead style="background: #1e293b; color: #94a3b8;">
+                                    <tr>
+                                        <th style="padding: 6px;">SKU</th>
+                                        <th style="padding: 6px;">Transacción</th>
+                                        <th style="padding: 6px;">Stock</th>
+                                        <th style="padding: 6px;">Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #1e293b;">
+                                        <td style="padding: 6px;">SKU-9021</td>
+                                        <td style="padding: 6px; color: #4ade80;">🟢 Inbound</td>
+                                        <td style="padding: 6px;"><span style="background: #ef4444; padding: 2px 6px; border-radius: 4px; font-weight: 700;">3 (Crítico)</span></td>
+                                        <td style="padding: 6px; color: #cbd5e1;">16/09/2026</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #1e293b;">
+                                        <td style="padding: 6px;">SKU-4410</td>
+                                        <td style="padding: 6px; color: #f87171;">🔴 Outbound</td>
+                                        <td style="padding: 6px;"><span style="background: #f59e0b; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #000;">12 (Medio)</span></td>
+                                        <td style="padding: 6px; color: #cbd5e1;">15/09/2026</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE CLASE 43: TypeScript y Modelado de Dominio -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • TypeScript & Modelado de Dominio (`CONTEXT-company.md`)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🏷️ Tipado de Entidades & Alineación de Vocabulario</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Strict TypeScript • Domain DTOs • Business Terms</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">📐 Interfaces Estrictas de Dominio:</strong>
+                            <p style="font-size: 0.78rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                                Definir contratos DTO precisos: <code>ProductSKU</code>, <code>InboundOrderPayload</code>, <code>OutboundOrderPayload</code> y <code>ApiErrorResponse</code>.
+                            </p>
+                        </div>
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 3px;">📖 Alineación de Nomenclatura Empresarial:</strong>
+                            <p style="font-size: 0.76rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Respetar los términos de <code>CONTEXT-company.md</code>. Si el dominio especifica <strong>SKU</strong> o <strong>Material</strong>, reflejarlo en interfaces, labels y variables en lugar de palabras genéricas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="editor-container" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="editor-header">
+                            <div class="editor-dots"><span class="editor-dot dot-red"></span><span class="editor-dot dot-yellow"></span><span class="editor-dot dot-green"></span></div>
+                            <span class="editor-filename">types/inventory.ts</span>
+                            <div class="editor-header-right"><span class="editor-lang">TypeScript</span></div>
+                        </div>
+                        <pre style="padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.64rem; color: #f8fafc; background: #0f172a; margin: 0; line-height: 1.35;"><code><span style="color: #f472b6;">export interface</span> <span style="color: #fbbf24;">ProductSKU</span> {
+  id: <span style="color: #fbbf24;">string</span>;
+  sku_code: <span style="color: #fbbf24;">string</span>;
+  name: <span style="color: #fbbf24;">string</span>;
+  available_stock: <span style="color: #fbbf24;">number</span>;
+}
+
+<span style="color: #f472b6;">export interface</span> <span style="color: #fbbf24;">OutboundOrderPayload</span> {
+  sku_id: <span style="color: #fbbf24;">string</span>;
+  quantity: <span style="color: #fbbf24;">number</span>;
+  destination: <span style="color: #fbbf24;">string</span>;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
     
         <!-- SLIDE LEAD ARCHITECT (3/3): Gotchas -->
         <div class="slide">
@@ -375,47 +1357,149 @@ alembic upgrade head</pre>
             </div>
         </div>
     
-        <!-- SLIDE CLASE 43 (11/11): Misión Final -->
+        <!-- SLIDE PROYECTO 1: Milestone 5 Backend -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title-header">Clase 43 • Proyecto Práctico: Misión Final</div>
+                <div class="slide-title-header">Clase 43 • Proyecto 1: Milestone 5 Backend</div>
                 <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
             </div>
             <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🎯 Misión: Construir el Backend ORM Milestone</h2>
-                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Milestone Project • FastAPI & Dual DB</span>
+                    <div>
+                        <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🐍 Proyecto 1: Milestone 5 — Backend: Inventory Management with ORM & Dual Database</h2>
+                        <p style="font-size: 0.78rem; color: #64748b; margin: 2px 0 0 0;">3 &lt;/&gt; Project • Motor RESTful transaccional de alta concurrencia</p>
+                    </div>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">FastAPI • SQLModel • Alembic • Dual DB</span>
                 </div>
 
-                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
-                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Contexto de la Misión:</strong>
-                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
-                        Construirás la API REST completa integrada con un ORM (SQLModel), migraciones con Alembic y estrategia Dual DB en FastAPI.
-                    </p>
-                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Propósito & Misión del Backend:</strong>
+                            <p style="font-size: 0.76rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                                Construir el servicio central de API REST encargado de persistir modelos relacionales, gestionar sesiones <code>get_db</code>, conectar TinyDB con PostgreSQL/Supabase, aplicar migraciones Alembic y hacer cumplir las reglas contables de inventario inmutable (<em>Ledger Pattern</em>).
+                            </p>
+                        </div>
 
-                <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px 16px; color: #ffffff;">
-                    <strong style="color: #34d399; font-size: 0.88rem; display: block; margin-bottom: 6px;">🚀 Tu Objetivo (Checklist de Entregables):</strong>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.78rem;">
-                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #38bdf8;">
-                            <strong style="color: #38bdf8;">1. 🐍 Modelos SQLModel (`app/models/`):</strong>
-                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Definir clases de tabla relacionales con PK, campos indexados y relaciones.</p>
-                        </div>
-                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a855f7;">
-                            <strong style="color: #c084fc;">2. 🔄 Dual DB & Session (`app/core/db.py`):</strong>
-                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Configurar `DATABASE_URL` dinámica e inyección de dependencia `get_session`.</p>
-                        </div>
-                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
-                            <strong style="color: #fbbf24;">3. 📦 Migraciones Alembic:</strong>
-                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Inicializar Alembic y generar revisiones automáticas de base de datos.</p>
-                        </div>
-                        <div style="background: #1e293b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ec4899;">
-                            <strong style="color: #f472b6;">4. ⚡ Endpoints CRUD REST:</strong>
-                            <p style="color: #cbd5e1; margin: 2px 0 0 0; font-size: 0.74rem;">Implementar operaciones GET, POST, PUT, DELETE con manejo de excepciones.</p>
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">⚙️</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Es la bóveda y el libro contable de la empresa. Nadie entra a cambiar los números a mano: la API recibe peticiones HTTP, verifica credenciales en TinyDB y anota las entradas y salidas de mercancía en PostgreSQL de forma atómica y segura.
+                            </p>
                         </div>
                     </div>
-                    <div style="margin-top: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 6px 12px; border-radius: 6px; text-align: center;">
-                        <strong style="color: #34d399; font-size: 0.80rem;">🟢 Criterio de Éxito: Backend 100% operativo con persistencia de datos y cero fugas de conexión.</strong>
+
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #0056FF; padding: 12px 14px; color: #ffffff;">
+                        <strong style="color: #38bdf8; font-size: 0.85rem; display: block; margin-bottom: 6px;">📋 Checklist de Entregables Clave (Proyecto 1):</strong>
+                        <ul style="font-size: 0.74rem; color: #cbd5e1; margin: 0; padding-left: 14px; line-height: 1.45;">
+                            <li style="margin-bottom: 4px;"><strong>1. Dual DB Setup (<code>database.py</code>):</strong> Integración NoSQL (TinyDB) + SQL Engine con <code>Depends(get_db)</code>.</li>
+                            <li style="margin-bottom: 4px;"><strong>2. Modelos ORM (<code>models.py</code>):</strong> Tabla <code>StockEntry</code>, <code>StockExit</code>, <code>Product</code> con <code>user_uuid</code> plano.</li>
+                            <li style="margin-bottom: 4px;"><strong>3. Ledger Inmutable:</strong> Cálculo dinámico <code>Stock = sum(Inbound) - sum(Outbound)</code>.</li>
+                            <li style="margin-bottom: 4px;"><strong>4. Prevención Stock Negativo:</strong> Error <code>HTTP 400 Bad Request</code> si <code>salida > disponible</code>.</li>
+                            <li><strong>5. Migraciones Alembic:</strong> Control de versiones DDL con <code>alembic upgrade head</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE PROYECTO 2: Milestone 5 Backoffice -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Proyecto 2: Milestone 5 Backoffice</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <div>
+                        <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🖥️ Proyecto 2: Milestone 5 — Backoffice: Inventory Management Interface</h2>
+                        <p style="font-size: 0.78rem; color: #64748b; margin: 2px 0 0 0;">4 &lt;/&gt; Project • Interfaz Web Frontend reactiva de operaciones de almacén</p>
+                    </div>
+                    <span style="background: #10b981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Next.js • React • Tailwind • REST Client</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #f0fdf4; border-left: 5px solid #10b981; border-radius: 8px; padding: 10px 14px;">
+                            <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 3px;">📌 Propósito & Misión del Backoffice:</strong>
+                            <p style="font-size: 0.76rem; color: #064e3b; margin: 0; line-height: 1.38;">
+                                Diseñar e implementar la aplicación web interactiva que consuma la API REST del Proyecto 1. Permite a los administradores registrar entradas/salidas, visualizar indicadores de stock en tiempo real, filtrar catálogos por SKU y gestionar la autenticación de sesión mediante JWT.
+                            </p>
+                        </div>
+
+                        <div style="background: #fffbe6; border: 2px solid #f59e0b; border-radius: 10px; padding: 10px 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span style="font-size: 1.1rem;">🖥️</span>
+                                <strong style="color: #b45309; font-size: 0.85rem;">Explicación Feynman:</strong>
+                            </div>
+                            <p style="font-size: 0.75rem; color: #78350f; margin: 0; line-height: 1.38;">
+                                Es la pantalla del cajero y el monitor del gerente de bodega. El cliente Web envía las órdenes a la API mediante un cliente centralizado (<code>lib/inventory.ts</code>), mostrando alertas visuales si el stock está en nivel crítico o si ocurre un error HTTP.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px 14px; color: #ffffff;">
+                        <strong style="color: #34d399; font-size: 0.85rem; display: block; margin-bottom: 6px;">📋 Checklist de Entregables Clave (Proyecto 2):</strong>
+                        <ul style="font-size: 0.74rem; color: #cbd5e1; margin: 0; padding-left: 14px; line-height: 1.45;">
+                            <li style="margin-bottom: 4px;"><strong>1. API Client HTTP (<code>lib/inventory.ts</code>):</strong> Fetch encapsulado con inyección <code>Bearer &lt;token&gt;</code> y captura de <code>4xx/5xx</code>.</li>
+                            <li style="margin-bottom: 4px;"><strong>2. Formularios Reactivos (<code>Outbound Form</code>):</strong> Manejo de <code>onChange</code> para actualizar stock disponible antes de enviar.</li>
+                            <li style="margin-bottom: 4px;"><strong>3. Protección de Rutas (<code>middleware.ts</code>):</strong> Redirección automática de usuarios anónimos a <code>/login</code>.</li>
+                            <li style="margin-bottom: 4px;"><strong>4. Backoffice UX & KPIs:</strong> Tablas con badges de nivel de inventario (Crítico, Medio, Óptimo).</li>
+                            <li><strong>5. Domain DTO Alignment:</strong> Tipado estricto en TypeScript (<code>ProductSKU</code>, <code>InboundPayload</code>).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE COMPARATIVA E INTEGRACIÓN DE PROYECTOS -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 43 • Integración End-to-End de Proyectos</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                    <h2 class="slide-section-title" style="font-size: 1.2rem; margin: 0;">🔄 Diferencia & Arquitectura Integrada entre Ambos Proyectos</h2>
+                    <span style="background: #8b5cf6; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Client-Server Pattern • Decoupled Architecture • Fullstack Contract</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <!-- Columna Backend -->
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #0056FF; padding: 12px; color: #ffffff;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="background: #0056FF; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">3 &lt;/&gt; Project 1 (Backend API)</span>
+                        </div>
+                        <ul style="font-size: 0.74rem; color: #cbd5e1; margin: 0; padding-left: 14px; line-height: 1.45;">
+                            <li style="margin-bottom: 4px;"><strong>Capa:</strong> Servidor de Negocio & Persistencia (FastAPI).</li>
+                            <li style="margin-bottom: 4px;"><strong>Responsabilidad:</strong> Valida schemas Pydantic, administra transacciones ORM, conecta PostgreSQL/TinyDB y frena stock negativo (HTTP 400).</li>
+                            <li style="margin-bottom: 4px;"><strong>Seguridad:</strong> Verifica y genera JWT Bearer Tokens.</li>
+                            <li><strong>Entregable:</strong> API REST documentada en Swagger (<code>/docs</code>).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna Frontend -->
+                    <div style="background: #0f172a; border-radius: 10px; border: 2px solid #10b981; padding: 12px; color: #ffffff;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                            <span style="background: #10b981; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">4 &lt;/&gt; Project 2 (Backoffice UI)</span>
+                        </div>
+                        <ul style="font-size: 0.74rem; color: #cbd5e1; margin: 0; padding-left: 14px; line-height: 1.45;">
+                            <li style="margin-bottom: 4px;"><strong>Capa:</strong> Cliente Frontend de Administración (Next.js / React).</li>
+                            <li style="margin-bottom: 4px;"><strong>Responsabilidad:</strong> Renderiza UI/UX, captura formularios reactivos, almacena JWT en Cookies/State y consume la API vía <code>lib/inventory.ts</code>.</li>
+                            <li style="margin-bottom: 4px;"><strong>Seguridad:</strong> Middleware de protección de rutas (<code>/backoffice</code>).</li>
+                            <li><strong>Entregable:</strong> Dashboard interactivo de gestión de bodega.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Flujo End-to-End Banner -->
+                <div style="background: #f8fafc; border: 2px solid #8b5cf6; border-radius: 10px; padding: 10px 14px; text-align: center;">
+                    <strong style="color: #6d28d9; font-size: 0.82rem; display: block; margin-bottom: 4px;">🔗 Flujo de Integración Cliente-Servidor (End-to-End):</strong>
+                    <div style="font-family: 'Fira Code', monospace; font-size: 0.74rem; color: #1e293b; font-weight: 600;">
+                        [Backoffice Client (Next.js)] ──(HTTP fetch + Bearer Token)──> [Backend API (FastAPI)] ──(SQLModel ORM)──> [PostgreSQL / Supabase DB]
                     </div>
                 </div>
             </div>
@@ -429,7 +1513,7 @@ alembic upgrade head</pre>
             <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
             <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
         </div>
-        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 12</div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 28</div>
         <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
     </div>
 
