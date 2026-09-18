@@ -37,7 +37,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (2/12): Visión Macro Contenerización vs VMs -->
+        <!-- SLIDE CLASE 44 (2/21): Visión Macro Contenerización vs VMs -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Contenerización vs Máquinas Virtuales</div>
@@ -81,7 +81,445 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (3/12): Anatomía de un Dockerfile -->
+        <!-- SLIDE CLASE 44: ¿Qué es un Sistema Operativo (SO)? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • ¿Qué es un Sistema Operativo (SO)?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🖥️ 1.1 ¿Qué es un Sistema Operativo (SO)?</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Administrador de Hardware • Software Base</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Definición:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Un <strong>Sistema Operativo (SO)</strong> es el software principal que administra y coordina los recursos de hardware físicos de una computadora (CPU, memoria RAM, disco, dispositivos de E/S) para permitir la ejecución ordenada de aplicaciones y programas de usuario.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Metáfora: El Administrador del Edificio</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        El Sistema Operativo es como el administrador de un gran edificio de oficinas. Asigna las llaves de cada oficina (memoria), gestiona la electricidad y el agua (CPU y energía) y se asegura de que ningún inquilino (proceso) interrumpa el trabajo de los demás.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-size: 0.76rem;">
+                    <strong style="color: #38bdf8; display: block; margin-bottom: 4px;">⚙️ Componentes Clave del Sistema Operativo:</strong>
+                    <ul style="margin: 0; padding-left: 18px; color: #cbd5e1; line-height: 1.4;">
+                        <li><strong>Kernel:</strong> El núcleo que interactúa directamente con los recursos del hardware.</li>
+                        <li><strong>Espacio de Usuario (User Space):</strong> Donde se ejecutan las aplicaciones, herramientas y sistemas de archivos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: ¿Qué es una Máquina Virtual (VM)? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • ¿Qué es una Máquina Virtual (VM)?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">💻 1.2 ¿Qué es una Máquina Virtual (VM)?</h2>
+                    <span style="background: #ef4444; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Hipervisor • Virtualización Pesada</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Definición:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Una <strong>Máquina Virtual (VM)</strong> emula un entorno informático completo (hardware virtualizado) mediante un <em>Hipervisor</em>. Cada VM instala y ejecuta un Sistema Operativo invitado completo (Guest OS) independiente, con su propio kernel y asignación rígida de recursos.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: La Casa de Ladrillos Entera</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Una VM es como construir una casa de ladrillos entera con sus propios cimientos, cocina y baño, solo para que duerma una persona. Ocupa mucho espacio (Gigabytes de RAM/disco) y tarda mucho tiempo en levantarse (minutos).
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.76rem;">
+                    <span style="color: #64748b;"># En virtualización tradicional con Vagrant/VirtualBox:</span><br>
+                    <span style="color: #38bdf8;">vagrant up</span>  <span style="color: #64748b;"># Descarga gigabytes y levanta un SO completo desde cero</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: ¿Qué es el Kernel en un Sistema Operativo? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • ¿Qué es el Kernel en un Sistema Operativo?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 9px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🧠 1.3 ¿Qué es el Kernel en un Sistema Operativo?</h2>
+                    <span style="background: #10B981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Núcleo del SO • Puente Hardware-Software</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 9px 12px;">
+                    <strong style="color: #0056FF; font-size: 0.83rem; display: block; margin-bottom: 2px;">📌 Definición:</strong>
+                    <p style="font-size: 0.78rem; color: #1e293b; margin: 0; line-height: 1.35;">
+                        Es el <strong>corazón del sistema operativo</strong>: el puente directo que comunica el hardware físico (CPU, RAM, disco) con el software y las aplicaciones.
+                    </p>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 9px 12px;">
+                    <strong style="color: #0f172a; font-size: 0.83rem; display: block; margin-bottom: 4px;">⚙️ Responsabilidades Clave:</strong>
+                    <ul style="margin: 0; padding-left: 18px; font-size: 0.76rem; color: #334155; line-height: 1.35;">
+                        <li><strong>Administración de recursos:</strong> Asigna memoria y tiempo de procesador a cada programa.</li>
+                        <li><strong>Control de hardware:</strong> Traduce las órdenes de las aplicaciones a los controladores (drivers) de los dispositivos.</li>
+                        <li><strong>Seguridad y privilegios:</strong> Evita que un programa bloquee el sistema o altere la memoria de otros procesos.</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 9px 12px;">
+                    <strong style="color: #6d28d9; font-size: 0.83rem; display: block; margin-bottom: 2px;">💡 Metáfora:</strong>
+                    <p style="font-size: 0.76rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Es el <strong>jefe de sala en un restaurante</strong>: los clientes (aplicaciones) no pueden entrar a la cocina ni tocar los fogones (hardware); le piden los platos al jefe de sala (llamadas al sistema), quien cocina y sirve de forma ordenada.
+                    </p>
+                </div>
+
+                <div style="background: #f0fdf4; border-left: 5px solid #10B981; border-radius: 8px; padding: 9px 12px;">
+                    <strong style="color: #047857; font-size: 0.83rem; display: block; margin-bottom: 2px;">🐳 Relevancia en Docker:</strong>
+                    <p style="font-size: 0.76rem; color: #14532d; margin: 0; line-height: 1.35;">
+                        A diferencia de una VM (que corre un kernel propio por cada máquina), <strong>los contenedores comparten el mismo kernel del anfitrión</strong>, logrando arranque instantáneo y uso mínimo de recursos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: Cimientos de Linux: Namespaces -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Cimientos de Linux: Namespaces</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🔍 2. Cimientos de Linux: Namespaces (Aislamiento de Vista)</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Aislamiento Lógico • PID, NET, MNT, USER</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Los <strong>Namespaces</strong> son una característica del Kernel de Linux que aísla la <strong>vista</strong> de los recursos del sistema operativo para un proceso o grupo de procesos (redes <code>NET</code>, procesos <code>PID</code>, montajes de disco <code>MNT</code>, usuarios <code>USER</code>). Para el proceso en ejecución, él cree que es el único proceso activo en todo el sistema.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: Las Gafas de Cartón Lateral</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Imagina un salón de clases lleno de alumnos. Ponerle un <strong>Namespace</strong> a un niño es ponerle unas gafas de cartón laterales: él solo ve su propio pupitre, cree que el salón está vacío y no puede ver ni molestar a los demás pupitres.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.76rem;">
+                    <span style="color: #64748b;"># Crear un namespace de procesos (PID) y montajes aislado manualmente en Linux:</span><br>
+                    <span style="color: #38bdf8;">unshare --fork --pid --mount-proc bash</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: Cimientos de Linux: Control Groups (cgroups) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Cimientos de Linux: Control Groups (cgroups)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚖️ 2.1 Cimientos de Linux: Control Groups (cgroups)</h2>
+                    <span style="background: #10B981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Límite de Recursos • RAM, CPU, I/O</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #10B981; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #047857; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Los <strong>Control Groups (cgroups)</strong> son una funcionalidad del Kernel de Linux que limita, contabiliza y aísla el <strong>consumo</strong> de recursos físicos de hardware (RAM, núcleos o porcentaje de CPU, ancho de banda de E/S de disco) asignados a un grupo de procesos. Previene que un proceso descontrolado consuma todo el servidor.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: Las Reglas Estrictas del Profesor</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Si los Namespaces son las gafas de cartón, <strong>cgroups</strong> es la regla estricta del profesor en el aula: <em>"cada alumno solo tiene permitido comer máximo 2 galletas del paquete y usar 100 MB de plastilina"</em>. Evita que un niño comelón (memory leak) se acabe los recursos de toda la clase.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.76rem;">
+                    <span style="color: #64748b;"># Limitar un grupo de procesos a 512MB de RAM usando cgroups en Linux:</span><br>
+                    <span style="color: #38bdf8;">cgcreate -g memory:mi_grupo &amp;&amp; cgset -r memory.max=512M mi_grupo</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: ¿Qué es un Contenedor? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • ¿Qué es un Contenedor?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📦 3. ¿Qué es un Contenedor? (Container)</h2>
+                    <span style="background: #10B981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Proceso Encapsulado • Kernel Compartido</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Un contenedor no es una máquina virtual. Es simplemente un <strong>proceso regular de Linux</strong> encapsulado y restringido mediante <em>namespaces</em> y <em>cgroups</em>. Comparte el mismo kernel del sistema operativo anfitrión sin duplicar hardware ni SO.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: El Edificio de Apartamentos</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        En lugar de construir una casa entera para cada huésped (VM), alquilas un edificio de apartamentos: todos comparten las mismas tuberías de agua y cimientos principales (kernel), pero cada quien tiene su puerta con llave y su propio medidor de luz.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.76rem;">
+                    <span style="color: #64748b;"># Inspeccionar que el contenedor es un proceso PID nativo del SO anfitrión:</span><br>
+                    <span style="color: #38bdf8;">docker top mi_contenedor</span>  <span style="color: #64748b;"># Muestra los PID de Linux ejecutando la app</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: Plataforma y Ecosistema Docker -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Plataforma &amp; Ecosistema Docker</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🌐 4. Plataforma y Ecosistema Docker</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Ecosistema OCI • CLI • Docker Hub</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        <strong>Docker</strong> es la plataforma integral y el ecosistema que popularizó el uso de contenedores. Incluye la herramienta de línea de comandos (CLI <code>docker</code>), las especificaciones abiertas de OCI (<em>Open Container Initiative</em>), las herramientas de desarrollo y los registros públicos como <strong>Docker Hub</strong>.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: El Manual Ilustrado y Catálogo de Juguetes</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Si los contenedores son piezas de Lego y el kernel es la mesa de trabajo, <strong>Docker</strong> es la marca completa que te entrega el manual de armado ilustrado y el catálogo internacional donde buscas y compartes modelos armados por otros creadores del mundo.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.76rem;">
+                    <span style="color: #64748b;"># Consultar información del ecosistema Docker y buscar imágenes en Docker Hub:</span><br>
+                    <span style="color: #38bdf8;">docker info</span><br>
+                    <span style="color: #38bdf8;">docker search python --filter "is-official=true"</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: ¿Qué es el Docker Engine? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • ¿Qué es el Docker Engine?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 8px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚙️ ¿Qué es el Docker Engine?</h2>
+                    <span style="background: #10B981; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Motor Central • Cliente-Servidor</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #0056FF; font-size: 0.82rem; display: block; margin-bottom: 2px;">📌 Definición:</strong>
+                    <p style="font-size: 0.77rem; color: #1e293b; margin: 0; line-height: 1.34;">
+                        Es el motor central de Docker: la aplicación cliente-servidor que se instala en el sistema operativo anfitrión para construir, distribuir y ejecutar contenedores.
+                    </p>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #0f172a; font-size: 0.82rem; display: block; margin-bottom: 3px;">🧩 Componentes Principales:</strong>
+                    <ul style="margin: 0; padding-left: 18px; font-size: 0.74rem; color: #334155; line-height: 1.34;">
+                        <li><strong>Servidor (Daemon - <code>dockerd</code>):</strong> El proceso que corre en segundo plano gestionando imágenes, redes, volúmenes y el ciclo de vida de los contenedores.</li>
+                        <li><strong>API REST:</strong> La interfaz de comunicación que recibe órdenes y conecta al cliente con el demonio.</li>
+                        <li><strong>Cliente CLI (<code>docker</code>):</strong> La herramienta de línea de comandos que usa el desarrollador para enviar instrucciones (e.g., <code>docker run</code>, <code>docker build</code>).</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #6d28d9; font-size: 0.82rem; display: block; margin-bottom: 2px;">🎼 Metáfora: El Director de Orquesta</strong>
+                    <p style="font-size: 0.75rem; color: #334155; margin: 0; line-height: 1.34;">
+                        Es el director de orquesta en un teatro: Tú como usuario le pasas las partituras por el micrófono (la terminal CLI); el director (la API y el demonio) interpreta las notas y coordina a cada músico (redes, imágenes y procesos del sistema) para que la obra suene en perfecta armonía sin que tú tengas que afinar cada instrumento a mano.
+                    </p>
+                </div>
+
+                <div style="background: #f0fdf4; border-left: 5px solid #10B981; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #047857; font-size: 0.82rem; display: block; margin-bottom: 2px;">⚡ Relevancia:</strong>
+                    <p style="font-size: 0.75rem; color: #14532d; margin: 0; line-height: 1.34;">
+                        Es la capa intermedia que traduce comandos sencillos de usuario en llamadas complejas al kernel de Linux (namespaces y cgroups) para materializar los contenedores.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: El Dockerfile -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • El Dockerfile</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">📜 5. Dockerfile</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Es un archivo de texto plano con instrucciones secuenciales que definen el entorno, dependencias, archivos y comandos necesarios para construir una aplicación reproducible.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: La Receta de Cocina</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Es la <strong>receta de cocina escrita en un papel</strong>. Dice: toma una base de masa (sistema base), agrégale salsa de tomate (dependencias), pon el queso encima (tu código) y hornea a 180°C (puerto expuesto).
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.74rem;">
+                    <span style="color: #f43f5e;">FROM</span> python:3.11-slim<br>
+                    <span style="color: #f43f5e;">WORKDIR</span> /app<br>
+                    <span style="color: #f43f5e;">COPY</span> requirements.txt .<br>
+                    <span style="color: #f43f5e;">RUN</span> pip install -r requirements.txt<br>
+                    <span style="color: #f43f5e;">COPY</span> . .<br>
+                    <span style="color: #f43f5e;">CMD</span> ["python", "main.py"]
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: ¿Qué son las Imágenes de Docker? -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • ¿Qué son las Imágenes de Docker?</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 8px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🖼️ ¿Qué son las Imágenes de Docker?</h2>
+                    <span style="background: #0056FF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">Plantillas Inmutables • Solo Lectura</span>
+                </div>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #0056FF; font-size: 0.82rem; display: block; margin-bottom: 2px;">📌 Definición:</strong>
+                    <p style="font-size: 0.77rem; color: #1e293b; margin: 0; line-height: 1.34;">
+                        Son plantillas binarias empaquetadas, inmutables y de solo lectura que contienen todo lo necesario para ejecutar una aplicación: código, entorno de ejecución (runtime), librerías, variables de entorno y archivos de configuración.
+                    </p>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #0f172a; font-size: 0.82rem; display: block; margin-bottom: 3px;">⚙️ Características Clave:</strong>
+                    <ul style="margin: 0; padding-left: 18px; font-size: 0.74rem; color: #334155; line-height: 1.34;">
+                        <li><strong>Estructura por capas (layers):</strong> Cada instrucción del Dockerfile crea una capa reutilizable y cacheable sobre la anterior.</li>
+                        <li><strong>Inmutabilidad:</strong> Una vez construida, una imagen nunca se modifica; si el código cambia, se compila una nueva versión con un nuevo tag.</li>
+                        <li><strong>Portabilidad:</strong> Se construyen una sola vez y corren exactamente igual en cualquier máquina que tenga Docker instalado.</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #6d28d9; font-size: 0.82rem; display: block; margin-bottom: 2px;">💡 Metáfora: La Receta Plastificada / Plano Arquitectónico</strong>
+                    <p style="font-size: 0.75rem; color: #334155; margin: 0; line-height: 1.34;">
+                        Es una receta de cocina impresa y plastificada (o una foto congelada): No puedes comer la receta impresa ni interactuar con ella directamente porque es solo papel estático; pero con esa misma plantilla exacta puedes preparar mil platos de comida idénticos (contenedores) en cualquier cocina del mundo.
+                    </p>
+                </div>
+
+                <div style="background: #f0fdf4; border-left: 5px solid #10B981; border-radius: 8px; padding: 8px 12px;">
+                    <strong style="color: #047857; font-size: 0.82rem; display: block; margin-bottom: 2px;">⚡ Relevancia:</strong>
+                    <p style="font-size: 0.75rem; color: #14532d; margin: 0; line-height: 1.34;">
+                        Son el molde estático del que nacen los contenedores: la imagen es el plano arquitectónico en reposo, mientras que el contenedor es el edificio vivo en construcción y operación.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: Contenedores de Docker (Docker Container) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Contenedores de Docker (Docker Container)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">⚡ 7. Contenedores de Docker (Docker Container)</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Es una instancia en ejecución (<em>runtime</em>) viva de una imagen de Docker. Tiene una capa de lectura/escritura en la parte superior donde guarda sus cambios temporales mientras corre.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: La Torta Servida en la Mesa</strong>
+                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
+                        Es la torta ya servida en la mesa lista para comer. La imagen era la receta congelada; el <strong>contenedor</strong> es el programa respirando, procesando peticiones y usando memoria en tiempo real.
+                    </p>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.76rem;">
+                    <span style="color: #64748b;"># Correr un contenedor mapeando el puerto 8000 hacia el anfitrión:</span><br>
+                    <span style="color: #38bdf8;">docker run -d -p 8000:8000 --name api-activa mi-api-backend:v1</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- SLIDE CLASE 44: Docker Compose (compose) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-header">Clase 44 • Docker Compose (`compose`)</div>
+                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
+            </div>
+            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
+                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🐙 8. Docker Compose (`compose`)</h2>
+
+                <div style="background: #eff6ff; border-left: 5px solid #0056FF; border-radius: 8px; padding: 10px 14px;">
+                    <strong style="color: #0056FF; font-size: 0.85rem; display: block; margin-bottom: 2px;">📌 Concepto:</strong>
+                    <p style="font-size: 0.80rem; color: #1e293b; margin: 0; line-height: 1.38;">
+                        Herramienta para definir y ejecutar aplicaciones multi-contenedor mediante un archivo declarativo YAML (<code>docker-compose.yml</code>). Permite levantar con un solo comando la API, la base de datos y la caché en una red interna compartida.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #f8fafc; border-left: 5px solid #8b5cf6; border-radius: 8px; padding: 10px 14px;">
+                        <strong style="color: #6d28d9; font-size: 0.85rem; display: block; margin-bottom: 2px;">💡 Explicación Feynman: Director de Banda de Garaje</strong>
+                        <p style="font-size: 0.77rem; color: #334155; margin: 0; line-height: 1.35;">
+                            Si un contenedor es un músico solista tocando la guitarra, <strong>Docker Compose</strong> es el director de una banda pequeña de garaje: le indica al bajista, al baterista y al cantante que empiecen a tocar al mismo tiempo y coordinados.
+                        </p>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-family: monospace; font-size: 0.71rem;">
+                        <span style="color: #38bdf8;">services:</span><br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">backend:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;build: .<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ports: ["8000:8000"]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;environment: [DB_HOST=postgres_db]<br>
+                        &nbsp;&nbsp;<span style="color: #f43f5e;">postgres_db:</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;environment: [POSTGRES_PASSWORD=secretpassword]<br><br>
+                        <span style="color: #64748b;"># Comando:</span> <span style="color: #10b981;">docker compose up -d</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <!-- SLIDE CLASE 44: Blueprint de la Imagen: El Dockerfile -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Blueprint de la Imagen: El Dockerfile</div>
@@ -124,7 +562,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (4/12): Multi-Stage Builds -->
+        <!-- SLIDE CLASE 44: Multi-Stage Builds -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Multi-Stage Builds: Imágenes Ultraligeras de Producción</div>
@@ -168,44 +606,8 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (5/12): Persistencia y Redes -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title-header">Clase 44 • Persistencia de Datos y Redes Docker</div>
-                <div class="logo-container">&lt;/&gt; 4Geeks academy</div>
-            </div>
-            <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; height: calc(100% - 56px); box-sizing: border-box; padding: 16px 24px; gap: 10px;">
-                <h2 class="slide-section-title" style="font-size: 1.25rem; margin: 0;">🌐 Volúmenes de Almacenamiento y Docker Networks</h2>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 10px; padding: 12px 14px;">
-                        <strong style="color: #1d4ed8; font-size: 0.90rem; display: block; margin-bottom: 4px;">💾 Volúmenes (`volumes:`) vs Bind Mounts</strong>
-                        <p style="font-size: 0.77rem; color: #334155; line-height: 1.35; margin: 0;">
-                            Los contenedores son efímeros (al destruirlos, se pierden sus archivos).<br>
-                            • <strong>Named Volumes:</strong> Gestionados completamente por Docker. Ideal para datos de producción de PostgreSQL/SQLite.<br>
-                            • <strong>Bind Mounts:</strong> Mapean carpetas locales directamente (ej. <code>./src:/app/src</code>). Ideal para desarrollo con Hot Reload.
-                        </p>
-                    </div>
-
-                    <div style="background: #ffffff; border: 2px solid #10b981; border-radius: 10px; padding: 12px 14px;">
-                        <strong style="color: #047857; font-size: 0.90rem; display: block; margin-bottom: 4px;">🔗 Redes Aisladas (`networks:`)</strong>
-                        <p style="font-size: 0.77rem; color: #334155; line-height: 1.35; margin: 0;">
-                            Docker crea una red interna virtual (puente <code>bridge</code>) donde cada contenedor tiene su propio nombre de Host DNS interno.<br>
-                            • Tu backend FastAPI puede conectarse a PostgreSQL usando la URL <code>postgresql://db:5432/inventario</code> sin exponer el puerto de Postgres a internet.
-                        </p>
-                    </div>
-                </div>
-
-                <div style="background: #f8fafc; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 10px 14px;">
-                    <strong style="color: #b45309; font-size: 0.85rem; display: block; margin-bottom: 2px;">⚠️ Regla de Oro de Almacenamiento:</strong>
-                    <p style="font-size: 0.78rem; color: #334155; margin: 0; line-height: 1.35;">
-                        Nunca guardes bases de datos dentro de la capa escribible del contenedor. Si el contenedor se reinicia o actualiza, la base de datos se destruirá a menos que esté montada sobre un <strong>Named Volume</strong>.
-                    </p>
-                </div>
-            </div>
-        </div>
-    
-        <!-- SLIDE CLASE 44 (6/12): Docker Compose -->
+        <!-- SLIDE CLASE 44: Orquestación Multi-Contenedor: docker-compose.yml -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Orquestación de Servicios con Docker Compose</div>
@@ -250,7 +652,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (7/12): Secretos y Variables de Entorno -->
+        <!-- SLIDE CLASE 44: Secretos y Variables de Entorno -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Manejo Seguro de Secretos &amp; Variables de Entorno</div>
@@ -286,7 +688,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (8/12): Healthchecks y Resiliencia -->
+        <!-- SLIDE CLASE 44: Healthchecks y Resiliencia -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Healthchecks &amp; Orquestación Resiliente</div>
@@ -329,7 +731,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (9/12): Antipatrones y Seguridad -->
+        <!-- SLIDE CLASE 44: Antipatrones y Seguridad -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Antipatrones &amp; Buenas Prácticas de Seguridad</div>
@@ -362,7 +764,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (10/12): Misión Práctica I -->
+        <!-- SLIDE CLASE 44: Misión Práctica I -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Misión Práctica I: Proyecto Monorepo Contenerizado</div>
@@ -405,7 +807,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (11/12): Misión Práctica II -->
+        <!-- SLIDE CLASE 44: Misión Práctica II -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Misión Práctica II: Launch-Ready MVP</div>
@@ -437,7 +839,7 @@
             </div>
         </div>
     
-        <!-- SLIDE CLASE 44 (12/12): Resumen Ejecutivo -->
+        <!-- SLIDE CLASE 44: Resumen Ejecutivo -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-header">Clase 44 • Resumen Ejecutivo &amp; Cheatsheet Docker</div>
@@ -481,7 +883,7 @@
             <a href="../index.html" class="nav-btn nav-btn-outline">🏠 Menú Principal</a>
             <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
         </div>
-        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 12</div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 de 23</div>
         <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
     </div>
 
